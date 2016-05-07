@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+   <h:head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Facelets Template</title>
+   </h:head>
+   <h:body>
+      <h:form>
+         
+         <p:growl id="msgs" showDetail="true"/>
+         
+         <h:panelGrid columns="2" cellpadding="5">
+            <p:selectOneMenu id="year" value="#{recaudosController.year}" style="width: 100px;">
+               <p:ajax listener="#{recaudosController.onYearChange}" update="month"/>
+               <f:selectItems value="#{recaudosController.years}"/>
+            </p:selectOneMenu>
+            <p:selectOneMenu id="month" value="#{recaudosController.month}" style="width: 100px;">
+               <f:selectItems value="#{recaudosController.months}"/>
+            </p:selectOneMenu>
+         </h:panelGrid>
+         
+         
+         <p:dataTable var="recaudo" value="#{recaudoController.recaudos}" widgetVar="recaudosTable"
+                      emptyMessage="No se han encontrado registros">
+            
+            <f:facet name="header">
+               
+               <h:panelGrid columns="2" style="border-style: hidden;">
+                  <h:outputText value="Mostrando datos de #{recaudosController.month} del #{recaudosController.year}"
+                                style="float: left;"/>
+                  <p:inputText id="globalFilter" onkeyup="PF('recaudosTable').filter()" 
+                               style="width: 150px; float: right;" placeholder="Ingresa un filtro"/>
+               </h:panelGrid>
+            </f:facet>
+            
+            <p:column headerText="No." width="20">
+               <h:outputText value="#{recaudo.dato}" />
+            </p:column>
+
+            <p:column headerText="Documento">
+               <h:outputText value="#{recaudo.dato}" />
+            </p:column>
+
+            <p:column headerText="Referencia">
+               <h:outputText value="#{recaudo.dato}" />
+            </p:column>
+
+            <p:column headerText="Fecha limite">
+               <h:outputText value="#{recaudo.dato}" />
+            </p:column>
+
+            <p:column headerText="Estado de pago">
+               <h:outputText value="#{recaudo.dato}" />
+            </p:column>
+
+            <p:column headerText="Acciones">
+               <h:outputText value="acciones" />
+            </p:column>
+         </p:dataTable>
+
+      </h:form>
+   </h:body>
+</html>

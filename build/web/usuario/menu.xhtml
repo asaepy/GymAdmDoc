@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+   <h:head>
+      <link href="../resources/css/styles-menu.css" rel="stylesheet" type="text/css"/>
+   </h:head>
+   <h:body>
+      <div id="tituloMenu">
+         <span><b>Menú de Usuario</b></span>
+      </div>
+
+      <div id="contenidoMenu">
+         <h:form id="formMenu">
+            <p:tieredMenu>
+               <p:submenu label="Usuarios">
+                  <p:menuitem value="Sub-menu"/>
+               </p:submenu>
+               <p:submenu label="Asistencia">
+                  <p:menuitem value="Sub-menu"/>
+               </p:submenu>
+               <p:submenu label="Recaudos">
+                  <p:menuitem value="Reportes mensuales" ajax="false"
+                              action="#{routingController.goToUsuario()}"/>
+                  <p:menuitem value="Registrar recaudo" ajax="false"
+                              action="#{routingController.goToPrueba()}"/>
+                  <p:menuitem value="Estadisticas"/>
+               </p:submenu>
+               <p:submenu label="Valoraciones">
+                  <p:menuitem value="Sub-menu"/>
+               </p:submenu>
+               <p:submenu label="Rutinas">
+                  <p:menuitem value="Sub-menu"/>
+               </p:submenu>
+               <p:separator/>
+               <p:menuitem value="Configuracion"/>
+            </p:tieredMenu>
+         </h:form>
+      </div>
+
+   </h:body>
+</html>
