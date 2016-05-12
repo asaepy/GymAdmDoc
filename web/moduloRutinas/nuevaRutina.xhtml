@@ -4,24 +4,24 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:head>
         <title>Nueva Rutina</title>
     </h:head>
     <h:body>
-
-        <h3>Agregar una nueva Rutina</h3>
         <h:form id="MruRutinaCreateForm">
             <h:panelGroup id="display">
-                <p:growl id="msgs" showDetail="true" />
-                <p:tabView>
+                <!--<p:growl id="msgs" showDetail="true" life="2500" />-->
+<!--                <p:tabView>
                     <p:tab title="Item para cubrir el espacio sobrante">
                         <h:outputText value="Se debe corregir en un sgte sprint" />
                     </p:tab>
                 </p:tabView>
                 <br/>
-                <br/>
+                <br/>-->
+                <h2>Agregar una nueva Rutina</h2>
                 <p:tabView>
                     <p:tab title="Datos preliminares">
                         <p:messages />
@@ -34,21 +34,23 @@
                                 <p:outputLabel value="#{bundle.CreateMruRutinaLabel_ruUsuario}" for="ruUsuario" />
                                 <p:inputText id="ruUsuario" value="#{mruRutinaController.selected.usuIdentificacion}" title="#{bundle.CreateMruRutinaTitle_ruUsuario}" required="true" requiredMessage="#{bundle.CreateMruRutinaRequiredMessage_ruUsuario}"/>
                             </h:panelGrid>
-                            <h2>Periodo de vigencia de la rutina</h2>
+                            <h3>Periodo de vigencia de la rutina</h3>
                             <h:panelGrid columns="4">
                                 <p:outputLabel value="#{bundle.CreateMruRutinaLabel_ruFechaini}" for="ruFechaini" />
-                                <p:calendar id="ruFechaini" pattern="MM/dd/yyyy" value="#{mruRutinaController.selected.ruFechaini}" title="#{bundle.EditMruRutinaTitle_ruFechaini}" required="true" requiredMessage="#{bundle.EditMruRutinaRequiredMessage_ruFechaini}" showOn="button"/>
+                                <p:calendar id="ruFechaini" pattern="MM/dd/yyyy" value="#{mruRutinaController.selected.ruFechaini}" title="#{bundle.CreateMruRutinaTitle_ruFechaini}" required="true" requiredMessage="#{bundle.CreateMruRutinaRequiredMessage_ruFechaini}" showOn="button"/>
                                 <p:outputLabel value="#{bundle.CreateMruRutinaLabel_ruFechafin}" for="ruFechafin" />
-                                <p:calendar id="ruFechafin" pattern="MM/dd/yyyy" value="#{mruRutinaController.selected.ruFechafin}" title="#{bundle.EditMruRutinaTitle_ruFechafin}" required="true" requiredMessage="#{bundle.EditMruRutinaRequiredMessage_ruFechafin}" showOn="button"/>
+                                <p:calendar id="ruFechafin" pattern="MM/dd/yyyy" value="#{mruRutinaController.selected.ruFechafin}" title="#{bundle.CreateMruRutinaTitle_ruFechafin}" required="true" requiredMessage="#{bundle.CreateMruRutinaRequiredMessage_ruFechafin}" showOn="button"/>
                             </h:panelGrid>
 
                             <h3>Datos personales</h3>
                             <p:panel>
                                 <br/>
-                                <p:outputLabel value="#{bundle.CreateMruRutinaLabel_ruPeso}" for="ruPeso" />
-                                <p:inputText id="ruPeso" value="#{mruRutinaController.selected.ruPeso}" title="#{bundle.CreateMruRutinaTitle_ruPeso}" required="true" requiredMessage="#{bundle.CreateMruRutinaRequiredMessage_ruPeso}"/>
-                                <p:outputLabel value="#{bundle.CreateMruRutinaLabel_ruTalla}" for="ruTalla" />
-                                <p:inputText id="ruTalla" value="#{mruRutinaController.selected.ruTalla}" title="#{bundle.CreateMruRutinaTitle_ruTalla}" required="true" requiredMessage="#{bundle.CreateMruRutinaRequiredMessage_ruTalla}"/>
+                                <h:panelGrid columns="4">
+                                    <p:outputLabel value="#{bundle.CreateMruRutinaLabel_ruPeso}" for="ruPeso" />
+                                    <p:inputText id="ruPeso" value="#{mruRutinaController.selected.ruPeso}" title="#{bundle.CreateMruRutinaTitle_ruPeso}" required="true" requiredMessage="#{bundle.CreateMruRutinaRequiredMessage_ruPeso}"/>
+                                    <p:outputLabel value="#{bundle.CreateMruRutinaLabel_ruTalla}" for="ruTalla" />
+                                    <p:inputText id="ruTalla" value="#{mruRutinaController.selected.ruTalla}" title="#{bundle.CreateMruRutinaTitle_ruTalla}" required="true" requiredMessage="#{bundle.CreateMruRutinaRequiredMessage_ruTalla}"/>
+                                </h:panelGrid>
                                 <br/>
                             </p:panel>
                             <br/>
@@ -62,7 +64,7 @@
 
                             </h:panelGrid>
                         </p:panel>
-                        <p:growl id="growl" showDetail="true" life="2000" />
+                        <p:growl id="growl" life="2000" />
                         <p:commandButton ajax="false" actionListener="#{mruRutinaController.create}" value="#{bundle.Save}" update="growl" />
                     </p:tab>
                     <p:tab title="Itinerario">
