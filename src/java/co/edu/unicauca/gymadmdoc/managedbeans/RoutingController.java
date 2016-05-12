@@ -16,22 +16,26 @@ import java.io.Serializable;
 @Named(value = "routingController")
 @SessionScoped
 public class RoutingController implements Serializable {
-   
-   private String ruta;
-   public String getRuta() {
-      return ruta;
-   }
-   
-   public RoutingController() {
-      this.ruta = "/moduloRutinas/nuevaRutina.xhtml";
-   }
-   
-   
-   public void goToUsuario(){
-      this.ruta = "/administrador/mrec/main_recaudos.xhtml";
-   }
-   
-   public void goToPrueba(){
-      this.ruta = "/administrador/mu/prueba.xhtml";
-   }
+
+    private String ruta;
+
+    public String getRuta() {
+        return ruta;
+    }
+
+    public RoutingController() {
+        this.ruta = "/moduloRutinas/nuevaRutina.xhtml";
+    }
+
+    public void goToUsuario() {
+        this.ruta = "/administrador/mrec/main_recaudos.xhtml";
+    }
+
+    public void goToPrueba() {
+        this.ruta = "/administrador/mu/prueba.xhtml";
+    }
+
+    public void goToRutinas() {
+        this.ruta = "/moduloRutinas/nuevaRutina.xhtml";
+    }
 }
