@@ -88,12 +88,21 @@ body {
 .ui-datatable th{
    font-size: 13px !important;
 }
-
 .ui-menu{
    width: 94% !important;
    min-width: 100px !important;
-   font-size: 100% !important;
 }
-.ui-panel-titlebar{
-   padding-bottom: 0px !important;
+
+.recaudoTable td{
+   text-align: center !important;
+   font-size: 12px !important;
+   color: #000000;
+}
+
+.ui-button-text{
+   font-size: 10px !important;
+}
+
+.fechaRed{
+   background-color: rgba(255,0,0,0.35) !important;
 }
