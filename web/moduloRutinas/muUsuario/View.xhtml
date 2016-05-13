@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MuUsuarioViewDlg" widgetVar="MuUsuarioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMuUsuarioTitle}">
+            <h:form id="MuUsuarioViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{muUsuarioController.selected != null}">
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuIdentificacion}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuIdentificacion}" title="#{bundle.ViewMuUsuarioTitle_usuIdentificacion}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_facId}"/>
+                        <h:outputText value="#{muUsuarioController.selected.facId}" title="#{bundle.ViewMuUsuarioTitle_facId}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_ocuId}"/>
+                        <h:outputText value="#{muUsuarioController.selected.ocuId}" title="#{bundle.ViewMuUsuarioTitle_ocuId}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_depId}"/>
+                        <h:outputText value="#{muUsuarioController.selected.depId}" title="#{bundle.ViewMuUsuarioTitle_depId}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuCodigo}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuCodigo}" title="#{bundle.ViewMuUsuarioTitle_usuCodigo}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuNombres}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuNombres}" title="#{bundle.ViewMuUsuarioTitle_usuNombres}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuApellido1}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuApellido1}" title="#{bundle.ViewMuUsuarioTitle_usuApellido1}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuApellido2}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuApellido2}" title="#{bundle.ViewMuUsuarioTitle_usuApellido2}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuFechaNacimiento}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuFechaNacimiento}" title="#{bundle.ViewMuUsuarioTitle_usuFechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuGenero}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuGenero}" title="#{bundle.ViewMuUsuarioTitle_usuGenero}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuTelefono}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuTelefono}" title="#{bundle.ViewMuUsuarioTitle_usuTelefono}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuCelular}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuCelular}" title="#{bundle.ViewMuUsuarioTitle_usuCelular}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuEmail}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuEmail}" title="#{bundle.ViewMuUsuarioTitle_usuEmail}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuFoto}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuFoto}" title="#{bundle.ViewMuUsuarioTitle_usuFoto}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuContrasena}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuContrasena}" title="#{bundle.ViewMuUsuarioTitle_usuContrasena}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuNombreUsuario}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuNombreUsuario}" title="#{bundle.ViewMuUsuarioTitle_usuNombreUsuario}"/>
+                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuEstado}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuEstado}" title="#{bundle.ViewMuUsuarioTitle_usuEstado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MuUsuarioViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
