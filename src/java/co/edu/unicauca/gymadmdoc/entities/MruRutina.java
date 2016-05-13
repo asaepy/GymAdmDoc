@@ -49,12 +49,12 @@ public class MruRutina implements Serializable {
     @Basic(optional = false)
     @Column(name = "RU_ID")
     private Integer ruId;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "USU_IDENTIFICACION")
     private Long usuIdentificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "RU_FECHAINI")
@@ -105,6 +105,10 @@ public class MruRutina implements Serializable {
 
     public Long getUsuIdentificacion() {
         return usuIdentificacion;
+    }
+
+    public float getRuImc() {
+        return (ruPeso) / (float) (Math.pow(ruTalla, 2) + 0.0);
     }
 
     public void setUsuIdentificacion(Long usuIdentificacion) {
@@ -184,5 +188,5 @@ public class MruRutina implements Serializable {
     public String toString() {
         return "co.edu.unicauca.gymadmdoc.entities.MruRutina[ ruId=" + ruId + " ]";
     }
-    
+
 }

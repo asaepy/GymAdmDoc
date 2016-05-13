@@ -24,7 +24,7 @@ public class RoutingController implements Serializable {
     }
 
     public RoutingController() {
-        this.ruta = "/moduloRutinas/nuevaRutina.xhtml";
+        this.ruta = "/administrador/mu/prueba.xhtml";
     }
 
     public void goToUsuario() {
@@ -35,11 +35,14 @@ public class RoutingController implements Serializable {
         this.ruta = "/administrador/mu/prueba.xhtml";
     }
 
-    public void goToRutinas() {
+    public void goToNuevaRutina() {
         this.ruta = "/moduloRutinas/nuevaRutina.xhtml";
     }
     
-    public void goToRutinas_Usuarios() {
+    public void goToUsuarios_Rutinas() {
         this.ruta = "/moduloRutinas/muUsuario/List.xhtml";
+    }
+    public void goToVerRutinasDeUsuario() {
+        this.ruta = "/moduloRutinas/ListarRutinas.xhtml";
     }
 }

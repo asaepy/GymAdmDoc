@@ -4,44 +4,44 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-   <h:head>
-      <link href="../resources/css/styles-menu.css" rel="stylesheet" type="text/css"/>
-   </h:head>
-   <h:body>
-      <div id="tituloMenu">
-         <span><b>Menú de Usuario</b></span>
-      </div>
+    <h:head>
+        <link href="../resources/css/styles-menu.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body>
+        <div id="tituloMenu">
+            <span><b>Menú de Usuario</b></span>
+        </div>
 
-      <div id="contenidoMenu">
-         <h:form id="formMenu">
-            <p:tieredMenu>
-               <p:submenu label="Usuarios">
-                  <p:menuitem value="Sub-menu"/>
-               </p:submenu>
-               <p:submenu label="Asistencia">
-                  <p:menuitem value="Sub-menu"/>
-               </p:submenu>
-               <p:submenu label="Recaudos">
-                  <p:menuitem value="Reportes mensuales" ajax="false"
-                              action="#{routingController.goToUsuario()}"/>
-                  <p:menuitem value="Registrar recaudo" ajax="false"
-                              action="#{routingController.goToPrueba()}"/>
-                  <p:menuitem value="Estadisticas"/>
-               </p:submenu>
-               <p:submenu label="Valoraciones">
-                  <p:menuitem value="Sub-menu"/>
-               </p:submenu>
-               <p:submenu label="Rutinas">
-                  <p:menuitem value="Nueva Rutina" ajax="false"
-                              action="#{routingController.goToRutinas}"/>
-                  <p:menuitem value="Ver Rutinas" ajax="false"
-                              action="#{routingController.goToRutinas_Usuarios}"/>
-               </p:submenu>
-               <p:separator/>
-               <p:menuitem value="Configuracion"/>
-            </p:tieredMenu>
-         </h:form>
-      </div>
+        <div id="contenidoMenu">
+            <h:form id="formMenu">
+                <p:tieredMenu>
+                    <p:submenu label="Usuarios">
+                        <p:menuitem value="Sub-menu"/>
+                    </p:submenu>
+                    <p:submenu label="Asistencia">
+                        <p:menuitem value="Sub-menu"/>
+                    </p:submenu>
+                    <p:submenu label="Recaudos">
+                        <p:menuitem value="Reportes mensuales" ajax="false"
+                                    action="#{routingController.goToUsuario()}"/>
+                        <p:menuitem value="Registrar recaudo" ajax="false"
+                                    action="#{routingController.goToPrueba()}"/>
+                        <p:menuitem value="Estadisticas"/>
+                    </p:submenu>
+                    <p:submenu label="Valoraciones">
+                        <p:menuitem value="Sub-menu"/>
+                    </p:submenu>
+                    <p:submenu label="Rutinas">
+                        <p:menuitem value="Listado" ajax="false"
+                                    action="#{routingController.goToUsuarios_Rutinas}"/>
+                        <p:menuitem value="Nueva Rutina" ajax="false"
+                                    action="#{routingController.goToNuevaRutina}"/>
+                    </p:submenu>
+                    <p:separator/>
+                    <p:menuitem value="Configuracion"/>
+                </p:tieredMenu>
+            </h:form>
+        </div>
 
-   </h:body>
+    </h:body>
 </html>

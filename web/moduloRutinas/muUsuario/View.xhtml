@@ -14,12 +14,12 @@
                     <p:panelGrid columns="2" rendered="#{muUsuarioController.selected != null}">
                         <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuIdentificacion}"/>
                         <h:outputText value="#{muUsuarioController.selected.usuIdentificacion}" title="#{bundle.ViewMuUsuarioTitle_usuIdentificacion}"/>
-                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_facId}"/>
+<!--                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_facId}"/>
                         <h:outputText value="#{muUsuarioController.selected.facId}" title="#{bundle.ViewMuUsuarioTitle_facId}"/>
                         <h:outputText value="#{bundle.ViewMuUsuarioLabel_ocuId}"/>
                         <h:outputText value="#{muUsuarioController.selected.ocuId}" title="#{bundle.ViewMuUsuarioTitle_ocuId}"/>
                         <h:outputText value="#{bundle.ViewMuUsuarioLabel_depId}"/>
-                        <h:outputText value="#{muUsuarioController.selected.depId}" title="#{bundle.ViewMuUsuarioTitle_depId}"/>
+                        <h:outputText value="#{muUsuarioController.selected.depId}" title="#{bundle.ViewMuUsuarioTitle_depId}"/>-->
                         <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuCodigo}"/>
                         <h:outputText value="#{muUsuarioController.selected.usuCodigo}" title="#{bundle.ViewMuUsuarioTitle_usuCodigo}"/>
                         <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuNombres}"/>
@@ -42,14 +42,14 @@
                         <h:outputText value="#{muUsuarioController.selected.usuEmail}" title="#{bundle.ViewMuUsuarioTitle_usuEmail}"/>
                         <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuFoto}"/>
                         <h:outputText value="#{muUsuarioController.selected.usuFoto}" title="#{bundle.ViewMuUsuarioTitle_usuFoto}"/>
-                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuContrasena}"/>
-                        <h:outputText value="#{muUsuarioController.selected.usuContrasena}" title="#{bundle.ViewMuUsuarioTitle_usuContrasena}"/>
+<!--                        <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuContrasena}"/>
+                        <h:outputText value="#{muUsuarioController.selected.usuContrasena}" title="#{bundle.ViewMuUsuarioTitle_usuContrasena}"/>-->
                         <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuNombreUsuario}"/>
                         <h:outputText value="#{muUsuarioController.selected.usuNombreUsuario}" title="#{bundle.ViewMuUsuarioTitle_usuNombreUsuario}"/>
                         <h:outputText value="#{bundle.ViewMuUsuarioLabel_usuEstado}"/>
                         <h:outputText value="#{muUsuarioController.selected.usuEstado}" title="#{bundle.ViewMuUsuarioTitle_usuEstado}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="MuUsuarioViewDialog.hide()"/>
+                    <p:commandButton value="#{bundle.Accept}" onclick="MuUsuarioViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

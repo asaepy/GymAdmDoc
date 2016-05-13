@@ -13,79 +13,82 @@
     <h:body>
         <h:form id="MuUsuarioListForm">
             <p:growl id="growl" life="2000" />
-            <!--<p:panel header="#{bundle.ListMuUsuarioTitle}">-->
-                <p:dataTable id="datalist" value="#{muUsuarioController.items}" var="item"
-                             selectionMode="single" selection="#{muUsuarioController.selected}"
-                             paginator="true"
-                             rowKey="#{item.usuIdentificacion}"
-                             rows="10"
-                             rowsPerPageTemplate="10,20,30,40,50"
-                             >
+        <!--<p:panel header="#{bundle.ListMuUsuarioTitle}">-->
+            <h3>Usuarios registrados:</h3>
+            <p:dataTable id="datalist" value="#{muUsuarioController.items}" var="item"
+                         selectionMode="single" selection="#{muUsuarioController.selected}"
+                         paginator="true"
+                         rowKey="#{item.usuIdentificacion}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         >
 
-<!--                    <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                    <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>-->
+                <!--                                    <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                                                    <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>-->
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListMuUsuarioTitle_usuIdentificacion}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.usuIdentificacion}"/>
-                    </p:column>
+                <p:ajax event="rowSelect"   update="viewButton"/>
+                <p:ajax event="rowUnselect" update="viewButton"/>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuIdentificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuIdentificacion}"/>
+                </p:column>
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListMuUsuarioTitle_usuNombres}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.usuNombres}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListMuUsuarioTitle_usuApellido1}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.usuApellido1}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListMuUsuarioTitle_usuApellido2}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.usuApellido2}"/>
-                    </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuNombres}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuNombres}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuApellido1}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuApellido1}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuApellido2}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuApellido2}"/>
+                </p:column>
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListMuUsuarioTitle_usuFoto}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.usuFoto}"/>
-                    </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuFoto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuFoto}"/>
+                </p:column>
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListMuUsuarioTitle_usuEstado}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.usuEstado}"/>
-                    </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuEstado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuEstado}"/>
+                </p:column>
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Acciones"/>
-                        </f:facet>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Acciones"/>
+                    </f:facet>
+                    <p:commandButton ajax="false" id="verRutinas" value="#{bundle.btnVerRutinasLabel}" title="#{bundle.btnVerRutinasTitle}" actionListener="#{routingController.goToVerRutinasDeUsuario()}"/>
+                    <p:commandButton ajax="false" id="nuevaRutina" value="#{bundle.btnNuevaRutinaLabel}" title="#{bundle.btnNuevaRutinaTitle}" actionListener="#{routingController.goToNuevaRutina()}"/>
 
-                        <p:commandButton ajax="false" id="verRutinas" value="#{bundle.btnVerRutinasLabel}" title="#{bundle.btnVerRutinasTitle}" actionListener="#{routingController.goToRutinas()}"/>
-
-                    </p:column>
-<!--                    <f:facet name="footer">
-                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{muUsuarioController.prepareCreate}" update=":MuUsuarioCreateForm" oncomplete="PF('MuUsuarioCreateDialog').show()"/>
-                        <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":MuUsuarioViewForm" oncomplete="PF('MuUsuarioViewDialog').show()" disabled="#{empty muUsuarioController.selected}"/>
-                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":MuUsuarioEditForm" oncomplete="PF('MuUsuarioEditDialog').show()" disabled="#{empty muUsuarioController.selected}"/>
-                        <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{muUsuarioController.destroy}" update=":growl,datalist" disabled="#{empty muUsuarioController.selected}"/>
-                    </f:facet>-->
-                </p:dataTable>
+                </p:column>
+                <f:facet name="footer">
+<!--                                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{muUsuarioController.prepareCreate}" update=":MuUsuarioCreateForm" oncomplete="PF('MuUsuarioCreateDialog').show()"/>-->
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.ViewUsuario}" update=":MuUsuarioViewForm" oncomplete="PF('MuUsuarioViewDialog').show()" disabled="#{empty muUsuarioController.selected}"/>
+<!--                                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":MuUsuarioEditForm" oncomplete="PF('MuUsuarioEditDialog').show()" disabled="#{empty muUsuarioController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{muUsuarioController.destroy}" update=":growl,datalist" disabled="#{empty muUsuarioController.selected}"/>-->
+                </f:facet>
+            </p:dataTable>
             <!--</p:panel>-->
         </h:form>
 
-<!--        <ui:include src="Create.xhtml"/>
-        <ui:include src="Edit.xhtml"/>
-        <ui:include src="View.xhtml"/>-->
+        <!--        <ui:include src="Create.xhtml"/>
+                <ui:include src="Edit.xhtml"/>-->
+        <ui:include src="View.xhtml"/>
     </h:body>
 
 
