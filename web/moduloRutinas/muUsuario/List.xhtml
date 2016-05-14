@@ -15,10 +15,10 @@
             <p:growl id="growl" life="2000" />
         <!--<p:panel header="#{bundle.ListMuUsuarioTitle}">-->
             <h3>Usuarios registrados:</h3>
-            <p:dataTable id="datalist" value="#{muUsuarioController.items}" var="item"
+            <p:dataTable id="datalist" value="#{muUsuarioController.items}" var="usuario"
                          selectionMode="single" selection="#{muUsuarioController.selected}"
                          paginator="true"
-                         rowKey="#{item.usuIdentificacion}"
+                         rowKey="#{usuario.usuIdentificacion}"
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          >
@@ -32,47 +32,49 @@
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListMuUsuarioTitle_usuIdentificacion}"/>
                     </f:facet>
-                    <h:outputText value="#{item.usuIdentificacion}"/>
+                    <h:outputText value="#{usuario.usuIdentificacion}"/>
                 </p:column>
 
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListMuUsuarioTitle_usuNombres}"/>
                     </f:facet>
-                    <h:outputText value="#{item.usuNombres}"/>
+                    <h:outputText value="#{usuario.usuNombres}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListMuUsuarioTitle_usuApellido1}"/>
                     </f:facet>
-                    <h:outputText value="#{item.usuApellido1}"/>
+                    <h:outputText value="#{usuario.usuApellido1}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListMuUsuarioTitle_usuApellido2}"/>
                     </f:facet>
-                    <h:outputText value="#{item.usuApellido2}"/>
+                    <h:outputText value="#{usuario.usuApellido2}"/>
                 </p:column>
 
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListMuUsuarioTitle_usuFoto}"/>
                     </f:facet>
-                    <h:outputText value="#{item.usuFoto}"/>
+                    <h:outputText value="#{usuario.usuFoto}"/>
                 </p:column>
 
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListMuUsuarioTitle_usuEstado}"/>
                     </f:facet>
-                    <h:outputText value="#{item.usuEstado}"/>
+                    <h:outputText value="#{usuario.usuEstado}"/>
                 </p:column>
 
-                <p:column>
+                <p:column width="300">
                     <f:facet name="header">
                         <h:outputText value="Acciones"/>
                     </f:facet>
-                    <p:commandButton ajax="false" id="verRutinas" value="#{bundle.btnVerRutinasLabel}" title="#{bundle.btnVerRutinasTitle}" actionListener="#{routingController.goToVerRutinasDeUsuario()}"/>
+                    <p:commandButton ajax="false" id="verRutinas" value="#{bundle.btnVerRutinasLabel}" title="#{bundle.btnVerRutinasTitle}" actionListener="#{mruRutinaController.consultarRutinaPorUsuario()}">
+                        <f:setPropertyActionListener value="#{usuario}" target="#{mruRutinaController.selectedUsuario}" />
+                    </p:commandButton>
                     <p:commandButton ajax="false" id="nuevaRutina" value="#{bundle.btnNuevaRutinaLabel}" title="#{bundle.btnNuevaRutinaTitle}" actionListener="#{routingController.goToNuevaRutina()}"/>
 
                 </p:column>
@@ -85,6 +87,53 @@
             </p:dataTable>
             <!--</p:panel>-->
         </h:form>
+        
+        <br/>
+        <br/>
+        <br/>
+        <h:panelGroup>
+            <p:dataTable value="#{mruRutinaController.rutinas}" var="rutina">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMruRutinaTitle_ruId}"/>
+                    </f:facet>
+                    <h:outputText value="#{rutina.ruId}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMruRutinaTitle_ruFechafin}"/>
+                    </f:facet>
+                    <h:outputText value="#{rutina.ruFechafin}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMruRutinaTitle_ruPeso}"/>
+                    </f:facet>
+                    <h:outputText value="#{rutina.ruPeso}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMruRutinaTitle_ruTalla}"/>
+                    </f:facet>
+                    <h:outputText value="#{rutina.ruTalla}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMruRutinaTitle_usuImc}"/>
+                    </f:facet>
+                    <h:outputText value="#{rutina.ruImc}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMruRutinaTitle_ruObservaciones}"/>
+                    </f:facet>
+                    <h:outputText value="#{rutina.ruObservaciones}"/>
+                </p:column>
+            </p:dataTable>
+
+        </h:panelGroup>
 
         <!--        <ui:include src="Create.xhtml"/>
                 <ui:include src="Edit.xhtml"/>-->

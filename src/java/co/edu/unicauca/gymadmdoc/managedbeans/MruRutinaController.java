@@ -1,9 +1,11 @@
 package co.edu.unicauca.gymadmdoc.managedbeans;
 
 import co.edu.unicauca.gymadmdoc.entities.MruRutina;
+import co.edu.unicauca.gymadmdoc.entities.MuUsuario;
 import co.edu.unicauca.gymadmdoc.util.JsfUtil;
 import co.edu.unicauca.gymadmdoc.util.JsfUtil.PersistAction;
 import co.edu.unicauca.gymadmdoc.sessionBeans.MruRutinaFacade;
+import co.edu.unicauca.gymadmdoc.sessionBeans.RutinasDeUsuarioBean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +20,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.SelectableDataModel;
 
 @Named("mruRutinaController")
 @SessionScoped
@@ -26,20 +31,48 @@ public class MruRutinaController implements Serializable {
     @EJB
     private MruRutinaFacade ejbFacade;
     private List<MruRutina> items = null;
+    private List<MruRutina> rutinas = null;
     private MruRutina selected;
+    
+    @EJB
+    RutinasDeUsuarioBean miSesionBean;
+    
+    private MuUsuario selectedUsuario;
 
     public MruRutinaController() {
         this.prepareCreate();
     }
 
+    public List<MruRutina> getRutinas() {
+        return rutinas;
+    }
+
+    public void setRutinas(List<MruRutina> rutinas) {
+        this.rutinas = rutinas;
+    }
+
+    
     public MruRutina getSelected() {
         return selected;
     }
 
+    public MuUsuario getSelectedUsuario() {
+        return selectedUsuario;
+    }
+
+    public void setSelectedUsuario(MuUsuario usuario) {
+        this.selectedUsuario = usuario;
+    }
+
+    
     public void setSelected(MruRutina selected) {
         this.selected = selected;
     }
 
+    public void consultarRutinaPorUsuario(){
+        rutinas = miSesionBean.consultarRutinasPorUsuario(selectedUsuario.getUsuIdentificacion());
+    }
+    
     protected void setEmbeddableKeys() {
     }
 

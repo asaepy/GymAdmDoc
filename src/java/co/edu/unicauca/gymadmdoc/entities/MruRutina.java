@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "MruRutina.findAll", query = "SELECT m FROM MruRutina m"),
     @NamedQuery(name = "MruRutina.findByRuId", query = "SELECT m FROM MruRutina m WHERE m.ruId = :ruId"),
+    @NamedQuery(name = "MruRutina.findByUsuId", query = "SELECT m FROM MruRutina m WHERE m.usuIdentificacion = :usuIdentificacion"),
     @NamedQuery(name = "MruRutina.findByRuFechaini", query = "SELECT m FROM MruRutina m WHERE m.ruFechaini = :ruFechaini"),
     @NamedQuery(name = "MruRutina.findByRuFechafin", query = "SELECT m FROM MruRutina m WHERE m.ruFechafin = :ruFechafin"),
     @NamedQuery(name = "MruRutina.findByRuPeso", query = "SELECT m FROM MruRutina m WHERE m.ruPeso = :ruPeso"),
