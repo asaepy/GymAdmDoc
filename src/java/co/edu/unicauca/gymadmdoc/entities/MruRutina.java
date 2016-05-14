@@ -33,12 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
    @NamedQuery(name = "MruRutina.findAll", query = "SELECT m FROM MruRutina m"),
    @NamedQuery(name = "MruRutina.findByRuId", query = "SELECT m FROM MruRutina m WHERE m.ruId = :ruId"),
    @NamedQuery(name = "MruRutina.findByUsuIdentificacion", query = "SELECT m FROM MruRutina m WHERE m.usuIdentificacion = :usuIdentificacion"),
-   @NamedQuery(name = "MruRutina.findByRuUsuIdentificacion", query = "SELECT m FROM MruRutina m WHERE m.ruUsuIdentificacion = :ruUsuIdentificacion"),
    @NamedQuery(name = "MruRutina.findByRuFechaini", query = "SELECT m FROM MruRutina m WHERE m.ruFechaini = :ruFechaini"),
    @NamedQuery(name = "MruRutina.findByRuFechafin", query = "SELECT m FROM MruRutina m WHERE m.ruFechafin = :ruFechafin"),
    @NamedQuery(name = "MruRutina.findByRuPeso", query = "SELECT m FROM MruRutina m WHERE m.ruPeso = :ruPeso"),
    @NamedQuery(name = "MruRutina.findByRuTalla", query = "SELECT m FROM MruRutina m WHERE m.ruTalla = :ruTalla"),
-   @NamedQuery(name = "MruRutina.findByRuImc", query = "SELECT m FROM MruRutina m WHERE m.ruImc = :ruImc"),
    @NamedQuery(name = "MruRutina.findByRuObservaciones", query = "SELECT m FROM MruRutina m WHERE m.ruObservaciones = :ruObservaciones")})
 public class MruRutina implements Serializable {
 
@@ -52,10 +50,6 @@ public class MruRutina implements Serializable {
    @NotNull
    @Column(name = "USU_IDENTIFICACION")
    private long usuIdentificacion;
-   @Basic(optional = false)
-   @NotNull
-   @Column(name = "RU_USU_IDENTIFICACION")
-   private long ruUsuIdentificacion;
    @Basic(optional = false)
    @NotNull
    @Column(name = "RU_FECHAINI")
@@ -74,10 +68,6 @@ public class MruRutina implements Serializable {
    @NotNull
    @Column(name = "RU_TALLA")
    private float ruTalla;
-   @Basic(optional = false)
-   @NotNull
-   @Column(name = "RU_IMC")
-   private float ruImc;
    @Size(max = 1000)
    @Column(name = "RU_OBSERVACIONES")
    private String ruObservaciones;
@@ -89,15 +79,13 @@ public class MruRutina implements Serializable {
       this.ruId = ruId;
    }
 
-   public MruRutina(Integer ruId, long usuIdentificacion, long ruUsuIdentificacion, Date ruFechaini, Date ruFechafin, float ruPeso, float ruTalla, float ruImc) {
+   public MruRutina(Integer ruId, long usuIdentificacion, Date ruFechaini, Date ruFechafin, float ruPeso, float ruTalla) {
       this.ruId = ruId;
       this.usuIdentificacion = usuIdentificacion;
-      this.ruUsuIdentificacion = ruUsuIdentificacion;
       this.ruFechaini = ruFechaini;
       this.ruFechafin = ruFechafin;
       this.ruPeso = ruPeso;
       this.ruTalla = ruTalla;
-      this.ruImc = ruImc;
    }
 
    public Integer getRuId() {
@@ -114,14 +102,6 @@ public class MruRutina implements Serializable {
 
    public void setUsuIdentificacion(long usuIdentificacion) {
       this.usuIdentificacion = usuIdentificacion;
-   }
-
-   public long getRuUsuIdentificacion() {
-      return ruUsuIdentificacion;
-   }
-
-   public void setRuUsuIdentificacion(long ruUsuIdentificacion) {
-      this.ruUsuIdentificacion = ruUsuIdentificacion;
    }
 
    public Date getRuFechaini() {
@@ -154,14 +134,6 @@ public class MruRutina implements Serializable {
 
    public void setRuTalla(float ruTalla) {
       this.ruTalla = ruTalla;
-   }
-
-   public float getRuImc() {
-      return ruImc;
-   }
-
-   public void setRuImc(float ruImc) {
-      this.ruImc = ruImc;
    }
 
    public String getRuObservaciones() {

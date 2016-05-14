@@ -51,8 +51,8 @@ and open the template in the editor.
             </p:column>
 
             <p:column headerText="Documento" 
-                      filterBy="#{recaudo.usuario_id}" filterMatchMode="contains">
-               <h:outputText value="#{recaudo.usuario_id}" />
+                      filterBy="#{recaudo.usuario.usuIdentificacion}" filterMatchMode="contains">
+               <h:outputText value="#{recaudo.usuario.usuIdentificacion}" />
             </p:column>
 
             <p:column headerText="Referencia"

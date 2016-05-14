@@ -37,37 +37,37 @@ public class UploadImage implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Basic(optional = false)
-   @Column(name = "image_id")
-   private Integer imageId;
+   @Column(name = "IMAGE_ID")
+   private Long imageId;
    @Basic(optional = false)
    @NotNull
    @Size(min = 1, max = 45)
-   @Column(name = "image_name")
+   @Column(name = "IMAGE_NAME")
    private String imageName;
    @Basic(optional = false)
    @NotNull
    @Lob
-   @Column(name = "image")
+   @Column(name = "IMAGE")
    private byte[] image;
 
    public UploadImage() {
    }
 
-   public UploadImage(Integer imageId) {
+   public UploadImage(Long imageId) {
       this.imageId = imageId;
    }
 
-   public UploadImage(Integer imageId, String imageName, byte[] image) {
+   public UploadImage(Long imageId, String imageName, byte[] image) {
       this.imageId = imageId;
       this.imageName = imageName;
       this.image = image;
    }
 
-   public Integer getImageId() {
+   public Long getImageId() {
       return imageId;
    }
 
-   public void setImageId(Integer imageId) {
+   public void setImageId(Long imageId) {
       this.imageId = imageId;
    }
 

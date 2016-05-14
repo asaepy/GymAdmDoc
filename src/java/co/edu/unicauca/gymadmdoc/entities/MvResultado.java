@@ -6,9 +6,12 @@
 package co.edu.unicauca.gymadmdoc.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
@@ -29,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
    @NamedQuery(name = "MvResultado.findAll", query = "SELECT m FROM MvResultado m"),
    @NamedQuery(name = "MvResultado.findByResId", query = "SELECT m FROM MvResultado m WHERE m.resId = :resId"),
    @NamedQuery(name = "MvResultado.findByValId", query = "SELECT m FROM MvResultado m WHERE m.valId = :valId"),
+   @NamedQuery(name = "MvResultado.findByUsuIdentificacion", query = "SELECT m FROM MvResultado m WHERE m.usuIdentificacion = :usuIdentificacion"),
    @NamedQuery(name = "MvResultado.findByResCaloriasrequeridadieta", query = "SELECT m FROM MvResultado m WHERE m.resCaloriasrequeridadieta = :resCaloriasrequeridadieta"),
    @NamedQuery(name = "MvResultado.findByResEctomorfia", query = "SELECT m FROM MvResultado m WHERE m.resEctomorfia = :resEctomorfia"),
    @NamedQuery(name = "MvResultado.findByResEjex", query = "SELECT m FROM MvResultado m WHERE m.resEjex = :resEjex"),
@@ -79,91 +83,92 @@ public class MvResultado implements Serializable {
 
    private static final long serialVersionUID = 1L;
    @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Basic(optional = false)
-   @NotNull
    @Column(name = "RES_ID")
    private Integer resId;
    @Basic(optional = false)
    @NotNull
    @Column(name = "VAL_ID")
    private int valId;
+   @Column(name = "USU_IDENTIFICACION")
+   private BigInteger usuIdentificacion;
+   // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
    @Column(name = "RES_CALORIASREQUERIDADIETA")
-   private Long resCaloriasrequeridadieta;
+   private Double resCaloriasrequeridadieta;
    @Column(name = "RES_ECTOMORFIA")
-   private Long resEctomorfia;
+   private Double resEctomorfia;
    @Column(name = "RES_EJEX")
-   private Long resEjex;
+   private Double resEjex;
    @Column(name = "RES_EJEY")
-   private Long resEjey;
+   private Double resEjey;
    @Column(name = "RES_ENDOMORFIA")
-   private Long resEndomorfia;
+   private Double resEndomorfia;
    @Column(name = "RES_GRAMOPROTEINADIA")
-   private Long resGramoproteinadia;
+   private Double resGramoproteinadia;
    @Column(name = "RES_MASACORPORALMAGRA")
-   private Long resMasacorporalmagra;
+   private Double resMasacorporalmagra;
    @Column(name = "RES_MASACORPORALMAGRAIDEAL")
-   private Long resMasacorporalmagraideal;
+   private Double resMasacorporalmagraideal;
    @Column(name = "RES_MESOMORFIA")
-   private Long resMesomorfia;
-   @Size(max = 2)
+   private Double resMesomorfia;
    @Column(name = "RES_PESOANTERIOR")
-   private String resPesoanterior;
+   private Double resPesoanterior;
    @Column(name = "RES_PESOGRASO")
-   private Long resPesograso;
+   private Double resPesograso;
    @Column(name = "RES_PESOGRASOIDEAL")
-   private Long resPesograsoideal;
+   private Double resPesograsoideal;
    @Column(name = "RES_PESOIDEAL")
-   private Long resPesoideal;
+   private Double resPesoideal;
    @Column(name = "RES_PESOIDEALINFERIOR")
-   private Long resPesoidealinferior;
+   private Double resPesoidealinferior;
    @Column(name = "RES_PESOIDEALLIMITE")
-   private Long resPesoideallimite;
+   private Double resPesoideallimite;
    @Column(name = "RES_PESOMUSCULAR")
-   private Long resPesomuscular;
+   private Double resPesomuscular;
    @Size(max = 2)
    @Column(name = "RES_PESOMUSCULARANTERIOR")
    private String resPesomuscularanterior;
    @Column(name = "RES_PESOMUSCULARIDEAL")
-   private Long resPesomuscularideal;
+   private Double resPesomuscularideal;
    @Column(name = "RES_PESOOSEO")
-   private Long resPesooseo;
+   private Double resPesooseo;
    @Column(name = "RES_PESORESIDUAL")
-   private Long resPesoresidual;
+   private Double resPesoresidual;
    @Column(name = "RES_PESOTOTAL")
-   private Long resPesototal;
-   @Size(max = 2)
+   private Double resPesototal;
    @Column(name = "RES_PORCENTAJEGRASAANTERIOR")
-   private String resPorcentajegrasaanterior;
+   private Double resPorcentajegrasaanterior;
    @Column(name = "RES_PORCENTAJEGRASACORPORALTOTAL")
-   private Long resPorcentajegrasacorporaltotal;
+   private Double resPorcentajegrasacorporaltotal;
    @Column(name = "RES_PORCENTAJEGRASAIDEAL")
-   private Long resPorcentajegrasaideal;
+   private Double resPorcentajegrasaideal;
    @Column(name = "RES_PORCENTAJEOSEOIDEAL")
-   private Long resPorcentajeoseoideal;
+   private Double resPorcentajeoseoideal;
    @Column(name = "RES_PORCENTAJEPESOMUSCULARIDEAL")
-   private Long resPorcentajepesomuscularideal;
+   private Double resPorcentajepesomuscularideal;
    @Column(name = "RES_PORCENTAJEPESOOSEO")
-   private Long resPorcentajepesooseo;
+   private Double resPorcentajepesooseo;
    @Column(name = "RES_PORCENTAJEPESORESIDUAL")
-   private Long resPorcentajepesoresidual;
+   private Double resPorcentajepesoresidual;
    @Column(name = "RES_PORCENTAJEPESOMUSCULAR")
-   private Long resPorcentajepesomuscular;
+   private Double resPorcentajepesomuscular;
    @Column(name = "RES_QUEMACALORIASSEMANA")
-   private Long resQuemacaloriassemana;
+   private Double resQuemacaloriassemana;
    @Column(name = "RES_RANGOSFRECCARDQUEMAGRASAMAX")
-   private Long resRangosfreccardquemagrasamax;
+   private Double resRangosfreccardquemagrasamax;
    @Column(name = "RES_RELACIONCINTURACADERA")
-   private Long resRelacioncinturacadera;
+   private Double resRelacioncinturacadera;
    @Column(name = "RES_SEMANAPROGRAMA")
-   private Long resSemanaprograma;
+   private Double resSemanaprograma;
    @Column(name = "RES_SESIONESSEMANA")
-   private Long resSesionessemana;
+   private Double resSesionessemana;
    @Column(name = "RES_SUMATORIA6PLIEGUES")
-   private Long resSumatoria6pliegues;
+   private Double resSumatoria6pliegues;
    @Column(name = "RES_TMB1HORA")
-   private Long resTmb1hora;
+   private Double resTmb1hora;
    @Column(name = "RES_TMB24HORAS")
-   private Long resTmb24horas;
+   private Double resTmb24horas;
    @Size(max = 20)
    @Column(name = "RES_ESTADO")
    private String resEstado;
@@ -177,20 +182,20 @@ public class MvResultado implements Serializable {
    @Column(name = "RES_HIDRATACION")
    private String resHidratacion;
    @Column(name = "RES_VO2MAXEXTIMADO")
-   private Long resVo2maxextimado;
+   private Double resVo2maxextimado;
    @Size(max = 20)
    @Column(name = "RES_CAPACIDADFUNCIONAL")
    private String resCapacidadfuncional;
    @Column(name = "RES_RANGOSFRECCARDQUEMAGRASAMIN")
-   private Long resRangosfreccardquemagrasamin;
+   private Double resRangosfreccardquemagrasamin;
    @Lob
    @Size(max = 65535)
    @Column(name = "RES_RECOMENDACIONES")
    private String resRecomendaciones;
    @Column(name = "RES_QUEMACALORIASSESION")
-   private Long resQuemacaloriassesion;
+   private Double resQuemacaloriassesion;
    @Column(name = "RES_DEFICITAEROBICO")
-   private Long resDeficitaerobico;
+   private Double resDeficitaerobico;
 
    public MvResultado() {
    }
@@ -220,131 +225,139 @@ public class MvResultado implements Serializable {
       this.valId = valId;
    }
 
-   public Long getResCaloriasrequeridadieta() {
+   public BigInteger getUsuIdentificacion() {
+      return usuIdentificacion;
+   }
+
+   public void setUsuIdentificacion(BigInteger usuIdentificacion) {
+      this.usuIdentificacion = usuIdentificacion;
+   }
+
+   public Double getResCaloriasrequeridadieta() {
       return resCaloriasrequeridadieta;
    }
 
-   public void setResCaloriasrequeridadieta(Long resCaloriasrequeridadieta) {
+   public void setResCaloriasrequeridadieta(Double resCaloriasrequeridadieta) {
       this.resCaloriasrequeridadieta = resCaloriasrequeridadieta;
    }
 
-   public Long getResEctomorfia() {
+   public Double getResEctomorfia() {
       return resEctomorfia;
    }
 
-   public void setResEctomorfia(Long resEctomorfia) {
+   public void setResEctomorfia(Double resEctomorfia) {
       this.resEctomorfia = resEctomorfia;
    }
 
-   public Long getResEjex() {
+   public Double getResEjex() {
       return resEjex;
    }
 
-   public void setResEjex(Long resEjex) {
+   public void setResEjex(Double resEjex) {
       this.resEjex = resEjex;
    }
 
-   public Long getResEjey() {
+   public Double getResEjey() {
       return resEjey;
    }
 
-   public void setResEjey(Long resEjey) {
+   public void setResEjey(Double resEjey) {
       this.resEjey = resEjey;
    }
 
-   public Long getResEndomorfia() {
+   public Double getResEndomorfia() {
       return resEndomorfia;
    }
 
-   public void setResEndomorfia(Long resEndomorfia) {
+   public void setResEndomorfia(Double resEndomorfia) {
       this.resEndomorfia = resEndomorfia;
    }
 
-   public Long getResGramoproteinadia() {
+   public Double getResGramoproteinadia() {
       return resGramoproteinadia;
    }
 
-   public void setResGramoproteinadia(Long resGramoproteinadia) {
+   public void setResGramoproteinadia(Double resGramoproteinadia) {
       this.resGramoproteinadia = resGramoproteinadia;
    }
 
-   public Long getResMasacorporalmagra() {
+   public Double getResMasacorporalmagra() {
       return resMasacorporalmagra;
    }
 
-   public void setResMasacorporalmagra(Long resMasacorporalmagra) {
+   public void setResMasacorporalmagra(Double resMasacorporalmagra) {
       this.resMasacorporalmagra = resMasacorporalmagra;
    }
 
-   public Long getResMasacorporalmagraideal() {
+   public Double getResMasacorporalmagraideal() {
       return resMasacorporalmagraideal;
    }
 
-   public void setResMasacorporalmagraideal(Long resMasacorporalmagraideal) {
+   public void setResMasacorporalmagraideal(Double resMasacorporalmagraideal) {
       this.resMasacorporalmagraideal = resMasacorporalmagraideal;
    }
 
-   public Long getResMesomorfia() {
+   public Double getResMesomorfia() {
       return resMesomorfia;
    }
 
-   public void setResMesomorfia(Long resMesomorfia) {
+   public void setResMesomorfia(Double resMesomorfia) {
       this.resMesomorfia = resMesomorfia;
    }
 
-   public String getResPesoanterior() {
+   public Double getResPesoanterior() {
       return resPesoanterior;
    }
 
-   public void setResPesoanterior(String resPesoanterior) {
+   public void setResPesoanterior(Double resPesoanterior) {
       this.resPesoanterior = resPesoanterior;
    }
 
-   public Long getResPesograso() {
+   public Double getResPesograso() {
       return resPesograso;
    }
 
-   public void setResPesograso(Long resPesograso) {
+   public void setResPesograso(Double resPesograso) {
       this.resPesograso = resPesograso;
    }
 
-   public Long getResPesograsoideal() {
+   public Double getResPesograsoideal() {
       return resPesograsoideal;
    }
 
-   public void setResPesograsoideal(Long resPesograsoideal) {
+   public void setResPesograsoideal(Double resPesograsoideal) {
       this.resPesograsoideal = resPesograsoideal;
    }
 
-   public Long getResPesoideal() {
+   public Double getResPesoideal() {
       return resPesoideal;
    }
 
-   public void setResPesoideal(Long resPesoideal) {
+   public void setResPesoideal(Double resPesoideal) {
       this.resPesoideal = resPesoideal;
    }
 
-   public Long getResPesoidealinferior() {
+   public Double getResPesoidealinferior() {
       return resPesoidealinferior;
    }
 
-   public void setResPesoidealinferior(Long resPesoidealinferior) {
+   public void setResPesoidealinferior(Double resPesoidealinferior) {
       this.resPesoidealinferior = resPesoidealinferior;
    }
 
-   public Long getResPesoideallimite() {
+   public Double getResPesoideallimite() {
       return resPesoideallimite;
    }
 
-   public void setResPesoideallimite(Long resPesoideallimite) {
+   public void setResPesoideallimite(Double resPesoideallimite) {
       this.resPesoideallimite = resPesoideallimite;
    }
 
-   public Long getResPesomuscular() {
+   public Double getResPesomuscular() {
       return resPesomuscular;
    }
 
-   public void setResPesomuscular(Long resPesomuscular) {
+   public void setResPesomuscular(Double resPesomuscular) {
       this.resPesomuscular = resPesomuscular;
    }
 
@@ -356,163 +369,163 @@ public class MvResultado implements Serializable {
       this.resPesomuscularanterior = resPesomuscularanterior;
    }
 
-   public Long getResPesomuscularideal() {
+   public Double getResPesomuscularideal() {
       return resPesomuscularideal;
    }
 
-   public void setResPesomuscularideal(Long resPesomuscularideal) {
+   public void setResPesomuscularideal(Double resPesomuscularideal) {
       this.resPesomuscularideal = resPesomuscularideal;
    }
 
-   public Long getResPesooseo() {
+   public Double getResPesooseo() {
       return resPesooseo;
    }
 
-   public void setResPesooseo(Long resPesooseo) {
+   public void setResPesooseo(Double resPesooseo) {
       this.resPesooseo = resPesooseo;
    }
 
-   public Long getResPesoresidual() {
+   public Double getResPesoresidual() {
       return resPesoresidual;
    }
 
-   public void setResPesoresidual(Long resPesoresidual) {
+   public void setResPesoresidual(Double resPesoresidual) {
       this.resPesoresidual = resPesoresidual;
    }
 
-   public Long getResPesototal() {
+   public Double getResPesototal() {
       return resPesototal;
    }
 
-   public void setResPesototal(Long resPesototal) {
+   public void setResPesototal(Double resPesototal) {
       this.resPesototal = resPesototal;
    }
 
-   public String getResPorcentajegrasaanterior() {
+   public Double getResPorcentajegrasaanterior() {
       return resPorcentajegrasaanterior;
    }
 
-   public void setResPorcentajegrasaanterior(String resPorcentajegrasaanterior) {
+   public void setResPorcentajegrasaanterior(Double resPorcentajegrasaanterior) {
       this.resPorcentajegrasaanterior = resPorcentajegrasaanterior;
    }
 
-   public Long getResPorcentajegrasacorporaltotal() {
+   public Double getResPorcentajegrasacorporaltotal() {
       return resPorcentajegrasacorporaltotal;
    }
 
-   public void setResPorcentajegrasacorporaltotal(Long resPorcentajegrasacorporaltotal) {
+   public void setResPorcentajegrasacorporaltotal(Double resPorcentajegrasacorporaltotal) {
       this.resPorcentajegrasacorporaltotal = resPorcentajegrasacorporaltotal;
    }
 
-   public Long getResPorcentajegrasaideal() {
+   public Double getResPorcentajegrasaideal() {
       return resPorcentajegrasaideal;
    }
 
-   public void setResPorcentajegrasaideal(Long resPorcentajegrasaideal) {
+   public void setResPorcentajegrasaideal(Double resPorcentajegrasaideal) {
       this.resPorcentajegrasaideal = resPorcentajegrasaideal;
    }
 
-   public Long getResPorcentajeoseoideal() {
+   public Double getResPorcentajeoseoideal() {
       return resPorcentajeoseoideal;
    }
 
-   public void setResPorcentajeoseoideal(Long resPorcentajeoseoideal) {
+   public void setResPorcentajeoseoideal(Double resPorcentajeoseoideal) {
       this.resPorcentajeoseoideal = resPorcentajeoseoideal;
    }
 
-   public Long getResPorcentajepesomuscularideal() {
+   public Double getResPorcentajepesomuscularideal() {
       return resPorcentajepesomuscularideal;
    }
 
-   public void setResPorcentajepesomuscularideal(Long resPorcentajepesomuscularideal) {
+   public void setResPorcentajepesomuscularideal(Double resPorcentajepesomuscularideal) {
       this.resPorcentajepesomuscularideal = resPorcentajepesomuscularideal;
    }
 
-   public Long getResPorcentajepesooseo() {
+   public Double getResPorcentajepesooseo() {
       return resPorcentajepesooseo;
    }
 
-   public void setResPorcentajepesooseo(Long resPorcentajepesooseo) {
+   public void setResPorcentajepesooseo(Double resPorcentajepesooseo) {
       this.resPorcentajepesooseo = resPorcentajepesooseo;
    }
 
-   public Long getResPorcentajepesoresidual() {
+   public Double getResPorcentajepesoresidual() {
       return resPorcentajepesoresidual;
    }
 
-   public void setResPorcentajepesoresidual(Long resPorcentajepesoresidual) {
+   public void setResPorcentajepesoresidual(Double resPorcentajepesoresidual) {
       this.resPorcentajepesoresidual = resPorcentajepesoresidual;
    }
 
-   public Long getResPorcentajepesomuscular() {
+   public Double getResPorcentajepesomuscular() {
       return resPorcentajepesomuscular;
    }
 
-   public void setResPorcentajepesomuscular(Long resPorcentajepesomuscular) {
+   public void setResPorcentajepesomuscular(Double resPorcentajepesomuscular) {
       this.resPorcentajepesomuscular = resPorcentajepesomuscular;
    }
 
-   public Long getResQuemacaloriassemana() {
+   public Double getResQuemacaloriassemana() {
       return resQuemacaloriassemana;
    }
 
-   public void setResQuemacaloriassemana(Long resQuemacaloriassemana) {
+   public void setResQuemacaloriassemana(Double resQuemacaloriassemana) {
       this.resQuemacaloriassemana = resQuemacaloriassemana;
    }
 
-   public Long getResRangosfreccardquemagrasamax() {
+   public Double getResRangosfreccardquemagrasamax() {
       return resRangosfreccardquemagrasamax;
    }
 
-   public void setResRangosfreccardquemagrasamax(Long resRangosfreccardquemagrasamax) {
+   public void setResRangosfreccardquemagrasamax(Double resRangosfreccardquemagrasamax) {
       this.resRangosfreccardquemagrasamax = resRangosfreccardquemagrasamax;
    }
 
-   public Long getResRelacioncinturacadera() {
+   public Double getResRelacioncinturacadera() {
       return resRelacioncinturacadera;
    }
 
-   public void setResRelacioncinturacadera(Long resRelacioncinturacadera) {
+   public void setResRelacioncinturacadera(Double resRelacioncinturacadera) {
       this.resRelacioncinturacadera = resRelacioncinturacadera;
    }
 
-   public Long getResSemanaprograma() {
+   public Double getResSemanaprograma() {
       return resSemanaprograma;
    }
 
-   public void setResSemanaprograma(Long resSemanaprograma) {
+   public void setResSemanaprograma(Double resSemanaprograma) {
       this.resSemanaprograma = resSemanaprograma;
    }
 
-   public Long getResSesionessemana() {
+   public Double getResSesionessemana() {
       return resSesionessemana;
    }
 
-   public void setResSesionessemana(Long resSesionessemana) {
+   public void setResSesionessemana(Double resSesionessemana) {
       this.resSesionessemana = resSesionessemana;
    }
 
-   public Long getResSumatoria6pliegues() {
+   public Double getResSumatoria6pliegues() {
       return resSumatoria6pliegues;
    }
 
-   public void setResSumatoria6pliegues(Long resSumatoria6pliegues) {
+   public void setResSumatoria6pliegues(Double resSumatoria6pliegues) {
       this.resSumatoria6pliegues = resSumatoria6pliegues;
    }
 
-   public Long getResTmb1hora() {
+   public Double getResTmb1hora() {
       return resTmb1hora;
    }
 
-   public void setResTmb1hora(Long resTmb1hora) {
+   public void setResTmb1hora(Double resTmb1hora) {
       this.resTmb1hora = resTmb1hora;
    }
 
-   public Long getResTmb24horas() {
+   public Double getResTmb24horas() {
       return resTmb24horas;
    }
 
-   public void setResTmb24horas(Long resTmb24horas) {
+   public void setResTmb24horas(Double resTmb24horas) {
       this.resTmb24horas = resTmb24horas;
    }
 
@@ -548,11 +561,11 @@ public class MvResultado implements Serializable {
       this.resHidratacion = resHidratacion;
    }
 
-   public Long getResVo2maxextimado() {
+   public Double getResVo2maxextimado() {
       return resVo2maxextimado;
    }
 
-   public void setResVo2maxextimado(Long resVo2maxextimado) {
+   public void setResVo2maxextimado(Double resVo2maxextimado) {
       this.resVo2maxextimado = resVo2maxextimado;
    }
 
@@ -564,11 +577,11 @@ public class MvResultado implements Serializable {
       this.resCapacidadfuncional = resCapacidadfuncional;
    }
 
-   public Long getResRangosfreccardquemagrasamin() {
+   public Double getResRangosfreccardquemagrasamin() {
       return resRangosfreccardquemagrasamin;
    }
 
-   public void setResRangosfreccardquemagrasamin(Long resRangosfreccardquemagrasamin) {
+   public void setResRangosfreccardquemagrasamin(Double resRangosfreccardquemagrasamin) {
       this.resRangosfreccardquemagrasamin = resRangosfreccardquemagrasamin;
    }
 
@@ -580,19 +593,19 @@ public class MvResultado implements Serializable {
       this.resRecomendaciones = resRecomendaciones;
    }
 
-   public Long getResQuemacaloriassesion() {
+   public Double getResQuemacaloriassesion() {
       return resQuemacaloriassesion;
    }
 
-   public void setResQuemacaloriassesion(Long resQuemacaloriassesion) {
+   public void setResQuemacaloriassesion(Double resQuemacaloriassesion) {
       this.resQuemacaloriassesion = resQuemacaloriassesion;
    }
 
-   public Long getResDeficitaerobico() {
+   public Double getResDeficitaerobico() {
       return resDeficitaerobico;
    }
 
-   public void setResDeficitaerobico(Long resDeficitaerobico) {
+   public void setResDeficitaerobico(Double resDeficitaerobico) {
       this.resDeficitaerobico = resDeficitaerobico;
    }
 

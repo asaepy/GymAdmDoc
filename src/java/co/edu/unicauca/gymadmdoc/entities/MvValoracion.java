@@ -6,13 +6,18 @@
 package co.edu.unicauca.gymadmdoc.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,14 +31,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
    @NamedQuery(name = "MvValoracion.findAll", query = "SELECT m FROM MvValoracion m"),
    @NamedQuery(name = "MvValoracion.findByValId", query = "SELECT m FROM MvValoracion m WHERE m.valId = :valId"),
-   @NamedQuery(name = "MvValoracion.findByUsuIdentificacion", query = "SELECT m FROM MvValoracion m WHERE m.usuIdentificacion = :usuIdentificacion"),
    @NamedQuery(name = "MvValoracion.findByResId", query = "SELECT m FROM MvValoracion m WHERE m.resId = :resId"),
    @NamedQuery(name = "MvValoracion.findByValAbdomeninferior", query = "SELECT m FROM MvValoracion m WHERE m.valAbdomeninferior = :valAbdomeninferior"),
    @NamedQuery(name = "MvValoracion.findByValAbdominal", query = "SELECT m FROM MvValoracion m WHERE m.valAbdominal = :valAbdominal"),
    @NamedQuery(name = "MvValoracion.findByValBiepicondilarfemoral", query = "SELECT m FROM MvValoracion m WHERE m.valBiepicondilarfemoral = :valBiepicondilarfemoral"),
    @NamedQuery(name = "MvValoracion.findByValBiepicondilarhumeral", query = "SELECT m FROM MvValoracion m WHERE m.valBiepicondilarhumeral = :valBiepicondilarhumeral"),
-   @NamedQuery(name = "MvValoracion.findByValBiceptscontraidosizq", query = "SELECT m FROM MvValoracion m WHERE m.valBiceptscontraidosizq = :valBiceptscontraidosizq"),
-   @NamedQuery(name = "MvValoracion.findByValBiceptsrelajadoizq", query = "SELECT m FROM MvValoracion m WHERE m.valBiceptsrelajadoizq = :valBiceptsrelajadoizq"),
+   @NamedQuery(name = "MvValoracion.findByValBicepscontraidoizq", query = "SELECT m FROM MvValoracion m WHERE m.valBicepscontraidoizq = :valBicepscontraidoizq"),
+   @NamedQuery(name = "MvValoracion.findByValBicepsrelajadoizq", query = "SELECT m FROM MvValoracion m WHERE m.valBicepsrelajadoizq = :valBicepsrelajadoizq"),
    @NamedQuery(name = "MvValoracion.findByValCadera", query = "SELECT m FROM MvValoracion m WHERE m.valCadera = :valCadera"),
    @NamedQuery(name = "MvValoracion.findByValFrecuenciacardiacareposo", query = "SELECT m FROM MvValoracion m WHERE m.valFrecuenciacardiacareposo = :valFrecuenciacardiacareposo"),
    @NamedQuery(name = "MvValoracion.findByValMedialpierna", query = "SELECT m FROM MvValoracion m WHERE m.valMedialpierna = :valMedialpierna"),
@@ -56,63 +60,60 @@ import javax.xml.bind.annotation.XmlRootElement;
    @NamedQuery(name = "MvValoracion.findByValBicepsrelajadoder", query = "SELECT m FROM MvValoracion m WHERE m.valBicepsrelajadoder = :valBicepsrelajadoder"),
    @NamedQuery(name = "MvValoracion.findByValBicepscontraidoder", query = "SELECT m FROM MvValoracion m WHERE m.valBicepscontraidoder = :valBicepscontraidoder"),
    @NamedQuery(name = "MvValoracion.findByValMuslosuperiorder", query = "SELECT m FROM MvValoracion m WHERE m.valMuslosuperiorder = :valMuslosuperiorder"),
-   @NamedQuery(name = "MvValoracion.findByValPantorrilader", query = "SELECT m FROM MvValoracion m WHERE m.valPantorrilader = :valPantorrilader")})
+   @NamedQuery(name = "MvValoracion.findByValPantorrillader", query = "SELECT m FROM MvValoracion m WHERE m.valPantorrillader = :valPantorrillader")})
 public class MvValoracion implements Serializable {
 
    private static final long serialVersionUID = 1L;
    @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Basic(optional = false)
-   @NotNull
    @Column(name = "VAL_ID")
    private Integer valId;
-   @Basic(optional = false)
-   @NotNull
-   @Column(name = "USU_IDENTIFICACION")
-   private long usuIdentificacion;
    @Column(name = "RES_ID")
    private Integer resId;
+   // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
    @Column(name = "VAL_ABDOMENINFERIOR")
-   private Long valAbdomeninferior;
+   private Double valAbdomeninferior;
    @Column(name = "VAL_ABDOMINAL")
-   private Long valAbdominal;
+   private Double valAbdominal;
    @Column(name = "VAL_BIEPICONDILARFEMORAL")
-   private Long valBiepicondilarfemoral;
+   private Double valBiepicondilarfemoral;
    @Column(name = "VAL_BIEPICONDILARHUMERAL")
-   private Long valBiepicondilarhumeral;
-   @Column(name = "VAL_BICEPTSCONTRAIDOSIZQ")
-   private Long valBiceptscontraidosizq;
-   @Column(name = "VAL_BICEPTSRELAJADOIZQ")
-   private Long valBiceptsrelajadoizq;
+   private Double valBiepicondilarhumeral;
+   @Column(name = "VAL_BICEPSCONTRAIDOIZQ")
+   private Double valBicepscontraidoizq;
+   @Column(name = "VAL_BICEPSRELAJADOIZQ")
+   private Double valBicepsrelajadoizq;
    @Column(name = "VAL_CADERA")
-   private Long valCadera;
+   private Double valCadera;
    @Column(name = "VAL_FRECUENCIACARDIACAREPOSO")
-   private Long valFrecuenciacardiacareposo;
+   private Double valFrecuenciacardiacareposo;
    @Column(name = "VAL_MEDIALPIERNA")
-   private Long valMedialpierna;
+   private Double valMedialpierna;
    @Column(name = "VAL_MUSLOANTERIOR")
-   private Long valMusloanterior;
+   private Double valMusloanterior;
    @Column(name = "VAL_MUSLOSUPERIORIZQ")
-   private Long valMuslosuperiorizq;
+   private Double valMuslosuperiorizq;
    @Column(name = "VAL_PANTORRILLAIZQ")
-   private Long valPantorrillaizq;
+   private Double valPantorrillaizq;
    @Column(name = "VAL_PECTORAL")
-   private Long valPectoral;
+   private Double valPectoral;
    @Column(name = "VAL_PORCENTAJEAGUACORPORAL")
-   private Long valPorcentajeaguacorporal;
+   private Double valPorcentajeaguacorporal;
    @Column(name = "VAL_PORCENTAJEGRASAIMPEDANCIOMETRIA")
-   private Long valPorcentajegrasaimpedanciometria;
+   private Double valPorcentajegrasaimpedanciometria;
    @Column(name = "VAL_RADIOCUBITAL")
-   private Long valRadiocubital;
+   private Double valRadiocubital;
    @Column(name = "VAL_SUBESCAPULAR")
-   private Long valSubescapular;
+   private Double valSubescapular;
    @Column(name = "VAL_SUPRAIIATICO")
-   private Long valSupraiiatico;
+   private Double valSupraiiatico;
    @Column(name = "VAL_TORAX")
-   private Long valTorax;
+   private Double valTorax;
    @Column(name = "VAL_TRICEPTS")
-   private Long valTricepts;
+   private Double valTricepts;
    @Column(name = "VAL_VO2MAX")
-   private Long valVo2max;
+   private Double valVo2max;
    @Basic(optional = false)
    @NotNull
    @Column(name = "VAL_CLIENTE")
@@ -122,17 +123,18 @@ public class MvValoracion implements Serializable {
    @Column(name = "VAL_VALORADOR")
    private long valValorador;
    @Column(name = "VAL_FECHAVALORACION")
-   private Long valFechavaloracion;
+   @Temporal(TemporalType.DATE)
+   private Date valFechavaloracion;
    @Column(name = "VAL_EDADDECIMAL")
-   private Long valEdaddecimal;
+   private Double valEdaddecimal;
    @Column(name = "VAL_BICEPSRELAJADODER")
-   private Long valBicepsrelajadoder;
+   private Double valBicepsrelajadoder;
    @Column(name = "VAL_BICEPSCONTRAIDODER")
-   private Long valBicepscontraidoder;
+   private Double valBicepscontraidoder;
    @Column(name = "VAL_MUSLOSUPERIORDER")
-   private Long valMuslosuperiorder;
-   @Column(name = "VAL_PANTORRILADER")
-   private Long valPantorrilader;
+   private Double valMuslosuperiorder;
+   @Column(name = "VAL_PANTORRILLADER")
+   private Double valPantorrillader;
 
    public MvValoracion() {
    }
@@ -141,9 +143,8 @@ public class MvValoracion implements Serializable {
       this.valId = valId;
    }
 
-   public MvValoracion(Integer valId, long usuIdentificacion, long valCliente, long valValorador) {
+   public MvValoracion(Integer valId, long valCliente, long valValorador) {
       this.valId = valId;
-      this.usuIdentificacion = usuIdentificacion;
       this.valCliente = valCliente;
       this.valValorador = valValorador;
    }
@@ -156,14 +157,6 @@ public class MvValoracion implements Serializable {
       this.valId = valId;
    }
 
-   public long getUsuIdentificacion() {
-      return usuIdentificacion;
-   }
-
-   public void setUsuIdentificacion(long usuIdentificacion) {
-      this.usuIdentificacion = usuIdentificacion;
-   }
-
    public Integer getResId() {
       return resId;
    }
@@ -172,171 +165,171 @@ public class MvValoracion implements Serializable {
       this.resId = resId;
    }
 
-   public Long getValAbdomeninferior() {
+   public Double getValAbdomeninferior() {
       return valAbdomeninferior;
    }
 
-   public void setValAbdomeninferior(Long valAbdomeninferior) {
+   public void setValAbdomeninferior(Double valAbdomeninferior) {
       this.valAbdomeninferior = valAbdomeninferior;
    }
 
-   public Long getValAbdominal() {
+   public Double getValAbdominal() {
       return valAbdominal;
    }
 
-   public void setValAbdominal(Long valAbdominal) {
+   public void setValAbdominal(Double valAbdominal) {
       this.valAbdominal = valAbdominal;
    }
 
-   public Long getValBiepicondilarfemoral() {
+   public Double getValBiepicondilarfemoral() {
       return valBiepicondilarfemoral;
    }
 
-   public void setValBiepicondilarfemoral(Long valBiepicondilarfemoral) {
+   public void setValBiepicondilarfemoral(Double valBiepicondilarfemoral) {
       this.valBiepicondilarfemoral = valBiepicondilarfemoral;
    }
 
-   public Long getValBiepicondilarhumeral() {
+   public Double getValBiepicondilarhumeral() {
       return valBiepicondilarhumeral;
    }
 
-   public void setValBiepicondilarhumeral(Long valBiepicondilarhumeral) {
+   public void setValBiepicondilarhumeral(Double valBiepicondilarhumeral) {
       this.valBiepicondilarhumeral = valBiepicondilarhumeral;
    }
 
-   public Long getValBiceptscontraidosizq() {
-      return valBiceptscontraidosizq;
+   public Double getValBicepscontraidoizq() {
+      return valBicepscontraidoizq;
    }
 
-   public void setValBiceptscontraidosizq(Long valBiceptscontraidosizq) {
-      this.valBiceptscontraidosizq = valBiceptscontraidosizq;
+   public void setValBicepscontraidoizq(Double valBicepscontraidoizq) {
+      this.valBicepscontraidoizq = valBicepscontraidoizq;
    }
 
-   public Long getValBiceptsrelajadoizq() {
-      return valBiceptsrelajadoizq;
+   public Double getValBicepsrelajadoizq() {
+      return valBicepsrelajadoizq;
    }
 
-   public void setValBiceptsrelajadoizq(Long valBiceptsrelajadoizq) {
-      this.valBiceptsrelajadoizq = valBiceptsrelajadoizq;
+   public void setValBicepsrelajadoizq(Double valBicepsrelajadoizq) {
+      this.valBicepsrelajadoizq = valBicepsrelajadoizq;
    }
 
-   public Long getValCadera() {
+   public Double getValCadera() {
       return valCadera;
    }
 
-   public void setValCadera(Long valCadera) {
+   public void setValCadera(Double valCadera) {
       this.valCadera = valCadera;
    }
 
-   public Long getValFrecuenciacardiacareposo() {
+   public Double getValFrecuenciacardiacareposo() {
       return valFrecuenciacardiacareposo;
    }
 
-   public void setValFrecuenciacardiacareposo(Long valFrecuenciacardiacareposo) {
+   public void setValFrecuenciacardiacareposo(Double valFrecuenciacardiacareposo) {
       this.valFrecuenciacardiacareposo = valFrecuenciacardiacareposo;
    }
 
-   public Long getValMedialpierna() {
+   public Double getValMedialpierna() {
       return valMedialpierna;
    }
 
-   public void setValMedialpierna(Long valMedialpierna) {
+   public void setValMedialpierna(Double valMedialpierna) {
       this.valMedialpierna = valMedialpierna;
    }
 
-   public Long getValMusloanterior() {
+   public Double getValMusloanterior() {
       return valMusloanterior;
    }
 
-   public void setValMusloanterior(Long valMusloanterior) {
+   public void setValMusloanterior(Double valMusloanterior) {
       this.valMusloanterior = valMusloanterior;
    }
 
-   public Long getValMuslosuperiorizq() {
+   public Double getValMuslosuperiorizq() {
       return valMuslosuperiorizq;
    }
 
-   public void setValMuslosuperiorizq(Long valMuslosuperiorizq) {
+   public void setValMuslosuperiorizq(Double valMuslosuperiorizq) {
       this.valMuslosuperiorizq = valMuslosuperiorizq;
    }
 
-   public Long getValPantorrillaizq() {
+   public Double getValPantorrillaizq() {
       return valPantorrillaizq;
    }
 
-   public void setValPantorrillaizq(Long valPantorrillaizq) {
+   public void setValPantorrillaizq(Double valPantorrillaizq) {
       this.valPantorrillaizq = valPantorrillaizq;
    }
 
-   public Long getValPectoral() {
+   public Double getValPectoral() {
       return valPectoral;
    }
 
-   public void setValPectoral(Long valPectoral) {
+   public void setValPectoral(Double valPectoral) {
       this.valPectoral = valPectoral;
    }
 
-   public Long getValPorcentajeaguacorporal() {
+   public Double getValPorcentajeaguacorporal() {
       return valPorcentajeaguacorporal;
    }
 
-   public void setValPorcentajeaguacorporal(Long valPorcentajeaguacorporal) {
+   public void setValPorcentajeaguacorporal(Double valPorcentajeaguacorporal) {
       this.valPorcentajeaguacorporal = valPorcentajeaguacorporal;
    }
 
-   public Long getValPorcentajegrasaimpedanciometria() {
+   public Double getValPorcentajegrasaimpedanciometria() {
       return valPorcentajegrasaimpedanciometria;
    }
 
-   public void setValPorcentajegrasaimpedanciometria(Long valPorcentajegrasaimpedanciometria) {
+   public void setValPorcentajegrasaimpedanciometria(Double valPorcentajegrasaimpedanciometria) {
       this.valPorcentajegrasaimpedanciometria = valPorcentajegrasaimpedanciometria;
    }
 
-   public Long getValRadiocubital() {
+   public Double getValRadiocubital() {
       return valRadiocubital;
    }
 
-   public void setValRadiocubital(Long valRadiocubital) {
+   public void setValRadiocubital(Double valRadiocubital) {
       this.valRadiocubital = valRadiocubital;
    }
 
-   public Long getValSubescapular() {
+   public Double getValSubescapular() {
       return valSubescapular;
    }
 
-   public void setValSubescapular(Long valSubescapular) {
+   public void setValSubescapular(Double valSubescapular) {
       this.valSubescapular = valSubescapular;
    }
 
-   public Long getValSupraiiatico() {
+   public Double getValSupraiiatico() {
       return valSupraiiatico;
    }
 
-   public void setValSupraiiatico(Long valSupraiiatico) {
+   public void setValSupraiiatico(Double valSupraiiatico) {
       this.valSupraiiatico = valSupraiiatico;
    }
 
-   public Long getValTorax() {
+   public Double getValTorax() {
       return valTorax;
    }
 
-   public void setValTorax(Long valTorax) {
+   public void setValTorax(Double valTorax) {
       this.valTorax = valTorax;
    }
 
-   public Long getValTricepts() {
+   public Double getValTricepts() {
       return valTricepts;
    }
 
-   public void setValTricepts(Long valTricepts) {
+   public void setValTricepts(Double valTricepts) {
       this.valTricepts = valTricepts;
    }
 
-   public Long getValVo2max() {
+   public Double getValVo2max() {
       return valVo2max;
    }
 
-   public void setValVo2max(Long valVo2max) {
+   public void setValVo2max(Double valVo2max) {
       this.valVo2max = valVo2max;
    }
 
@@ -356,52 +349,52 @@ public class MvValoracion implements Serializable {
       this.valValorador = valValorador;
    }
 
-   public Long getValFechavaloracion() {
+   public Date getValFechavaloracion() {
       return valFechavaloracion;
    }
 
-   public void setValFechavaloracion(Long valFechavaloracion) {
+   public void setValFechavaloracion(Date valFechavaloracion) {
       this.valFechavaloracion = valFechavaloracion;
    }
 
-   public Long getValEdaddecimal() {
+   public Double getValEdaddecimal() {
       return valEdaddecimal;
    }
 
-   public void setValEdaddecimal(Long valEdaddecimal) {
+   public void setValEdaddecimal(Double valEdaddecimal) {
       this.valEdaddecimal = valEdaddecimal;
    }
 
-   public Long getValBicepsrelajadoder() {
+   public Double getValBicepsrelajadoder() {
       return valBicepsrelajadoder;
    }
 
-   public void setValBicepsrelajadoder(Long valBicepsrelajadoder) {
+   public void setValBicepsrelajadoder(Double valBicepsrelajadoder) {
       this.valBicepsrelajadoder = valBicepsrelajadoder;
    }
 
-   public Long getValBicepscontraidoder() {
+   public Double getValBicepscontraidoder() {
       return valBicepscontraidoder;
    }
 
-   public void setValBicepscontraidoder(Long valBicepscontraidoder) {
+   public void setValBicepscontraidoder(Double valBicepscontraidoder) {
       this.valBicepscontraidoder = valBicepscontraidoder;
    }
 
-   public Long getValMuslosuperiorder() {
+   public Double getValMuslosuperiorder() {
       return valMuslosuperiorder;
    }
 
-   public void setValMuslosuperiorder(Long valMuslosuperiorder) {
+   public void setValMuslosuperiorder(Double valMuslosuperiorder) {
       this.valMuslosuperiorder = valMuslosuperiorder;
    }
 
-   public Long getValPantorrilader() {
-      return valPantorrilader;
+   public Double getValPantorrillader() {
+      return valPantorrillader;
    }
 
-   public void setValPantorrilader(Long valPantorrilader) {
-      this.valPantorrilader = valPantorrilader;
+   public void setValPantorrillader(Double valPantorrillader) {
+      this.valPantorrillader = valPantorrillader;
    }
 
    @Override

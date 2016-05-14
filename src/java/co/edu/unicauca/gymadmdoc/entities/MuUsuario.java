@@ -6,6 +6,7 @@
 package co.edu.unicauca.gymadmdoc.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -31,9 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
    @NamedQuery(name = "MuUsuario.findAll", query = "SELECT m FROM MuUsuario m"),
    @NamedQuery(name = "MuUsuario.findByUsuIdentificacion", query = "SELECT m FROM MuUsuario m WHERE m.usuIdentificacion = :usuIdentificacion"),
-   @NamedQuery(name = "MuUsuario.findByFacId", query = "SELECT m FROM MuUsuario m WHERE m.facId = :facId"),
    @NamedQuery(name = "MuUsuario.findByOcuId", query = "SELECT m FROM MuUsuario m WHERE m.ocuId = :ocuId"),
-   @NamedQuery(name = "MuUsuario.findByDepId", query = "SELECT m FROM MuUsuario m WHERE m.depId = :depId"),
+   @NamedQuery(name = "MuUsuario.findByFamiliarIdentificacion", query = "SELECT m FROM MuUsuario m WHERE m.familiarIdentificacion = :familiarIdentificacion"),
+   @NamedQuery(name = "MuUsuario.findByFacDepId", query = "SELECT m FROM MuUsuario m WHERE m.facDepId = :facDepId"),
    @NamedQuery(name = "MuUsuario.findByUsuCodigo", query = "SELECT m FROM MuUsuario m WHERE m.usuCodigo = :usuCodigo"),
    @NamedQuery(name = "MuUsuario.findByUsuNombres", query = "SELECT m FROM MuUsuario m WHERE m.usuNombres = :usuNombres"),
    @NamedQuery(name = "MuUsuario.findByUsuApellido1", query = "SELECT m FROM MuUsuario m WHERE m.usuApellido1 = :usuApellido1"),
@@ -56,14 +57,12 @@ public class MuUsuario implements Serializable {
    private Long usuIdentificacion;
    @Basic(optional = false)
    @NotNull
-   @Column(name = "FAC_ID")
-   private int facId;
-   @Basic(optional = false)
-   @NotNull
    @Column(name = "OCU_ID")
    private int ocuId;
-   @Column(name = "DEP_ID")
-   private Integer depId;
+   @Column(name = "FAMILIAR_IDENTIFICACION")
+   private BigInteger familiarIdentificacion;
+   @Column(name = "FAC_DEP_ID")
+   private Integer facDepId;
    @Size(max = 150)
    @Column(name = "USU_CODIGO")
    private String usuCodigo;
@@ -77,9 +76,7 @@ public class MuUsuario implements Serializable {
    @Size(min = 1, max = 25)
    @Column(name = "USU_APELLIDO1")
    private String usuApellido1;
-   @Basic(optional = false)
-   @NotNull
-   @Size(min = 1, max = 25)
+   @Size(max = 25)
    @Column(name = "USU_APELLIDO2")
    private String usuApellido2;
    @Basic(optional = false)
@@ -95,21 +92,18 @@ public class MuUsuario implements Serializable {
    @Size(max = 15)
    @Column(name = "USU_TELEFONO")
    private String usuTelefono;
+   @Size(max = 15)
    @Column(name = "USU_CELULAR")
-   private Integer usuCelular;
-   @Basic(optional = false)
-   @NotNull
-   @Size(min = 1, max = 50)
+   private String usuCelular;
+   @Size(max = 50)
    @Column(name = "USU_EMAIL")
    private String usuEmail;
-   @Basic(optional = false)
-   @NotNull
    @Lob
    @Column(name = "USU_FOTO")
    private byte[] usuFoto;
    @Basic(optional = false)
    @NotNull
-   @Size(min = 1, max = 20)
+   @Size(min = 1, max = 350)
    @Column(name = "USU_CONTRASENA")
    private String usuContrasena;
    @Basic(optional = false)
@@ -130,17 +124,13 @@ public class MuUsuario implements Serializable {
       this.usuIdentificacion = usuIdentificacion;
    }
 
-   public MuUsuario(Long usuIdentificacion, int facId, int ocuId, String usuNombres, String usuApellido1, String usuApellido2, Date usuFechaNacimiento, String usuGenero, String usuEmail, byte[] usuFoto, String usuContrasena, String usuNombreUsuario, String usuEstado) {
+   public MuUsuario(Long usuIdentificacion, int ocuId, String usuNombres, String usuApellido1, Date usuFechaNacimiento, String usuGenero, String usuContrasena, String usuNombreUsuario, String usuEstado) {
       this.usuIdentificacion = usuIdentificacion;
-      this.facId = facId;
       this.ocuId = ocuId;
       this.usuNombres = usuNombres;
       this.usuApellido1 = usuApellido1;
-      this.usuApellido2 = usuApellido2;
       this.usuFechaNacimiento = usuFechaNacimiento;
       this.usuGenero = usuGenero;
-      this.usuEmail = usuEmail;
-      this.usuFoto = usuFoto;
       this.usuContrasena = usuContrasena;
       this.usuNombreUsuario = usuNombreUsuario;
       this.usuEstado = usuEstado;
@@ -154,14 +144,6 @@ public class MuUsuario implements Serializable {
       this.usuIdentificacion = usuIdentificacion;
    }
 
-   public int getFacId() {
-      return facId;
-   }
-
-   public void setFacId(int facId) {
-      this.facId = facId;
-   }
-
    public int getOcuId() {
       return ocuId;
    }
@@ -170,12 +152,20 @@ public class MuUsuario implements Serializable {
       this.ocuId = ocuId;
    }
 
-   public Integer getDepId() {
-      return depId;
+   public BigInteger getFamiliarIdentificacion() {
+      return familiarIdentificacion;
    }
 
-   public void setDepId(Integer depId) {
-      this.depId = depId;
+   public void setFamiliarIdentificacion(BigInteger familiarIdentificacion) {
+      this.familiarIdentificacion = familiarIdentificacion;
+   }
+
+   public Integer getFacDepId() {
+      return facDepId;
+   }
+
+   public void setFacDepId(Integer facDepId) {
+      this.facDepId = facDepId;
    }
 
    public String getUsuCodigo() {
@@ -234,11 +224,11 @@ public class MuUsuario implements Serializable {
       this.usuTelefono = usuTelefono;
    }
 
-   public Integer getUsuCelular() {
+   public String getUsuCelular() {
       return usuCelular;
    }
 
-   public void setUsuCelular(Integer usuCelular) {
+   public void setUsuCelular(String usuCelular) {
       this.usuCelular = usuCelular;
    }
 

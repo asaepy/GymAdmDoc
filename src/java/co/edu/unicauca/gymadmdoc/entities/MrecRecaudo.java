@@ -17,7 +17,7 @@ public class MrecRecaudo {
    SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
    
    private long id;
-   private long usuario_id;
+   private MuUsuario usuario;
    private String estado;
    private Date fechaLimite;
    private String strFechaLimite;
@@ -27,9 +27,9 @@ public class MrecRecaudo {
    }
 
    
-   public MrecRecaudo(long id, long usuario_id, String estado, Date fechaLimite, MrecReciboPago recibo) {
+   public MrecRecaudo(long id, MuUsuario usuario, String estado, Date fechaLimite, MrecReciboPago recibo) {
       this.id = id;
-      this.usuario_id = usuario_id;
+      this.usuario = usuario;
       this.estado = estado;
       this.fechaLimite = fechaLimite;
       this.strFechaLimite = formateador.format(fechaLimite);
@@ -44,12 +44,12 @@ public class MrecRecaudo {
       this.id = id;
    }
 
-   public long getUsuario_id() {
-      return usuario_id;
+   public MuUsuario getUsuario() {
+      return usuario;
    }
 
-   public void setUsuario_id(long usuario_id) {
-      this.usuario_id = usuario_id;
+   public void setUsuario(MuUsuario usuario) {
+      this.usuario = usuario;
    }
 
    public String getEstado() {
