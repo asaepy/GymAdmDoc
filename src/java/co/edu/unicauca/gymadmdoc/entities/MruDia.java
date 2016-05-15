@@ -63,6 +63,7 @@ public class MruDia implements Serializable {
     private Collection<MruGrupomuscular> mruGrupomuscularCollection;
 
     public MruDia() {
+        
     }
 
     public MruDia(Integer diaId) {
@@ -140,5 +141,5 @@ public class MruDia implements Serializable {
     public String toString() {
         return "co.edu.unicauca.gymadmdoc.entities.MruDia[ diaId=" + diaId + " ]";
     }
-    
+
 }

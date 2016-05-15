@@ -1,6 +1,7 @@
 package co.edu.unicauca.gymadmdoc.managedbeans;
 
 import co.edu.unicauca.gymadmdoc.entities.MruDia;
+import co.edu.unicauca.gymadmdoc.entities.MruRutina;
 import co.edu.unicauca.gymadmdoc.util.JsfUtil;
 import co.edu.unicauca.gymadmdoc.util.JsfUtil.PersistAction;
 import co.edu.unicauca.gymadmdoc.sessionBeans.MruDiaFacade;
@@ -14,6 +15,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -29,6 +31,7 @@ public class MruDiaController implements Serializable {
     private MruDia selected;
 
     public MruDiaController() {
+        this.prepareCreate();    
     }
 
     public MruDia getSelected() {
@@ -60,6 +63,12 @@ public class MruDiaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+    
+    public void clearFields(){
+        selected = new MruDia();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Successful",  "Los campos han sido limpiados") );
     }
 
     public void update() {

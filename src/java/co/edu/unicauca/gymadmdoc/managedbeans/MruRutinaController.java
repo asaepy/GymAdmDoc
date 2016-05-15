@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -95,7 +96,13 @@ public class MruRutinaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        
+    }
+    
+    public void clearFields(){
         selected = new MruRutina();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Successful",  "Los campos han sido limpiados") );
     }
 
     public void update() {
