@@ -72,7 +72,8 @@
                     <f:facet name="header">
                         <h:outputText value="Acciones"/>
                     </f:facet>
-                    <p:commandButton ajax="false" id="verRutinas" value="#{bundle.btnVerRutinasLabel}" title="#{bundle.btnVerRutinasTitle}" actionListener="#{mruRutinaController.consultarRutinaPorUsuario()}">
+                    <p:commandButton ajax="false" update="tblRutinas" id="verRutinas" value="#{bundle.btnVerRutinasLabel}" title="#{bundle.btnVerRutinasTitle}">
+                        <p:ajax listener="#{mruRutinaController.consultarRutinaPorUsuario()}"/>
                         <f:setPropertyActionListener value="#{usuario}" target="#{mruRutinaController.selectedUsuario}" />
                     </p:commandButton>
                     <p:commandButton ajax="false" id="nuevaRutina" value="#{bundle.btnNuevaRutinaLabel}" title="#{bundle.btnNuevaRutinaTitle}" actionListener="#{routingController.goToNuevaRutina()}"/>
@@ -92,7 +93,7 @@
         <br/>
         <br/>
         <h:panelGroup>
-            <p:dataTable value="#{mruRutinaController.rutinas}" var="rutina">
+            <p:dataTable id="tblRutinas" value="#{mruRutinaController.rutinas}" var="rutina">
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListMruRutinaTitle_ruId}"/>

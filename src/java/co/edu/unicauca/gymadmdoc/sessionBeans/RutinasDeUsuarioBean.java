@@ -7,6 +7,7 @@ package co.edu.unicauca.gymadmdoc.sessionBeans;
 
 import co.edu.unicauca.gymadmdoc.entities.MruRutina;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,8 +24,9 @@ public class RutinasDeUsuarioBean {
     // "Insert Code > Add Business Method")
     @PersistenceContext(unitName="Gym_Adm_DocPU")
     private EntityManager em;
-    
-    public List<MruRutina> consultarRutinasPorUsuario(float usuId){
+
+    public List<MruRutina> consultarRutinasPorUsuario(Long usuId){
+       
         TypedQuery<MruRutina> consulta = (TypedQuery<MruRutina>) getEm().createNamedQuery("MruRutina.findByUsuId");
         consulta.setParameter("usuIdentificacion", usuId);
         List<MruRutina> resultList = consulta.getResultList();

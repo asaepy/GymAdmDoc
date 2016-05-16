@@ -42,6 +42,7 @@ public class MruRutinaController implements Serializable {
 
     public MruRutinaController() {
         this.prepareCreate();
+        rutinas=null;
     }
 
     public List<MruRutina> getRutinas() {
