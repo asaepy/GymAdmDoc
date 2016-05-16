@@ -2,9 +2,12 @@ package co.edu.unicauca.gymadmdoc.managedbeans;
 
 import co.edu.unicauca.gymadmdoc.entities.MruDia;
 import co.edu.unicauca.gymadmdoc.entities.MruRutina;
+import co.edu.unicauca.gymadmdoc.entities.MuUsuario;
+import co.edu.unicauca.gymadmdoc.sessionBeans.DiasDeRutinaBean;
 import co.edu.unicauca.gymadmdoc.util.JsfUtil;
 import co.edu.unicauca.gymadmdoc.util.JsfUtil.PersistAction;
 import co.edu.unicauca.gymadmdoc.sessionBeans.MruDiaFacade;
+import co.edu.unicauca.gymadmdoc.sessionBeans.RutinasDeUsuarioBean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,12 +29,28 @@ import javax.faces.convert.FacesConverter;
 public class MruDiaController implements Serializable {
 
     @EJB
-    private co.edu.unicauca.gymadmdoc.sessionBeans.MruDiaFacade ejbFacade;
+    private MruDiaFacade ejbFacade;
     private List<MruDia> items = null;
+    private List<MruDia> dias = null;
     private MruDia selected;
+    
+    
+    @EJB
+    DiasDeRutinaBean miSesionBean;
 
+    private MruRutina selectedRutina;
+    
     public MruDiaController() {
+        dias = null;
         this.prepareCreate();    
+    }
+    
+    public List<MruDia> getDias() {
+        return dias;
+    }
+
+    public void setDias(List<MruDia> dias) {
+        this.dias = dias;
     }
 
     public MruDia getSelected() {
@@ -41,6 +60,8 @@ public class MruDiaController implements Serializable {
     public void setSelected(MruDia selected) {
         this.selected = selected;
     }
+    
+    
 
     protected void setEmbeddableKeys() {
     }
@@ -63,6 +84,10 @@ public class MruDiaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+    
+    public void consultarDiaPorRutina(){
+        dias = miSesionBean.consultarDiaPorRutina(selectedRutina.getRuId());
     }
     
     public void clearFields(){
@@ -128,6 +153,14 @@ public class MruDiaController implements Serializable {
 
     public List<MruDia> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public MruRutina getSelectedRutina() {
+        return selectedRutina;
+    }
+
+    public void setSelectedRutina(MruRutina selectedRutina) {
+        this.selectedRutina = selectedRutina;
     }
 
     @FacesConverter(forClass = MruDia.class)
