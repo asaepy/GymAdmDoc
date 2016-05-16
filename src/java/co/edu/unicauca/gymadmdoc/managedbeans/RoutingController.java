@@ -23,15 +23,19 @@ public class RoutingController implements Serializable {
    }
    
    public RoutingController() {
-      this.ruta = "/administrador/mrec/main_recaudos.xhtml";
+      this.ruta = "/administrador/mrec/reporte_mensual.xhtml";
    }
    
    
-   public void goToUsuario(){
-      this.ruta = "/administrador/mrec/main_recaudos.xhtml";
+   public void goToReporteMensualMREC(){
+      this.ruta = "/administrador/mrec/reporte_mensual.xhtml";
    }
    
-   public void goToPrueba(){
-      this.ruta = "/administrador/mu/prueba.xhtml";
+   public void goToNuevoRecaudoMREC(){
+      this.ruta = "/administrador/mrec/nuevo_recaudo.xhtml";
+   }
+   
+   public void goToEstadisticasMREC(){
+      this.ruta = "/administrador/mrec/estadisticas.xhtml";
    }
 }

@@ -20,20 +20,12 @@ public class MrecRecaudo {
    private MuUsuario usuario;
    private String estado;
    private Date fechaLimite;
+   private int mes;
+   private int anio;
    private String strFechaLimite;
    private MrecReciboPago recibo;
 
    public MrecRecaudo() {
-   }
-
-   
-   public MrecRecaudo(long id, MuUsuario usuario, String estado, Date fechaLimite, MrecReciboPago recibo) {
-      this.id = id;
-      this.usuario = usuario;
-      this.estado = estado;
-      this.fechaLimite = fechaLimite;
-      this.strFechaLimite = formateador.format(fechaLimite);
-      this.recibo = recibo;
    }
 
    public long getId() {
@@ -60,6 +52,22 @@ public class MrecRecaudo {
       this.estado = estado;
    }
 
+   public int getMes() {
+      return mes;
+   }
+
+   public void setMes(int mes) {      
+      this.mes = mes;
+   }
+
+   public int getAnio() {
+      return anio;
+   }
+
+   public void setAnio(int anio) {
+      this.anio = anio;
+   }
+   
    public Date getFechaLimite() {
       return fechaLimite;
    }

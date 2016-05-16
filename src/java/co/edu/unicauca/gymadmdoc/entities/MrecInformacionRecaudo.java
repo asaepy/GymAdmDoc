@@ -7,6 +7,7 @@ package co.edu.unicauca.gymadmdoc.entities;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
    @NamedQuery(name = "MrecInformacionRecaudo.findByIrecId", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.irecId = :irecId"),
    @NamedQuery(name = "MrecInformacionRecaudo.findByRpagReferencia", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.rpagReferencia = :rpagReferencia"),
    @NamedQuery(name = "MrecInformacionRecaudo.findByUsuIdentificacion", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.usuIdentificacion = :usuIdentificacion"),
-   @NamedQuery(name = "MrecInformacionRecaudo.findByIrecEstadoRecaudo", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.irecEstadoRecaudo = :irecEstadoRecaudo")})
+   @NamedQuery(name = "MrecInformacionRecaudo.findByIrecEstadoRecaudo", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.irecEstadoRecaudo = :irecEstadoRecaudo"),
+   @NamedQuery(name = "MrecInformacionRecaudo.findByIrecMes", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.irecMes = :irecMes"),
+   @NamedQuery(name = "MrecInformacionRecaudo.findByIrecAnio", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.irecAnio = :irecAnio"),
+   @NamedQuery(name = "MrecInformacionRecaudo.findByIrecFechaLimite", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.irecFechaLimite = :irecFechaLimite")})
 public class MrecInformacionRecaudo implements Serializable {
 
    private static final long serialVersionUID = 1L;
@@ -52,6 +58,19 @@ public class MrecInformacionRecaudo implements Serializable {
    @Size(min = 1, max = 50)
    @Column(name = "IREC_ESTADO_RECAUDO")
    private String irecEstadoRecaudo;
+   @Basic(optional = false)
+   @NotNull
+   @Column(name = "IREC_MES")
+   private int irecMes;
+   @Basic(optional = false)
+   @NotNull
+   @Column(name = "IREC_ANIO")
+   private int irecAnio;
+   @Basic(optional = false)
+   @NotNull
+   @Column(name = "IREC_FECHA_LIMITE")
+   @Temporal(TemporalType.DATE)
+   private Date irecFechaLimite;
 
    public MrecInformacionRecaudo() {
    }
@@ -60,10 +79,13 @@ public class MrecInformacionRecaudo implements Serializable {
       this.irecId = irecId;
    }
 
-   public MrecInformacionRecaudo(Long irecId, long usuIdentificacion, String irecEstadoRecaudo) {
+   public MrecInformacionRecaudo(Long irecId, long usuIdentificacion, String irecEstadoRecaudo, int irecMes, int irecAnio, Date irecFechaLimite) {
       this.irecId = irecId;
       this.usuIdentificacion = usuIdentificacion;
       this.irecEstadoRecaudo = irecEstadoRecaudo;
+      this.irecMes = irecMes;
+      this.irecAnio = irecAnio;
+      this.irecFechaLimite = irecFechaLimite;
    }
 
    public Long getIrecId() {
@@ -96,6 +118,30 @@ public class MrecInformacionRecaudo implements Serializable {
 
    public void setIrecEstadoRecaudo(String irecEstadoRecaudo) {
       this.irecEstadoRecaudo = irecEstadoRecaudo;
+   }
+
+   public int getIrecMes() {
+      return irecMes;
+   }
+
+   public void setIrecMes(int irecMes) {
+      this.irecMes = irecMes;
+   }
+
+   public int getIrecAnio() {
+      return irecAnio;
+   }
+
+   public void setIrecAnio(int irecAnio) {
+      this.irecAnio = irecAnio;
+   }
+
+   public Date getIrecFechaLimite() {
+      return irecFechaLimite;
+   }
+
+   public void setIrecFechaLimite(Date irecFechaLimite) {
+      this.irecFechaLimite = irecFechaLimite;
    }
 
    @Override
