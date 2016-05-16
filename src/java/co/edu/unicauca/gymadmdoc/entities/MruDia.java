@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MruDia.findAll", query = "SELECT m FROM MruDia m"),
+    @NamedQuery(name = "MruDia.findByRuId", query = "SELECT m FROM MruDia m WHERE m.ruId.ruId = :ruId"),//Aquí se usa ruId.ruId porque si no recibe el objeto y no el id del objeto
     @NamedQuery(name = "MruDia.findByDiaId", query = "SELECT m FROM MruDia m WHERE m.diaId = :diaId"),
     @NamedQuery(name = "MruDia.findByDiaNumero", query = "SELECT m FROM MruDia m WHERE m.diaNumero = :diaNumero"),
     @NamedQuery(name = "MruDia.findByDiaTiempomin", query = "SELECT m FROM MruDia m WHERE m.diaTiempomin = :diaTiempomin")})

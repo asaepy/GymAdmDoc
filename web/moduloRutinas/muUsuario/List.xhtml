@@ -22,10 +22,6 @@
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          >
-
-                <!--                                    <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                                                    <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>-->
-
                 <p:ajax event="rowSelect"   update="viewButton"/>
                 <p:ajax event="rowUnselect" update="viewButton"/>
                 <p:column>
@@ -88,53 +84,104 @@
             </p:dataTable>
             <!--</p:panel>-->
         </h:form>
-        
+
+        <!--Zona para mostrar las rutinas-->
         <br/>
         <br/>
         <br/>
-        <h:panelGroup>
-            <p:dataTable id="tblRutinas" value="#{mruRutinaController.rutinas}" var="rutina">
+        <h:form id="MruRutinasListForm">
+            <p:growl id="growl" life="2000" />
+            <h3>Rutinas Registradas</h3>
+            <h:panelGroup>      
+                <p:dataTable id="tblRutinas" value="#{mruRutinaController.rutinas}" var="rutina" selectionMode="single"
+                             selection="#{mruRutinaController.selected}" rowKey="#{rutina.ruId}">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_ruId}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruId}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_ruFechafin}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruFechafin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_ruPeso}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruPeso}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_ruTalla}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruTalla}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_usuImc}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruImc}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_ruObservaciones}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruObservaciones}"/>
+                    </p:column>
+
+                    <p:column width="300">
+                        <f:facet name="header">
+                            <h:outputText value="Acciones"/>
+                        </f:facet>
+                        <p:commandButton ajax="false" update="tblDias" id="verDias" value="#{bundle.btnVerDiasLabel}" title="#{bundle.btnVerDiasTitle}">
+                            <p:ajax listener="#{mruDiaController.consultarDiaPorRutina()}"/>
+                            <f:setPropertyActionListener value="#{rutina}" target="#{mruDiaController.selectedRutina}" />
+                        </p:commandButton>
+                        <p:commandButton ajax="false" id="nuevoDia" value="#{bundle.btnNuevoDiaLabel}" title="#{bundle.btnNuevoDiaTitle}" actionListener="#"/>
+
+                    </p:column>
+                </p:dataTable>
+
+            </h:panelGroup>
+        </h:form>
+
+
+        <!--Zona para mostrar los días-->
+        <br/>
+        <br/>
+        <br/>
+        <h3>Dias registrados</h3>
+        <h:panelGroup>      
+            <p:dataTable id="tblDias" value="#{mruDiaController.dias}" var="dia">
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{bundle.ListMruRutinaTitle_ruId}"/>
+                        <h:outputText value="#{bundle.ListMruDiaTitle_diaId}"/>
                     </f:facet>
-                    <h:outputText value="#{rutina.ruId}"/>
+                    <h:outputText value="#{dia.diaId}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{bundle.ListMruRutinaTitle_ruFechafin}"/>
+                        <h:outputText value="#{bundle.ListMruDiaTitle_diaNumero}"/>
                     </f:facet>
-                    <h:outputText value="#{rutina.ruFechafin}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    <h:outputText value="#{dia.diaNumero}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMruDiaTitle_diaTiempomin}"/>
+                    </f:facet>
+                    <h:outputText value="#{dia.diaTiempomin}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
                     </h:outputText>
                 </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{bundle.ListMruRutinaTitle_ruPeso}"/>
-                    </f:facet>
-                    <h:outputText value="#{rutina.ruPeso}"/>
-                </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{bundle.ListMruRutinaTitle_ruTalla}"/>
-                    </f:facet>
-                    <h:outputText value="#{rutina.ruTalla}"/>
-                </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{bundle.ListMruRutinaTitle_usuImc}"/>
-                    </f:facet>
-                    <h:outputText value="#{rutina.ruImc}"/>
-                </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{bundle.ListMruRutinaTitle_ruObservaciones}"/>
-                    </f:facet>
-                    <h:outputText value="#{rutina.ruObservaciones}"/>
-                </p:column>
             </p:dataTable>
-
         </h:panelGroup>
+
+
 
         <!--        <ui:include src="Create.xhtml"/>
                 <ui:include src="Edit.xhtml"/>-->
