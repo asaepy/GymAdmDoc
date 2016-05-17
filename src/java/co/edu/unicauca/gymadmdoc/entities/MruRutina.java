@@ -187,7 +187,7 @@ public class MruRutina implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.unicauca.gymadmdoc.entities.MruRutina[ ruId=" + ruId + " ]";
+        return "Rutina: " + ruId;
     }
 
 }

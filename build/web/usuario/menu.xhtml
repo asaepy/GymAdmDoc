@@ -32,10 +32,12 @@
                         <p:menuitem value="Sub-menu"/>
                     </p:submenu>
                     <p:submenu label="Rutinas">
-                        <p:menuitem value="Listado" ajax="false"
+                        <p:menuitem value="Ir" ajax="false"
                                     action="#{routingController.goToUsuarios_Rutinas}"/>
                         <p:menuitem value="Nueva Rutina" ajax="false"
                                     action="#{routingController.goToNuevaRutina}"/>
+                        <p:menuitem value="Gestionar ejercicios" ajax="false"
+                                    action="#{routingController.goToEjercicios}"/>
                     </p:submenu>
                     <p:separator/>
                     <p:menuitem value="Configuracion"/>

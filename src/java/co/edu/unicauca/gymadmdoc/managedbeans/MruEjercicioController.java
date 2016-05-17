@@ -14,10 +14,13 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.event.FileUploadEvent;
+
 
 @Named("mruEjercicioController")
 @SessionScoped
@@ -28,6 +31,14 @@ public class MruEjercicioController implements Serializable {
     private List<MruEjercicio> items = null;
     private MruEjercicio selected;
 
+    
+    public void handleFileUpload(FileUploadEvent event) {
+        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    
+    
     public MruEjercicioController() {
     }
 
@@ -72,6 +83,7 @@ public class MruEjercicioController implements Serializable {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        
     }
 
     public List<MruEjercicio> getItems() {

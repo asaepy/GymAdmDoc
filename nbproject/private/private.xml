@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Migdress/computerSciences/businessInformationSystemArchitecture/GimnasioAdministrativo/GymAdmDoc/src/java/co/edu/unicauca/gymadmdoc/sessionBeans/RutinasDeUsuarioBean.java</file>
-            <file>file:/C:/Migdress/computerSciences/businessInformationSystemArchitecture/GimnasioAdministrativo/GymAdmDoc/web/moduloRutinas/muUsuario/List.xhtml</file>
-            <file>file:/C:/Migdress/computerSciences/businessInformationSystemArchitecture/GimnasioAdministrativo/GymAdmDoc/src/java/co/edu/unicauca/gymadmdoc/entities/MuUsuario.java</file>
-            <file>file:/C:/Migdress/computerSciences/businessInformationSystemArchitecture/GimnasioAdministrativo/GymAdmDoc/src/java/co/edu/unicauca/gymadmdoc/managedbeans/MruRutinaController.java</file>
+            <file>file:/E:/DATA/UNICAUCA/10mo%20Semestre/ASAE/PROYECTO%20FINAL/GymAdmDoc/web/moduloRutinas/mruEjercicio/ListEjercicio.xhtml</file>
+            <file>file:/E:/DATA/UNICAUCA/10mo%20Semestre/ASAE/PROYECTO%20FINAL/GymAdmDoc/web/usuario/menu.xhtml</file>
+            <file>file:/E:/DATA/UNICAUCA/10mo%20Semestre/ASAE/PROYECTO%20FINAL/GymAdmDoc/src/java/Bundle.properties</file>
+            <file>file:/E:/DATA/UNICAUCA/10mo%20Semestre/ASAE/PROYECTO%20FINAL/GymAdmDoc/src/java/co/edu/unicauca/gymadmdoc/entities/MruRutina.java</file>
+            <file>file:/E:/DATA/UNICAUCA/10mo%20Semestre/ASAE/PROYECTO%20FINAL/GymAdmDoc/src/java/co/edu/unicauca/gymadmdoc/managedbeans/RoutingController.java</file>
+            <file>file:/E:/DATA/UNICAUCA/10mo%20Semestre/ASAE/PROYECTO%20FINAL/GymAdmDoc/web/moduloRutinas/nuevaRutina.xhtml</file>
+            <file>file:/E:/DATA/UNICAUCA/10mo%20Semestre/ASAE/PROYECTO%20FINAL/GymAdmDoc/src/java/co/edu/unicauca/gymadmdoc/managedbeans/MruEjercicioController.java</file>
         </group>
     </open-files>
 </project-private>

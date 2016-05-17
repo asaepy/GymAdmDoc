@@ -64,13 +64,13 @@
                     <h:outputText value="#{usuario.usuEstado}"/>
                 </p:column>
 
-                <p:column width="300">
+                <p:column width="28%">
                     <f:facet name="header">
                         <h:outputText value="Acciones"/>
                     </f:facet>
                     <p:commandButton ajax="false" update="tblRutinas" id="verRutinas" value="#{bundle.btnVerRutinasLabel}" title="#{bundle.btnVerRutinasTitle}">
-                        <p:ajax listener="#{mruRutinaController.consultarRutinaPorUsuario()}"/>
                         <f:setPropertyActionListener value="#{usuario}" target="#{mruRutinaController.selectedUsuario}" />
+                        <p:ajax listener="#{mruRutinaController.consultarRutinaPorUsuario()}"/>
                     </p:commandButton>
                     <p:commandButton ajax="false" id="nuevaRutina" value="#{bundle.btnNuevaRutinaLabel}" title="#{bundle.btnNuevaRutinaTitle}" actionListener="#{routingController.goToNuevaRutina()}"/>
 
@@ -134,7 +134,7 @@
                         <h:outputText value="#{rutina.ruObservaciones}"/>
                     </p:column>
 
-                    <p:column width="300">
+                    <p:column width="28%">
                         <f:facet name="header">
                             <h:outputText value="Acciones"/>
                         </f:facet>
