@@ -21,6 +21,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.primefaces.model.chart.DonutChartModel;
+import org.primefaces.model.chart.HorizontalBarChartModel;
 
 /**
  *
@@ -173,6 +175,65 @@ public class RecaudosController implements Serializable {
    
    // </editor-fold>
    
+   // <editor-fold defaultstate="collapsed" desc="Atributos para el manejo de las Estadisticas">
+   
+   private DonutChartModel donutModel;
+   public DonutChartModel getDonutModel() {
+      return donutModel;
+   }
+   
+   private HorizontalBarChartModel barModel;
+   public HorizontalBarChartModel getBarModel() {
+      return barModel;
+   }
+   
+   private String[] selectedOcupaciones;
+   public String[] getSelectedOcupaciones() {
+      return selectedOcupaciones;
+   }
+   public void setSelectedOcupaciones(String[] selectedOcupaciones) {
+      this.selectedOcupaciones = selectedOcupaciones;
+   }
+   
+   private List<String> ocupaciones;
+   public List<String> getOcupaciones() {
+      return ocupaciones;
+   }
+   
+   private Date filterFechaInicio;
+   public Date getFilterFechaInicio() {
+      return filterFechaInicio;
+   }
+   public void setFilterFechaInicio(Date filterFechaInicio) {
+      this.filterFechaInicio = filterFechaInicio;
+   }
+   
+   private Date filterFechaFin;
+   public Date getFilterFechaFin() {
+      return filterFechaFin;
+   }
+   public void setFilterFechaFin(Date filterFechaFin) {
+      this.filterFechaFin = filterFechaFin;
+   }
+   
+   private boolean filterMensualidad;
+   public boolean isFilterMensualidad() {
+      return filterMensualidad;
+   }
+   public void setFilterMensualidad(boolean filterMensualidad) {
+      this.filterMensualidad = filterMensualidad;
+   }
+   
+   private boolean filterSesiones;
+   public boolean isFilterSesiones() {
+      return filterSesiones;
+   }
+   public void setFilterSesiones(boolean filterSesiones) {
+      this.filterSesiones = filterSesiones;
+   }
+      
+   // </editor-fold>
+   
    public RecaudosController(){}
    
    @PostConstruct
@@ -186,6 +247,9 @@ public class RecaudosController implements Serializable {
       this.day = c.get(Calendar.DATE);
       loadTableInfo();
       loadInfoRecibo();
+      buildOcupaciones();
+      loadGraphicFilters();
+      this.donutModel = new DonutChartModel();
    }
    
    public void addMessage(String summary, String detail) {
@@ -263,5 +327,47 @@ public class RecaudosController implements Serializable {
       rp.setRpagTotalRecibo(total);
       return rp;
    }
+   
+   private void buildOcupaciones(){
+      this.ocupaciones = service_recaudo.getOcupaciones();
+   }
+
+   private void loadGraphicFilters(){
+      this.filterMensualidad = true;
+      this.filterSesiones = true;
+      this.selectedOcupaciones = null;
+      Calendar c = Calendar.getInstance();
+      this.filterFechaFin = c.getTime();
+      c.set(Calendar.DATE, 1);
+      this.filterFechaInicio = c.getTime();
+   }
+   
+   public void generarGraficas(){
+      if(comprobateFilters()){
+         this.donutModel = service_recaudo.getDonut(filterFechaInicio, 
+                 filterFechaFin, filterMensualidad, filterSesiones, selectedOcupaciones);
+      }
+   }
+   
+   private boolean comprobateFilters(){
+      boolean result = true;
+      
+      if(this.filterFechaInicio == null || 
+              this.filterFechaFin == null){
+         result = false;
+         addMessage("Error", "Debe existir un rango de fechas para generar las graficas.");
+      }
+      if(!this.filterMensualidad && !this.filterSesiones){
+         result = false;
+         addMessage("Error", "Seleccione Mensualidad o Sesiones, al menos una.");
+      }
+      if(this.selectedOcupaciones.length == 0){
+         result = false;
+         addMessage("Error", "Seleccione al menos una ocupacion.");
+      }
+      
+      return result;
+   }
+   
 }
 

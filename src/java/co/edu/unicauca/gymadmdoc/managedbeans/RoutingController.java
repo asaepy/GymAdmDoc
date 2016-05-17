@@ -23,7 +23,7 @@ public class RoutingController implements Serializable {
    }
    
    public RoutingController() {
-      this.ruta = "/administrador/mrec/reporte_mensual.xhtml";
+      this.ruta = "/administrador/mrec/estadisticas.xhtml";
    }
    
    

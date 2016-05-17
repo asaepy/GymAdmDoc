@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
    @NamedQuery(name = "MrecInformacionRecaudo.findByIrecMes", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.irecMes = :irecMes"),
    @NamedQuery(name = "MrecInformacionRecaudo.findByIrecAnio", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.irecAnio = :irecAnio"),
    @NamedQuery(name = "MrecInformacionRecaudo.findByIrecFechaLimite", query = "SELECT m FROM MrecInformacionRecaudo m WHERE m.irecFechaLimite = :irecFechaLimite")})
+
 public class MrecInformacionRecaudo implements Serializable {
 
    private static final long serialVersionUID = 1L;
