@@ -76,10 +76,7 @@
 
                 </p:column>
                 <f:facet name="footer">
-<!--                                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{muUsuarioController.prepareCreate}" update=":MuUsuarioCreateForm" oncomplete="PF('MuUsuarioCreateDialog').show()"/>-->
                     <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.ViewUsuario}" update=":MuUsuarioViewForm" oncomplete="PF('MuUsuarioViewDialog').show()" disabled="#{empty muUsuarioController.selected}"/>
-<!--                                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":MuUsuarioEditForm" oncomplete="PF('MuUsuarioEditDialog').show()" disabled="#{empty muUsuarioController.selected}"/>
-                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{muUsuarioController.destroy}" update=":growl,datalist" disabled="#{empty muUsuarioController.selected}"/>-->
                 </f:facet>
             </p:dataTable>
             <!--</p:panel>-->
