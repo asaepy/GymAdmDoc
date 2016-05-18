@@ -139,7 +139,7 @@
                             <p:ajax listener="#{mruDiaController.consultarDiaPorRutina()}"/>
                             <f:setPropertyActionListener value="#{rutina}" target="#{mruDiaController.selectedRutina}" />
                         </p:commandButton>
-                        <p:commandButton ajax="false" id="nuevoDia" value="#{bundle.btnNuevoDiaLabel}" title="#{bundle.btnNuevoDiaTitle}" actionListener="#"/>
+                        <p:commandButton ajax="false" id="nuevoDia" value="#{bundle.btnNuevoDiaLabel}" title="#{bundle.btnNuevoDiaTitle}" actionListener="#{routingController.goToNuevoDia()}"/>
 
                     </p:column>
                 </p:dataTable>
@@ -155,12 +155,12 @@
         <h3>Dias registrados</h3>
         <h:panelGroup>      
             <p:dataTable id="tblDias" value="#{mruDiaController.dias}" var="dia">
-                <p:column>
+<!--                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListMruDiaTitle_diaId}"/>
                     </f:facet>
                     <h:outputText value="#{dia.diaId}"/>
-                </p:column>
+                </p:column>-->
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListMruDiaTitle_diaNumero}"/>
