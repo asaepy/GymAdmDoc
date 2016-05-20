@@ -21,9 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
-import org.primefaces.model.SelectableDataModel;
+
 
 @Named("mruRutinaController")
 @SessionScoped
@@ -42,6 +40,7 @@ public class MruRutinaController implements Serializable {
 
     public MruRutinaController() {
         this.prepareCreate();
+        selectedUsuario=new MuUsuario();
         rutinas= null;
     }
 

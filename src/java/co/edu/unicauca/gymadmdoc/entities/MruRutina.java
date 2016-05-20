@@ -187,7 +187,8 @@ public class MruRutina implements Serializable {
 
     @Override
     public String toString() {
-        return "Rutina: " + ruId;
+        return "Rutina con identificador: " + ruId;
     }
-
+    
+   
 }

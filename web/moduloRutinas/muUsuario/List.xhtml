@@ -64,13 +64,13 @@
                     <h:outputText value="#{usuario.usuEstado}"/>
                 </p:column>
 
-                <p:column width="28%">
+                <p:column id="sd" width="28%">
                     <f:facet name="header">
                         <h:outputText value="Acciones"/>
                     </f:facet>
                     <p:commandButton ajax="false" update="tblRutinas" id="verRutinas" value="#{bundle.btnVerRutinasLabel}" title="#{bundle.btnVerRutinasTitle}">
                         <f:setPropertyActionListener value="#{usuario}" target="#{mruRutinaController.selectedUsuario}" />
-                        <p:ajax listener="#{mruRutinaController.consultarRutinaPorUsuario()}"/>
+                        <p:ajax id="ajaxAUX" listener="#{mruRutinaController.consultarRutinaPorUsuario()}"/>
                     </p:commandButton>
                     <p:commandButton ajax="false" id="nuevaRutina" value="#{bundle.btnNuevaRutinaLabel}" title="#{bundle.btnNuevaRutinaTitle}" actionListener="#{routingController.goToNuevaRutina()}"/>
 
@@ -88,7 +88,7 @@
         <br/>
         <h:form id="MruRutinasListForm">
             <p:growl id="growl" life="2000" />
-            <h3>Rutinas Registradas</h3>
+            <h3>Rutinas registradas: <p:outputLabel value="#{mruRutinaController.selectedUsuario.usuNombres} #{mruRutinaController.selectedUsuario.usuApellido1} #{mruRutinaController.selectedUsuario.usuApellido2}"></p:outputLabel></h3>
             <h:panelGroup>      
                 <p:dataTable id="tblRutinas" value="#{mruRutinaController.rutinas}" var="rutina" selectionMode="single"
                              selection="#{mruRutinaController.selected}" rowKey="#{rutina.ruId}">
@@ -152,7 +152,7 @@
         <br/>
         <br/>
         <br/>
-        <h3>Dias registrados</h3>
+        <h3>Dias registrados: <p:outputLabel value="#{mruDiaController.selectedRutina.toString()}" /> </h3>
         <h:panelGroup>      
             <p:dataTable id="tblDias" value="#{mruDiaController.dias}" var="dia">
 <!--                <p:column>
