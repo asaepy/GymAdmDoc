@@ -2,14 +2,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
    <h:head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <h:outputStylesheet name="./css/default.css"/>
       <h:outputStylesheet name="./css/cssLayout.css"/>
       <h:outputStylesheet name="./css/usuario.css"/>
-      <title>Gimnasio Administrativos</title>
+      <h:outputStylesheet name="./css/style.css"/>
+      <h:outputScript library="js" name="login.js"/>
+      <title>Facelets Template</title>
    </h:head>
 
    <h:body>
@@ -23,6 +27,24 @@
                <div class="borde-redondo"></div>
             </div>
             <!--<p:graphicImage library="img/" name="GymAdmDoc.png" height="145" style="margin-top: 25px; margin-left: -30px"/>-->
+            <div class="CuadroDeBotonesSesion">
+                <h:form>
+                <h:link id="opcionesusuario" style="text-decoration: none;color:#FFFFFF; ">
+                                    #{usuarioSessionController.nombreUsuario()}
+                                    <p:graphicImage value="#{usuarioSessionController.imagenFlujo}" width="30"  height="30" >
+                                        <f:param name="id" value="#{usuarioSessionController.identificacion}" />
+                        </p:graphicImage>    
+                                </h:link>
+                    
+                    <p:menu overlay="true" trigger="opcionesusuario"  my="left top" at="left bottom" style="width: 100px">     
+                                    
+                                    <p:menuitem value="Mi Perfil" />
+                                    <p:menuitem value="Cerrar Sesión" action="#{usuarioSessionController.logout()}"
+                                                onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"/>
+                                </p:menu>
+                   </h:form>
+            </div>
+            
          </div>
          <div class="bottom">
             
@@ -36,7 +58,7 @@
             <ui:insert name="content">Content</ui:insert>
          </div>
       </div>
-
+<ui:include src="/EfectodeCarga.xhtml"/>
    </h:body>
 
 </html>

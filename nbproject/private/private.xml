@@ -3,13 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/NetBeansProjects/Gym_Adm_Doc/src/java/co/edu/unicauca/gymadmdoc/sessionbeans/MrecInformacionRecaudoFacade.java</file>
-            <file>file:/D:/NetBeansProjects/Gym_Adm_Doc/src/java/co/edu/unicauca/gymadmdoc/services/RecaudoService.java</file>
-            <file>file:/D:/NetBeansProjects/Gym_Adm_Doc/web/administrador/mrec/reporte_mensual.xhtml</file>
-            <file>file:/D:/NetBeansProjects/Gym_Adm_Doc/web/administrador/mrec/nuevo_recaudo.xhtml</file>
-            <file>file:/D:/NetBeansProjects/Gym_Adm_Doc/src/java/co/edu/unicauca/gymadmdoc/entities/MrecInformacionRecaudo.java</file>
-            <file>file:/D:/NetBeansProjects/Gym_Adm_Doc/src/java/co/edu/unicauca/gymadmdoc/managedbeans/RecaudosController.java</file>
-            <file>file:/D:/NetBeansProjects/Gym_Adm_Doc/web/administrador/mrec/estadisticas.xhtml</file>
+            <file>file:/D:/todo/UNIVERSIDAD/semestre%202016-1/arquitectutas%20aplicaciones%20empresariales/proyecto/copia/GymAdmDoc/web/administrador/mu/listarUsuarios.xhtml</file>
+            <file>file:/D:/todo/UNIVERSIDAD/semestre%202016-1/arquitectutas%20aplicaciones%20empresariales/proyecto/copia/GymAdmDoc/web/usuario/menu.xhtml</file>
+            <file>file:/D:/todo/UNIVERSIDAD/semestre%202016-1/arquitectutas%20aplicaciones%20empresariales/proyecto/copia/GymAdmDoc/src/java/com/unicauca/gymadmdoc/managedbeans/MuUsuariogrupoController.java</file>
+            <file>file:/D:/todo/UNIVERSIDAD/semestre%202016-1/arquitectutas%20aplicaciones%20empresariales/proyecto/copia/GymAdmDoc/src/java/com/unicauca/gymadmdoc/managedbeans/MuGrupoController.java</file>
+            <file>file:/D:/todo/UNIVERSIDAD/semestre%202016-1/arquitectutas%20aplicaciones%20empresariales/proyecto/copia/GymAdmDoc/src/java/com/unicauca/gymadmdoc/managedbeans/RegistrarUsuarioController.java</file>
+            <file>file:/D:/todo/UNIVERSIDAD/semestre%202016-1/arquitectutas%20aplicaciones%20empresariales/proyecto/copia/GymAdmDoc/web/administrador/mu/ventanaRegistroUsuario.xhtml</file>
         </group>
     </open-files>
 </project-private>

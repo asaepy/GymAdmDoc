@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <h:head>
+        <title>Ver rutinas.</title>
+    </h:head>
+    <h:body>
+        <h:form id="MuUsuarioListForm">
+            <p:growl id="growl" life="2000" />
+        <!--<p:panel header="#{bundle.ListMuUsuarioTitle}">-->
+            <h3>Usuarios registrados:</h3>
+            <p:dataTable id="datalist" value="#{muUsuarioController.items}" var="usuario"
+                         selectionMode="single" selection="#{muUsuarioController.usuario}"
+                         paginator="true"
+                         rowKey="#{usuario.usuIdentificacion}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         >
+                <p:ajax event="rowSelect"   update="viewButton"/>
+                <p:ajax event="rowUnselect" update="viewButton"/>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuIdentificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usuIdentificacion}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuNombres}"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usuNombres}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuApellido1}"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usuApellido1}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuApellido2}"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usuApellido2}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuFoto}"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usuFoto}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMuUsuarioTitle_usuEstado}"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usuEstado}"/>
+                </p:column>
+
+                <p:column id="sd" width="28%">
+                    <f:facet name="header">
+                        <h:outputText value="Acciones"/>
+                    </f:facet>
+                    <p:commandButton ajax="false" update="tblRutinas" id="verRutinas" value="#{bundle.btnVerRutinasLabel}" title="#{bundle.btnVerRutinasTitle}">
+                        <f:setPropertyActionListener value="#{usuario}" target="#{mruRutinaController.selectedUsuario}" />
+                        <p:ajax id="ajaxAUX" listener="#{mruRutinaController.consultarRutinaPorUsuario()}"/>
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="nuevaRutina" value="#{bundle.btnNuevaRutinaLabel}" title="#{bundle.btnNuevaRutinaTitle}" actionListener="#{routingController.goToNuevaRutina()}"/>
+
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.ViewUsuario}" update=":MuUsuarioViewForm" oncomplete="PF('MuUsuarioViewDialog').show()" disabled="#{empty muUsuarioController.usuario}"/>
+                </f:facet>
+            </p:dataTable>
+            <!--</p:panel>-->
+        </h:form>
+
+        <!--Zona para mostrar las rutinas-->
+        <br/>
+        <br/>
+        <br/>
+        <h:form id="MruRutinasListForm">
+            <p:growl id="growl" life="2000" />
+            <h3>Rutinas registradas: <p:outputLabel value="#{mruRutinaController.selectedUsuario.usuNombres} #{mruRutinaController.selectedUsuario.usuApellido1} #{mruRutinaController.selectedUsuario.usuApellido2}"></p:outputLabel></h3>
+            <h:panelGroup>      
+                <p:dataTable id="tblRutinas" value="#{mruRutinaController.rutinas}" var="rutina" selectionMode="single"
+                             selection="#{mruRutinaController.selected}" rowKey="#{rutina.ruId}">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_ruId}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruId}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_ruFechafin}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruFechafin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_ruPeso}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruPeso}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_ruTalla}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruTalla}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_usuImc}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruImc}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMruRutinaTitle_ruObservaciones}"/>
+                        </f:facet>
+                        <h:outputText value="#{rutina.ruObservaciones}"/>
+                    </p:column>
+
+                    <p:column width="28%">
+                        <f:facet name="header">
+                            <h:outputText value="Acciones"/>
+                        </f:facet>
+                        <p:commandButton ajax="false" update="tblDias" id="verDias" value="#{bundle.btnVerDiasLabel}" title="#{bundle.btnVerDiasTitle}">
+                            <p:ajax listener="#{mruDiaController.consultarDiaPorRutina()}"/>
+                            <f:setPropertyActionListener value="#{rutina}" target="#{mruDiaController.selectedRutina}" />
+                        </p:commandButton>
+                        <p:commandButton ajax="false" id="nuevoDia" value="#{bundle.btnNuevoDiaLabel}" title="#{bundle.btnNuevoDiaTitle}" actionListener="#{routingController.goToNuevoDia()}"/>
+
+                    </p:column>
+                </p:dataTable>
+
+            </h:panelGroup>
+        </h:form>
+
+
+        <!--Zona para mostrar los días-->
+        <br/>
+        <br/>
+        <br/>
+        <h3>Dias registrados: <p:outputLabel value="#{mruDiaController.selectedRutina.toString()}" /> </h3>
+        <h:panelGroup>      
+            <p:dataTable id="tblDias" value="#{mruDiaController.dias}" var="dia">
+<!--                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMruDiaTitle_diaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{dia.diaId}"/>
+                </p:column>-->
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMruDiaTitle_diaNumero}"/>
+                    </f:facet>
+                    <h:outputText value="#{dia.diaNumero}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListMruDiaTitle_diaTiempomin}"/>
+                    </f:facet>
+                    <h:outputText value="#{dia.diaTiempomin}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+        </h:panelGroup>
+
+
+
+        <!--        <ui:include src="Create.xhtml"/>
+                <ui:include src="Edit.xhtml"/>-->
+        <ui:include src="View.xhtml"/>
+    </h:body>
+
+
+</html>

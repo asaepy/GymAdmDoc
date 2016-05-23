@@ -16,7 +16,10 @@
          <h:form id="formMenu">
             <p:tieredMenu>
                <p:submenu label="Usuarios">
-                  <p:menuitem value="Sub-menu"/>
+                  <p:menuitem value="Gestión de usuarios" action="#{routingController.irGestionUsuario()}" ajax="false"
+                              onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"/>
+                   <p:menuitem value="Registros de ingreo" action="#{routingController.irRegistroIngreso()}" ajax="false"
+                               onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"/>
                </p:submenu>
                <p:submenu label="Asistencia">
                   <p:menuitem value="Sub-menu"/>
@@ -30,16 +33,25 @@
                               action="#{routingController.goToEstadisticasMREC()}"/>
                </p:submenu>
                <p:submenu label="Valoraciones">
-                  <p:menuitem value="Sub-menu"/>
+                  <p:menuitem value="Valoraciones" action="#{routingController.irValoracion()}" ajax="false"/>
+                   <p:menuitem value="Siguientes Valoraciones" action="#{routingController.irSiguientesValoraciones()}" ajax="false"/>
+                   <p:menuitem value="Dias Festivos" action="#{routingController.irDiasFestivos()}" ajax="false"/>
                </p:submenu>
                <p:submenu label="Rutinas">
-                  <p:menuitem value="Sub-menu"/>
+                  <p:menuitem value="Ir" ajax="false"
+                                    action="#{routingController.goToUsuarios_Rutinas}"/>
+                        <p:menuitem value="Nueva Rutina" ajax="false"
+                                    action="#{routingController.goToNuevaRutina}"/>
+                        <p:menuitem value="Agregar nuevo día a rutina" ajax="false"
+                                    action="#{routingController.goToNuevoDia()}"/>
+                        <p:menuitem value="Gestionar ejercicios" ajax="false"
+                                    action="#{routingController.goToEjercicios}"/>
                </p:submenu>
                <p:separator/>
                <p:menuitem value="Configuracion"/>
             </p:tieredMenu>
          </h:form>
       </div>
-
+ <ui:include src="/EfectodeCarga.xhtml"/>
    </h:body>
 </html>
