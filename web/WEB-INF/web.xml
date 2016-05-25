@@ -30,7 +30,8 @@
         <web-resource-collection>
             <web-resource-name>administrador - administración usuarios</web-resource-name>
             <description/>
-            <url-pattern>/administrador/*</url-pattern>
+            <url-pattern>/faces/administrador/*</url-pattern>
+            <url-pattern>/faces/usuario/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
@@ -53,8 +54,8 @@
         <auth-method>FORM</auth-method>
         <realm-name>gymJDBCRealm</realm-name>
         <form-login-config>
-            <form-login-page>/visitante/principal.xhtml</form-login-page>
-            <form-error-page>/welcomePrimefacesxhtml</form-error-page>
+            <form-login-page>/faces/error.xhtml</form-login-page>
+            <form-error-page>/error.xhtml</form-error-page>
         </form-login-config>
     </login-config>
     <security-role>
