@@ -66,6 +66,24 @@
                 
             </p:panelGrid>
         </h:form>
+        
+        <p:dialog modal="true" resizable="false" header="Error" widgetVar="errorIniciarSesion" closable="false">
+
+            <p:panelGrid style="text-align:left;" styleClass="panelgrid">
+                <p:row>
+                    <p:column style="font-size: 13px">
+                        <h:outputLabel style="color: red;" value="Usuario o contraseña incorrectos"/>
+                    </p:column>                                
+                </p:row>
+                <p:row>
+                    <p:column width="200px;">
+                        <p:commandButton style="background: #C8CDD6;color:#000000;font-style: italic;margin-left: 100px;font-weight: normal;" 
+                                         value="Aceptar" onclick="PF('errorIniciarSesion').hide()"/>                                    
+                    </p:column>
+
+                </p:row>
+            </p:panelGrid>
+        </p:dialog>
     </h:body>
 </html>
 

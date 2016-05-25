@@ -1,6 +1,5 @@
 package com.unicauca.gymadmdoc.managedbeans;
 
-
 import com.unicauca.gymadmdoc.entities.MuUsuario;
 import com.unicauca.gymadmdoc.entities.MuUsuariogrupo;
 import com.unicauca.gymadmdoc.sessionbeans.MuUsuarioFacade;
@@ -30,23 +29,21 @@ import org.primefaces.model.StreamedContent;
  */
 @ManagedBean
 @SessionScoped
-public class UsuarioSessionController implements Serializable
-{
+public class UsuarioSessionController implements Serializable {
+
     @EJB
     private MuUsuariogrupoFacade usuarioGrupoEJB;
     @EJB
     private MuUsuarioFacade usuarioEJB;
-    String nombreDeUsuario;    
+    String nombreDeUsuario;
     String contrasena;
-    
+
     private Boolean haySesion;
     private Long identificacion;
-    
-    
-    public UsuarioSessionController()
-    {
-        haySesion=false;
-            }
+
+    public UsuarioSessionController() {
+        haySesion = false;
+    }
 
     public Boolean getHaySesion() {
         return haySesion;
@@ -54,15 +51,13 @@ public class UsuarioSessionController implements Serializable
 
     public void setHaySesion(Boolean haySesion) {
         this.haySesion = haySesion;
-    }    
-    
-    public String getNombreDeUsuario()
-    {
+    }
+
+    public String getNombreDeUsuario() {
         return nombreDeUsuario;
     }
 
-    public void setNombreDeUsuario(String nombreDeUsuario) 
-    {
+    public void setNombreDeUsuario(String nombreDeUsuario) {
         this.nombreDeUsuario = nombreDeUsuario;
     }
 
@@ -74,152 +69,139 @@ public class UsuarioSessionController implements Serializable
         this.identificacion = identificacion;
     }
 
-    public String getContrasena() 
-    {
+    public String getContrasena() {
         return contrasena;
     }
 
-    public void setContrasena(String contrasena)
-    {
+    public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-       
-    public void login()throws IOException, ServletException 
-    {
+
+    public void login() throws IOException, ServletException {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesContext fc = FacesContext.getCurrentInstance();
-        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();        
+        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
         if (req.getUserPrincipal() == null) {
-            try 
-            {
+            try {
                 req.login(this.nombreDeUsuario, this.contrasena);
                 req.getServletContext().log("Autenticacion exitosa");
                 haySesion = true;
-                if(this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuariogrupoPK().getGruId().equals("user"))
-                {
+                if (this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuariogrupoPK().getGruId().equals("user")) {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("");
-                }
-                else
-                {
+                } else {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GymAdmDoc/faces/usuario/usuarioMain.xhtml");
-                    identificacion=this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuario().getUsuIdentificacion();
+                    identificacion = this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuario().getUsuIdentificacion();
                 }
-            } 
-            catch (ServletException e) 
-            {
-                fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nombre de usuario o contraseña incorrectos", "Nombre de usuario o contraseña incorrectos"));
-                
+            } catch (ServletException e) {
+
+                requestContext = RequestContext.getCurrentInstance();
+                FacesContext context = FacesContext.getCurrentInstance();
+                Application application = context.getApplication();
+                ViewHandler viewHandler = application.getViewHandler();
+                UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
+                context.setViewRoot(viewRoot);
+                context.renderResponse();
+                requestContext.execute("PF('errorIniciarSesion').show()");
+
             }
-        } 
-        else 
-        {
+        } else {
             req.getServletContext().log("El usuario ya estaba logueado:  ");
             requestContext.update("mensajeerror");
         }
     }
+
     public StreamedContent getImagenFlujo() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
             return new DefaultStreamedContent();
         } else {
             String id = context.getExternalContext().getRequestParameterMap().get("id");
-            System.out.println("ident: "+id);
+            System.out.println("ident: " + id);
             MuUsuario usu = usuarioEJB.buscarPorIdUsuario(Long.valueOf(id)).get(0);
-            if (usu.getUsuFoto()==null)
+            if (usu.getUsuFoto() == null) {
                 return Utilidades.getImagenPorDefecto("foto");
-            else
+            } else {
                 return new DefaultStreamedContent(new ByteArrayInputStream(usu.getUsuFoto()));
+            }
         }
-    }    
-    public void logout() throws IOException, ServletException 
-    {
+    }
+
+    public void logout() throws IOException, ServletException {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
         try {
-            req.logout();            
+            req.logout();
             req.getSession().invalidate();
             fc.getExternalContext().invalidateSession();
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/Gymadmdoc/");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/GymAdmDoc/");
 
-        } catch (ServletException e) {            
-            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "FAILED", "Logout failed on backend"));            
+        } catch (ServletException e) {
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "FAILED", "Logout failed on backend"));
         }
-        
+
     }
-    
-    public void ventanaInicioSession()
-    {
-       RequestContext requestContext = RequestContext.getCurrentInstance();          
-       FacesContext context = FacesContext.getCurrentInstance();
-       Application application = context.getApplication();
-       ViewHandler viewHandler = application.getViewHandler();
-       UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
-       context.setViewRoot(viewRoot);       
-       context.renderResponse();
-       this.contrasena=null;
-       this.nombreDeUsuario=null;
-       requestContext.update("formularioInicioSession");       
-       requestContext.execute("PF('IniciarSesion').show()");
+
+    public void ventanaInicioSession() {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        FacesContext context = FacesContext.getCurrentInstance();
+        Application application = context.getApplication();
+        ViewHandler viewHandler = application.getViewHandler();
+        UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
+        context.setViewRoot(viewRoot);
+        context.renderResponse();
+        this.contrasena = null;
+        this.nombreDeUsuario = null;
+        requestContext.update("formularioInicioSession");
+        requestContext.execute("PF('IniciarSesion').show()");
     }
-    public boolean esusuarioSinSession()
-    {
+
+    public boolean esusuarioSinSession() {
         FacesContext fc = FacesContext.getCurrentInstance();
-        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();       
-        if (req.getUserPrincipal() == null) 
-        {
+        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
+        if (req.getUserPrincipal() == null) {
             return true;
         }
         return false;
     }
-    
-    public boolean esusuarioConSession()
-    {
+
+    public boolean esusuarioConSession() {
         FacesContext fc = FacesContext.getCurrentInstance();
-        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();       
-        if (req.getUserPrincipal() == null) 
-        {
+        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
+        if (req.getUserPrincipal() == null) {
             return false;
-            
-        }
-        else
-        {
+
+        } else {
             /*if(this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuariogrupoPK().getGruId().equals(2))
             {
                 return true;
             }*/
             return false;
         }
-        
+
     }
-    public boolean esAdministrador()
-    {
+
+    public boolean esAdministrador() {
         FacesContext fc = FacesContext.getCurrentInstance();
-        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();       
-        if (req.getUserPrincipal() == null) 
-        {
+        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
+        if (req.getUserPrincipal() == null) {
             return false;
-            
-        }
-        else
-        {
-           /* if(this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuariogrupoPK().getGruid().equals("admin"))
+
+        } else {
+            /* if(this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getUsuariogrupoPK().getGruid().equals("admin"))
             {
                 return true;
             }*/
             return false;
         }
-        
+
     }
-    public String nombreUsuario()
-    {
+
+    public String nombreUsuario() {
         FacesContext fc = FacesContext.getCurrentInstance();
-        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();       
-        if (req.getUserPrincipal() == null) 
-        {
+        HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
+        if (req.getUserPrincipal() == null) {
             return "";
-        }
-        else
-        {
+        } else {
             return req.getUserPrincipal().getName();
         }
     }
