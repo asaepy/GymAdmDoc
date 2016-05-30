@@ -8,5 +8,9 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/mru_Bundle</base-name>
+            <var>mru_Bundle</var>
+        </resource-bundle>
     </application>
 </faces-config>

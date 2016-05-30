@@ -63,10 +63,13 @@ public class RoutingController implements Serializable {
     }
     
     public void goToUsuarios_Rutinas() {
-        this.ruta = "/administrador/mru/muUsuario/List.xhtml";
+        this.ruta = "/administrador/mru/muUsuario/ListarUsuariariosRutinas.xhtml";
     }
     public void goToVerRutinasDeUsuario() {
         this.ruta = "/administrador/mru/ListarRutinas.xhtml";
+    }
+    public void goToListarRutinasDeUsuario(){
+        this.ruta = "/administrador/mru/ListarRutinasDeUsuario.xhtml";
     }
     public void goToEjercicios() {
         this.ruta = "/administrador/mru/mruEjercicio/ListEjercicio.xhtml";

@@ -3,18 +3,16 @@
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
         <Node id="index.xhtml" x="400" y="450" zoom="true"/>
-        <Node id="templates/_visitantetmp.xhtml" x="150" y="450" zoom="true"/>
-        <Node id="welcomePrimefaces.xhtml" x="88" y="99" zoom="true"/>
-        <Node id="visitante/principal.xhtml" x="650" y="300" zoom="true"/>
-        <Node id="administrador/mrec/reporte_mensual.xhtml" x="1400" y="300" zoom="true"/>
-        <Node id="administrador/mu/prueba.xhtml" x="650" y="150" zoom="true"/>
-        <Node id="usuario/usuarioMain.xhtml" x="150" y="600" zoom="true"/>
-        <Node id="usuario/menu.xhtml" x="400" y="300" zoom="true"/>
         <Node id="administrador/mrec/nuevo_recaudo.xhtml" x="150" y="750" zoom="true"/>
         <Node id="administrador/mrec/estadisticas.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="templates/_visitantetmp.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="visitante/principal.xhtml" x="650" y="300" zoom="true"/>
         <Node id="template.xhtml" x="900" y="600" zoom="true"/>
-        <Node id="usuario/content.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="administrador/mrec/reporte_mensual.xhtml" x="1400" y="300" zoom="true"/>
         <Node id="templates/_usuariotmp.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="usuario/content.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="usuario/usuarioMain.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="usuario/menu.xhtml" x="400" y="300" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
