@@ -78,4 +78,7 @@ public class RoutingController implements Serializable {
    public void irRegistroIngreso(){
        this.ruta = "/administrador/mu/registroIngreso.xhtml";
    }
+   public void irPerfil(){
+       this.ruta = "/usuariosestandar/mu/perfilUsuario.xhtml";
+   }
 }

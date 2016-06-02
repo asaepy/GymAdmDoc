@@ -6,20 +6,20 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <p:dialog header="Editar Usuario" modal="true" resizable="false" position="top"  widgetVar="editarUsuario" closable="true">
-        <h:form id="editarInformacionUsuario">
+    <p:dialog header="Editar Usuario" modal="true" resizable="false" position="center"  widgetVar="editarUsuario" closable="true">
+        <h:form id="editarFoto">
             <p:panelGrid styleClass="panelgrid" id="panel">
-                <p:row rendered="#{editarUsuarioController.campoIdentificacion}">
+                <p:row>
                     <p:column>
-                        <p:outputLabel style="font-size: 15px;" value="Número de Cédula: "/>
+                        
                     </p:column>
-                    <p:column style="background: #eff5fa">
-                        <p:outputLabel value="#{editarUsuarioController.usuario.usuIdentificacion}"/>
+                    <p:column >
+                        
                     </p:column>
-                    <p:column style="background: #eff5fa">
-                        <p:commandLink style="color:blue;" value="Modificar" action="#{editarUsuarioController.mostrarModificarIdentificacion()}"/>
+                    <p:column >
+                        
                     </p:column>
-                    <p:column rowspan="6">
+                    <p:column rowspan="7">
                         <p:panel header="Foto de Perfil" toggleable="true">
                             <div style="float:left">
                                 <h:form id="formularioFoto">
@@ -40,20 +40,17 @@
                                             </p:column>
 
                                             <p:column  rendered="#{!editarUsuarioController.campoFoto}">
-                                                La imagen que suba será redimensionada automáticamente
-                                                <p:fileUpload  fileUploadListener="#{editarUsuarioController.cargarFoto}" mode="advanced" dragDropSupport="false"
-                                                               label="Cargar" auto="false"  
-                                                               invalidFileMessage="Tipo de archivo no válido"   fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                                               onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"/>
-                                            </p:column>
-                                            <p:column rendered="#{!editarUsuarioController.campoFoto}">
-                                                <p:outputLabel value="#{editarUsuarioController.foto.fileName}"/>
-                                            </p:column>
-                                        </p:row>
+                                                    <p:fileUpload  fileUploadListener="#{editarUsuarioController.cargarFoto}" mode="advanced" dragDropSupport="false"
+                                                                   style="width:250px;"
+                                                                   label="Seleccionar" auto="false"  
+                                                                   invalidFileMessage="Tipo de archivo no válido" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                                   onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"/>
 
-                                        <p:graphicImage value="#{uploadImageController.imagenFlujo}" >
-                                            <f:param name="id" value="#{uploadImageController.selected.imageId}" />
-                                        </p:graphicImage>
+                                                </p:column>
+                                                <p:column rendered="#{!editarUsuarioController.campoFoto}">
+                                                    <p:outputLabel value="#{editarUsuarioController.uploadedFileFoto.fileName}"/>
+                                                </p:column>
+                                        </p:row>                                   
 
                                     </p:panelGrid>            
                                 </h:form> 
@@ -73,9 +70,26 @@
                         </p:panel>
                     </p:column>
                 </p:row>
+            </p:panelGrid>
+        </h:form>
+        
+        <h:form id="editarInformacionUsuario">
+            <p:panelGrid styleClass="panelgrid" id="panel">
+                
+                <p:row rendered="#{editarUsuarioController.campoIdentificacion}">
+                    <p:column>
+                        <p:outputLabel style="font-size: 15px;" value="Número de cédula: "/>
+                    </p:column>
+                    <p:column style="background: #eff5fa">
+                        <p:outputLabel value="#{editarUsuarioController.usuario.usuIdentificacion}"/>
+                    </p:column>
+                    <p:column style="background: #eff5fa">
+                        <p:commandLink style="color:blue;" value="Modificar" action="#{editarUsuarioController.mostrarModificarIdentificacion()}"/>
+                    </p:column>
+                </p:row>
                 <p:row rendered="#{!editarUsuarioController.campoIdentificacion}">
                     <p:column>
-                        <p:outputLabel style="font-size: 15px;" value="Número de Identificación: "/>
+                        <p:outputLabel style="font-size: 15px;" value="Número de cédula: "/>
                         <h:outputLabel style="font-style: italic;font-size: 16px;text-align: left; color:red;" 
                                        value="* "/>
                     </p:column>
@@ -87,38 +101,6 @@
                                        onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
                         <p:commandLink style="margin-left: 10px;color:blue;"  value="Cancelar" action="#{editarUsuarioController.cancelarActualizarIdentificacion()}"
                                        onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
-                    </p:column>
-                    <p:column rowspan="6">
-                        <p:row>
-                            <p:column>                                
-                            </p:column>
-
-                            <p:column  rendered="#{editarUsuarioController.campoFoto}">                                
-                                <p:graphicImage value="#{editarUsuarioController.imagenFlujo}" >
-                                    <f:param name="idUsu" value="#{editarUsuarioController.usuario.usuIdentificacion}" />
-                                </p:graphicImage>
-
-                            </p:column>
-                            <p:column rendered="#{editarUsuarioController.campoFoto}">
-                                <p:commandLink style="color: blue;" action="#{editarUsuarioController.mostraSubirFoto()}" value="Cambiar"/>                                                                 
-                            </p:column>
-
-                            <p:column  rendered="#{!editarUsuarioController.campoFoto}">
-                                La imagen que suba será redimensionada automáticamente
-                                <p:fileUpload  fileUploadListener="#{editarUsuarioController.cargarFoto}" mode="advanced" dragDropSupport="false"
-                                               label="Cargar" auto="true"  
-                                               invalidFileMessage="Tipo de archivo no válido"   fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                               onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"/>
-                            </p:column>
-                            <p:column rendered="#{!editarUsuarioController.campoFoto}">
-                                <p:outputLabel value="#{editarUsuarioController.foto.fileName}"/>
-                            </p:column>
-                        </p:row>
-
-                        <p:graphicImage value="#{uploadImageController.imagenFlujo}" >
-                            <f:param name="id" value="#{uploadImageController.selected.imageId}" />
-                        </p:graphicImage>
-
                     </p:column>
                 </p:row>
 
@@ -149,8 +131,6 @@
                                        onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
                     </p:column>
                 </p:row>
-
-
                 <p:row rendered="#{editarUsuarioController.campoNombre}">
                     <p:column>
                         <p:outputLabel style="font-size: 15px;" value="Nombres: "/>
@@ -176,7 +156,7 @@
                                        onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
                         <p:commandLink style="margin-left: 10px;color: blue;" value="Cancelar" 
                                        action="#{editarUsuarioController.cancelarActualizarNombre()}"
-                                       onstart="PF('cargando').show()"  onsuccess="PF('cargamdo').hide()"/>
+                                       onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
                     </p:column>
                 </p:row>
 
@@ -298,7 +278,7 @@
                     </p:column>
                 </p:row>
 
-                <p:row rendered="#{editarUsuarioController.campotelefono}">
+                <p:row rendered="#{editarUsuarioController.campoTelefono}">
                     <p:column>
                         <p:outputLabel style="font-size: 15px;" value="Teléfono: "/>
                     </p:column>
@@ -309,7 +289,7 @@
                         <p:commandLink style="color: blue;" value="Modificar" action="#{editarUsuarioController.mostrarModificarTelefono()}"/>
                     </p:column>
                 </p:row>
-                <p:row rendered="#{!editarUsuarioController.campotelefono}">
+                <p:row rendered="#{!editarUsuarioController.campoTelefono}">
                     <p:column>
                         <p:outputLabel style="font-size: 15px;" value="Teléfono: "/>
                     </p:column>
@@ -391,6 +371,7 @@
                         <p:outputLabel value=" años"/>
                     </p:column>
                 </p:row>
+                
                 <p:row rendered="#{editarUsuarioController.campoOcupacion}">
                     <p:column>
                         <p:outputLabel style="font-size: 15px;" value="Ocupacion: "/>
@@ -516,10 +497,10 @@
                     </p:column>
                     <p:column style="background: #eff5fa" colspan="2">
                         <p:commandLink style="color: blue;" value="Aceptar" action="#{editarUsuarioController.actualizarContrasena()}"
-                                       onstart="PF('efectoCarga').show()"  onsuccess="PF('efectoCarga').hide()"/>
+                                       onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
                         <p:commandLink style="margin-left: 10px;color: blue;" value="Cancelar" 
                                        action="#{editarUsuarioController.cancelarActualizarContrasena()}"
-                                       onstart="PF('efectoCarga').show()"  onsuccess="PF('efectoCarga').hide()"/>
+                                       onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
                     </p:column>
                 </p:row>
             </p:panelGrid>    

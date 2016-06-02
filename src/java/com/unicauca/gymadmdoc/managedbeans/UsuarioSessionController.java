@@ -40,6 +40,7 @@ public class UsuarioSessionController implements Serializable {
 
     private Boolean haySesion;
     private Long identificacion;
+    private MuUsuario usuario;
 
     public UsuarioSessionController() {
         haySesion = false;
@@ -77,6 +78,14 @@ public class UsuarioSessionController implements Serializable {
         this.contrasena = contrasena;
     }
 
+    public MuUsuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(MuUsuario usuario) {
+        this.usuario = usuario;
+    }
+
     public void login() throws IOException, ServletException {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -87,7 +96,8 @@ public class UsuarioSessionController implements Serializable {
                 req.getServletContext().log("Autenticacion exitosa");
                 haySesion = true;
                 if (this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuariogrupoPK().getGruId().equals("user")) {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/GymAdmDoc/faces/usuarioestandar/estandarMain.xhtml");
+                    identificacion = this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuario().getUsuIdentificacion();
                 } else {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GymAdmDoc/faces/usuario/usuarioMain.xhtml");
                     identificacion = this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuario().getUsuIdentificacion();
@@ -104,9 +114,12 @@ public class UsuarioSessionController implements Serializable {
                 requestContext.execute("PF('errorIniciarSesion').show()");
 
             }
+        } else if (this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuariogrupoPK().getGruId().equals("user")) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/GymAdmDoc/faces/usuarioestandar/estandarMain.xhtml");
+            identificacion = this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuario().getUsuIdentificacion();
         } else {
-            req.getServletContext().log("El usuario ya estaba logueado:  ");
-            requestContext.update("mensajeerror");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/GymAdmDoc/faces/usuario/usuarioMain.xhtml");
+            identificacion = this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuario().getUsuIdentificacion();
         }
     }
 
@@ -116,7 +129,7 @@ public class UsuarioSessionController implements Serializable {
             return new DefaultStreamedContent();
         } else {
             String id = context.getExternalContext().getRequestParameterMap().get("id");
-            System.out.println("ident: " + id);
+            //System.out.println("ident: " + id);
             MuUsuario usu = usuarioEJB.buscarPorIdUsuario(Long.valueOf(id)).get(0);
             if (usu.getUsuFoto() == null) {
                 return Utilidades.getImagenPorDefecto("foto");

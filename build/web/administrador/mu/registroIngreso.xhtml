@@ -15,7 +15,7 @@
         <h:form id="datosIngreso">
             <h:panelGrid columns="3"> 
                 <p:outputLabel styleClass="CampoLabel" value="Seleccione un Usuario " />                      
-                <p:commandButton value="Seleccionar" style="background: #22419A;color:#FFFFFF;font-style: italic;font-weight: normal;" 
+                <p:commandButton value="Seleccionar" 
                              onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"
                              onclick="PF('seleccionarUsuario').show()" />
             </h:panelGrid>
@@ -81,12 +81,12 @@
         <p:separator/> 
         
         
-        <p:dialog header="Seleccionar usuario" resizable="false" width="850" position="290,50" modal="true"  widgetVar="seleccionarUsuario">
+        <p:dialog header="Seleccionar usuario" resizable="false" width="850" position="center" modal="true"  widgetVar="seleccionarUsuario">
             <h:form id="seleccionUsuario">
                 <br/>
                 <h:panelGrid columns="2">
                     <p:outputLabel value="Nombre del usuario:" />
-                    <p:inputText style="width: 240px;" value="#{registrarUsuarioController.nombreOApellidos}"  >
+                    <p:inputText  placeholder="Nombres, apellidos o identificación " style="width: 240px;" value="#{registrarUsuarioController.nombreOApellidos}"  >
                         <p:ajax event="keyup" update="tablaSeleccionUsuario" listener="#{registrarUsuarioController.buscarPorNombresOApellidos()}" />                                
                     </p:inputText>                          
                 </h:panelGrid>
@@ -111,12 +111,10 @@
                         <p:column headerText="Ocupación" width="80">
                             #{usuario.ocuId.ocuDescripcion}
                         </p:column>
-                        <p:column headerText="Acciones" width="70">
-                            <p:commandLink actionListener="#{registrarDatosIngresoController.seleccionarUsuario(usuario)}" 
-                                           id="seleccionar" style="text-decoration: none;color: blue; font-size: 12px;" 
-                                           >                                    
-                                Seleccionar
-                            </p:commandLink>
+                        <p:column headerText="Acciones" width="80">
+                            <p:commandButton icon="ui-icon-plus" actionListener="#{registrarDatosIngresoController.seleccionarUsuario(usuario)}" 
+                                             id="seleccionar" value="Seleccionar"
+                                           />      
                         </p:column> 
 
                     </p:dataTable>

@@ -39,6 +39,7 @@ public class MostrarUsuariosController implements Serializable {
     private boolean habilitarEstudiantes;    
     private boolean habilitarFuncionarios;
     private boolean habilitarFamiliares;
+    private boolean habilitarTodos;
     private boolean habilitarTablaUsuarios;
     
     private String nombreUsuario;
@@ -100,6 +101,14 @@ public class MostrarUsuariosController implements Serializable {
     {
         this.nombreUsuario = nombreUsuario;
     }
+
+    public boolean isHabilitarTodos() {
+        return habilitarTodos;
+    }
+
+    public void setHabilitarTodos(boolean habilitarTodos) {
+        this.habilitarTodos = habilitarTodos;
+    }
     
     public List<String> getListaTiposdeUsuario() 
     {
@@ -149,6 +158,7 @@ public class MostrarUsuariosController implements Serializable {
     private void cargarListaTiposUsuarios()
     {
         this.listaTiposdeUsuario=new ArrayList();
+        this.listaTiposdeUsuario.add("Todos");
         this.listaTiposdeUsuario.add("Estudiantes");
         this.listaTiposdeUsuario.add("Funcionarios");
         this.listaTiposdeUsuario.add("Familiares");
@@ -159,6 +169,7 @@ public class MostrarUsuariosController implements Serializable {
         this.habilitarEstudiantes=false;
         this.habilitarFamiliares=false;
         this.habilitarFuncionarios=false;
+        this.habilitarTodos=false;
         this.habilitarTablaUsuarios=false;
     }
     
@@ -168,6 +179,7 @@ public class MostrarUsuariosController implements Serializable {
         this.habilitarEstudiantes=false;
         this.habilitarFuncionarios=false;
         this.habilitarFamiliares=false;
+        this.habilitarTodos=false;
         this.habilitarTablaUsuarios=false;
         this.nombreUsuario=null;
         
@@ -189,10 +201,28 @@ public class MostrarUsuariosController implements Serializable {
             this.habilitarTablaUsuarios=true;
             this.listaUsuarios=this.usuarioEJB.buscarPorEstudiantes();
         }
+        if(tipo.equals("Todos"))
+        {
+            this.habilitarTodos=true;
+            this.habilitarTablaUsuarios=true;
+            this.listaUsuarios=this.usuarioEJB.buscarTodos();
+        }
     }    
     public void  buscarPorNombresOApellidos()
     {
         this.listaUsuarios=usuarioEJB.buscarPorNombresApellidos(this.nombreOApellidos.toLowerCase());
+    }   
+    public void  buscarPorNombresOApellidosFuncionarios()
+    {
+        this.listaUsuarios=usuarioEJB.buscarPorNombresApellidosFuncionarios(this.nombreOApellidos.toLowerCase());
+    }   
+    public void  buscarPorNombresOApellidosEstudiantes()
+    {
+        this.listaUsuarios=usuarioEJB.buscarPorNombresApellidosEstudiantes(this.nombreOApellidos.toLowerCase());
+    }   
+    public void  buscarPorNombresOApellidosFamiliares()
+    {
+        this.listaUsuarios=usuarioEJB.buscarPorNombresApellidosFamiliares(this.nombreOApellidos.toLowerCase());
     }   
     public void buscarPorNombreUsuario()
     {

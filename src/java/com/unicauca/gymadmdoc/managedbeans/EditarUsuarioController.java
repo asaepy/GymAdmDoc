@@ -59,7 +59,6 @@ public class EditarUsuarioController implements Serializable {
     private boolean campoCodigo;
     private boolean campoNombre;
     private boolean campoCorreo;
-    private boolean campotelefono;
     private boolean campoGenero;
     private boolean campoNombreUsuario;
     private boolean campoContrasena;
@@ -278,13 +277,7 @@ public class EditarUsuarioController implements Serializable {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public boolean isCampotelefono() {
-        return campotelefono;
-    }
-
-    public void setCampotelefono(boolean campotelefono) {
-        this.campotelefono = campotelefono;
-    }
+    
 
     public String getTelefono() {
         return telefono;
@@ -392,6 +385,14 @@ public class EditarUsuarioController implements Serializable {
         this.campoFoto = campoFoto;
     }
 
+    public UploadedFile getUploadedFileFoto() {
+        return uploadedFileFoto;
+    }
+
+    public void setUploadedFileFoto(UploadedFile uploadedFileFoto) {
+        this.uploadedFileFoto = uploadedFileFoto;
+    }
+     
     public UploadedFile getFoto() {
         return uploadedFileFoto;
     }
@@ -552,7 +553,7 @@ public class EditarUsuarioController implements Serializable {
         this.campoApellido2 = true;
         this.campoFechaNacimiento = true;
         this.campoCorreo = true;
-        this.campotelefono = true;
+        this.campoTelefono = true;
         this.campoGenero = true;
         this.campoNombreUsuario = true;
         this.campoContrasena = true;
@@ -571,33 +572,30 @@ public class EditarUsuarioController implements Serializable {
     public void cargarFoto(FileUploadEvent event) {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.uploadedFileFoto = event.getFile();
-        requestContext.update("editarInformacionUsuario");
+        requestContext.update("formularioFoto");
 
     }
+    
+    
 
     public void actualizarFoto() throws InterruptedException {
-        System.out.println("entro upload");
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        if (this.uploadedFileFoto != null) {
-            
+        if (this.uploadedFileFoto != null) {            
             this.campoFoto = true;
             try {
                 InputStream fi = uploadedFileFoto.getInputstream();
                 byte[] buffer = RedimensionadorImagenes.redimensionar(fi, 200);
                 usuario.setUsuFoto(buffer);
                 this.usuarioEJB.edit(usuario);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Foto Actualizada exitosamente. Fresione F5 para refrescarla", "Foto Actualizada."));
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Thread.sleep(2000);
             this.uploadedFileFoto = null;
 
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se ha cargado una foto.", "No se ha cargado una foto"));
-        }
-
-        requestContext.update("editarInformacionUsuario");
+        } 
+        
+        requestContext.update("editarFoto");
     }
 
     public void cancelarSubirFoto() {
@@ -605,7 +603,7 @@ public class EditarUsuarioController implements Serializable {
         this.campoFoto = true;
         this.uploadedFileFoto = null;
 
-        requestContext.update("editarInformacionUsuario");
+        requestContext.update("editarFoto");
 
     }
 
@@ -615,8 +613,8 @@ public class EditarUsuarioController implements Serializable {
     public void mostraSubirFoto() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.campoFoto = false;
-
-        requestContext.update("editarInformacionUsuario");
+        requestContext.update("editarFoto");
+        
     }
 
     public void mostrarModificarNombre() {
@@ -805,10 +803,16 @@ public void mostrarModificarApellido2() {
 
     public void mostrarModificarTelefono() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        this.campotelefono = false;
+        this.campoTelefono = false;
         if (this.usuario.getUsuTelefono() != null) {
             this.telefono = this.usuario.getUsuTelefono() + "";
         }
+        requestContext.update("editarInformacionUsuario");
+    }
+    public void cancelarActualizarTelefono() {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        this.campoTelefono = true;
+        this.telefono = "";
         requestContext.update("editarInformacionUsuario");
     }
 
@@ -834,7 +838,7 @@ public void mostrarModificarApellido2() {
         this.validarEdicionUsuario = new ValidarEdicionUsuarios();
         RequestContext requestContext = RequestContext.getCurrentInstance();
         if (this.validarEdicionUsuario.validarTelefono(this.telefono)) {
-            this.campotelefono = true;
+            this.campoTelefono = true;
             if (!this.telefono.isEmpty()) {
                 
                 this.usuario.setUsuTelefono(this.telefono);
@@ -847,12 +851,7 @@ public void mostrarModificarApellido2() {
         requestContext.update("editarInformacionUsuario");
     }
     
-     public void cancelarActualizarTelefono() {
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        this.campoTelefono = true;
-        this.telefono = "";
-        requestContext.update("editarInformacionUsuario");
-    }
+     
     public void actualizarCelular() {
         this.validarEdicionUsuario = new ValidarEdicionUsuarios();
         RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -873,7 +872,7 @@ public void mostrarModificarApellido2() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.campoCelular = false;
         if (this.usuario.getUsuCelular()!= null) {
-            this.telefono = this.usuario.getUsuCelular()+ "";
+            this.celular = this.usuario.getUsuCelular()+ "";
         }
         requestContext.update("editarInformacionUsuario");
     }
@@ -916,7 +915,6 @@ public void cancelarActualizarCelular() {
         requestContext.update("editarInformacionUsuario");
     }
     
-    
     public void cancelarActualizarOcupacion() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.campoOcupacion = true;
@@ -929,7 +927,6 @@ public void cancelarActualizarCelular() {
         this.campoOcupacion = true;
         this.usuario.setOcuId(ocupacion);
         this.usuarioEJB.edit(this.usuario);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info. Campo ocupación actualizado.", ""));
         requestContext.update("editarInformacionUsuario");
     }
     
@@ -952,9 +949,8 @@ public void cancelarActualizarCelular() {
     public void actualizarFacultadDependencia() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.campoFacultadDependencia= true;
-        this.usuario.setFacDepId(facultadDependencia);
+        this.usuario.setFacDepId(this.facultadDependencia);
         this.usuarioEJB.edit(this.usuario);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info. Campo facultad o dependencia actualizado.", ""));
         requestContext.update("editarInformacionUsuario");
     }
     
@@ -966,7 +962,6 @@ public void cancelarActualizarCelular() {
             this.usuario.setUsuNombreUsuario(this.nombreUsuario);
             this.usuarioEJB.edit(this.usuario);
             this.usuarioGrupoEJB.actualizarNombreUsuario("user", this.usuario.getUsuIdentificacion(), this.usuario.getUsuNombreUsuario());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info. Campo nombre de usuario actualizado.", ""));
         }
         requestContext.update("editarInformacionUsuario");
     }
@@ -991,7 +986,6 @@ public void cancelarActualizarCelular() {
             this.campoContrasena = true;
             this.usuario.setUsuContrasena(Cifrar.sha256(this.contrasena));
             this.usuarioEJB.edit(this.usuario);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info. Campo contraseña actualizado.", ""));
         }
         requestContext.update("editarInformacionUsuario");
     }

@@ -34,7 +34,6 @@
                     <div style="clear:both"></div>
                     <div id="loginBox">                
                         <h:form id="loginForm">
-
                             <p:panelGrid style="text-align:left; width: 390px; height: 180px" styleClass="panelgrid">
                                 <p:row>
                                     <p:column style="text-align:right; width: 140px ">
@@ -70,7 +69,6 @@
                                     </p:column>
                                 </p:row>
                                 <p:row>
-
                                     <p:column colspan="3" style="text-align: center;">
                                         <p:link  value="¿Has olvidado tu contraseña?">                                
                                         </p:link> 
@@ -80,30 +78,18 @@
                                     <p:column colspan="3" style="text-align: right; ">
                                         <p:commandButton style="background: gainsboro; width: 150px; color:#000000;font-style: normal;font-weight: bold; "
                                                          value="Iniciar sesión"  action="#{usuarioSessionController.login()}"
-                                                         onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
+                                                         
+                                                         ajax="false"/>
+                                        
                                     </p:column>
+                                    
                                 </p:row>
                             </p:panelGrid>           
                         </h:form>
+                        
                     </div>
                     <h:form id="mensajeerror">
-                        <p:dialog modal="true" resizable="false" header="Error" widgetVar="errorIniciarSesion" closable="false">
-
-            <p:panelGrid style="text-align:left;" styleClass="panelgrid">
-                <p:row>
-                    <p:column style="font-size: 13px">
-                        <h:outputLabel style="color: red;" value="Usuario o contraseña incorrectos"/>
-                    </p:column>                                
-                </p:row>
-                <p:row>
-                    <p:column width="200px;">
-                        <p:commandButton style="background: #C8CDD6;color:#000000;font-style: italic;margin-left: 100px;font-weight: normal;" 
-                                         value="Aceptar" onclick="PF('errorIniciarSesion').hide()"/>                                    
-                    </p:column>
-
-                </p:row>
-            </p:panelGrid>
-        </p:dialog>
+    
                     </h:form>
                 </div>
                 <p:graphicImage library="img/" name="GymAdmDoc.png" height="145" style="margin-top: 25px; margin-left: -30px"/>
@@ -113,6 +99,7 @@
         </div>
         <div id="content" class="center_content">
             <ui:insert name="content">Content</ui:insert>
+            
         </div>
 
         <div id="bottom">

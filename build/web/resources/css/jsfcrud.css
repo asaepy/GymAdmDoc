@@ -10,8 +10,20 @@
 }
 .ui-widget-header {
     text-align: center;
-    text-transform: uppercase;
 }
 .ui-button {
     margin-top: 10px !important;
 }
+.list-center-content {
+    clear: both;
+    position: relative;
+    width: 100%;
+    top: -200px;
+    height: 100%;
+}
+.ui-panel .ui-panel-titlebar {
+    padding: 3px;
+    height: 3%;
+}
+
+

@@ -9,10 +9,26 @@
             <h:panelGrid style="margin-bottom: 10px;" rendered="#{mostrarUsuariosController.habilitarTablaUsuarios}" columns="3">                      
                 <h:outputLabel rendered="#{mostrarUsuariosController.habilitarFuncionarios}" class="CampoLabel" value="Nombre del Funcionario:" />
                 <h:outputLabel rendered="#{mostrarUsuariosController.habilitarEstudiantes}" class="CampoLabel" value="Nombre del Estudiante:" />
-                <h:outputLabel rendered="#{mostrarUsuariosController.habilitarFamiliares}" class="CampoLabel" value="Nombre del Familiar:" />
+                <h:outputLabel rendered="#{mostrarUsuariosController.habilitarFamiliares}" class="CampoLabel" value="Nombre del Familiar:"/>
+                <h:outputLabel rendered="#{mostrarUsuariosController.habilitarTodos}" class="CampoLabel" value="Todos:"/>
                 
-                <p:inputText style="width: 240px;" value="#{mostrarUsuariosController.nombreOApellidos}"  
-                             placeholder="Buscar...">
+                <p:inputText rendered="#{mostrarUsuariosController.habilitarFuncionarios}" style="width: 240px;" value="#{mostrarUsuariosController.nombreOApellidos}"  
+                             placeholder="Buscar en funcionarios...">
+                    <p:ajax event="keyup" update="tablaGestionUsuario" listener="#{mostrarUsuariosController.buscarPorNombresOApellidosFuncionarios()}" />                                
+                    
+                </p:inputText>                                                   
+                <p:inputText rendered="#{mostrarUsuariosController.habilitarEstudiantes}" style="width: 240px;" value="#{mostrarUsuariosController.nombreOApellidos}"  
+                             placeholder="Buscar en estudiantes...">
+                    <p:ajax event="keyup" update="tablaGestionUsuario" listener="#{mostrarUsuariosController.buscarPorNombresOApellidosEstudiantes()}" />                                
+                    
+                </p:inputText>                                                   
+                <p:inputText rendered="#{mostrarUsuariosController.habilitarFamiliares}" style="width: 240px;" value="#{mostrarUsuariosController.nombreOApellidos}"  
+                             placeholder="Buscar en familiares...">
+                    <p:ajax event="keyup" update="tablaGestionUsuario" listener="#{mostrarUsuariosController.buscarPorNombresOApellidosFamiliares()}" />                                
+                    
+                </p:inputText>                                                   
+                <p:inputText rendered="#{mostrarUsuariosController.habilitarTodos}" style="width: 240px;" value="#{mostrarUsuariosController.nombreOApellidos}"  
+                             placeholder="Buscar en todos los usuarios...">
                     <p:ajax event="keyup" update="tablaGestionUsuario" listener="#{mostrarUsuariosController.buscarPorNombresOApellidos()}" />                                
                     
                 </p:inputText>                                                   

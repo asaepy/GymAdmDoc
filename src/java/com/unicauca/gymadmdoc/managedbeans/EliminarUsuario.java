@@ -37,8 +37,6 @@ public class EliminarUsuario implements Serializable
     
     public void ventanaEliminarUsuario(MuUsuario usuario, MostrarUsuariosController mgb)
     {        
-        System.out.println("usuarios:  "+usuario.getUsuNombres());
-        
         RequestContext requestContext = RequestContext.getCurrentInstance();
         this.usuarioSeleccionado=usuario;
         this.managebUsuarios=mgb;

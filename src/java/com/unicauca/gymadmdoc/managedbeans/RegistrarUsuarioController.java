@@ -23,9 +23,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.Application;
@@ -85,13 +82,14 @@ public class RegistrarUsuarioController implements Serializable {
         this.inicializarCamposUsuarioEspecificos();
         this.usuario = new MuUsuario();
         this.usuario.setUsuGenero("M");
-
+        this.usuario.setUsuEstado("Activo");
     }
 
     @PostConstruct
     private void init() {
         this.ocupacion = new MuOcupacion();
         this.cargarListaOcupaciones();
+        this.listarUsuarios();
     }
 
     public boolean isCampoFoto() {
@@ -247,6 +245,7 @@ public class RegistrarUsuarioController implements Serializable {
         listaTipo.add("Estudiante");
         listaTipo.add("Familiar");
         listaTipo.add("Funcionario");
+
     }
 
     private void cargarListaFuncionarios() {
@@ -280,7 +279,7 @@ public class RegistrarUsuarioController implements Serializable {
 
         this.ocupacionSeleccionada = false;
         this.listaFacultadesYDependencias = null;
-        this.facultadDependencia=null;
+        this.facultadDependencia = null;
 
         if (ocupacionSelect.equals("1") || ocupacionSelect.equals("6") || ocupacionSelect.equals("11") || ocupacionSelect.equals("12") || ocupacionSelect.equals("13")) {
             this.facultadDependencia = new MuFacultadDependencia();
@@ -295,13 +294,14 @@ public class RegistrarUsuarioController implements Serializable {
     }
 
     public void buscarUsuarios() {
-
         this.listaUsuarios = usuarioEJB.buscarTodos();
+    }
 
+    public void listarUsuarios() {
+        this.listaUsuarios = usuarioEJB.buscarTodos();
     }
 
     public void validateContrasena(FacesContext arg0, UIComponent arg1, Object arg2) throws ValidatorException {
-
         this.contrasena = String.valueOf(arg2);
     }
 
@@ -338,7 +338,6 @@ public class RegistrarUsuarioController implements Serializable {
         this.campoFoto = false;
         this.uploadedFileFoto = null;
         requestContext.update("formularioFoto");
-
     }
 
     public StreamedContent getImagenFlujo() {
@@ -437,6 +436,7 @@ public class RegistrarUsuarioController implements Serializable {
         }
         requestContext.update("formularioFoto");
     }
+
     public void agregarFoto() throws InterruptedException {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         if (this.uploadedFileFoto != null) {
@@ -452,7 +452,7 @@ public class RegistrarUsuarioController implements Serializable {
             Thread.sleep(2000);
             this.uploadedFileFoto = null;
 
-        } 
+        }
         requestContext.update("formularioFoto");
     }
 

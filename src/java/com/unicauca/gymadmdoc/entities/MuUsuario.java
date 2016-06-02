@@ -53,19 +53,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MuUsuario.findByUsuNombreUsuario", query = "SELECT m FROM MuUsuario m WHERE m.usuNombreUsuario = :usuNombreUsuario"),
     @NamedQuery(name = "MuUsuario.findByUsuEstado", query = "SELECT m FROM MuUsuario m WHERE m.usuEstado = :usuEstado"),
     //Agregadas
-    @NamedQuery(name = "MuUsuario.findByNombresApellidos", query = "SELECT m FROM MuUsuario m WHERE LOWER(CONCAT(CONCAT(CONCAT(CONCAT(m.usuNombres,' '),m.usuApellido1),' '),m.usuApellido2)) LIKE :nombresApellidos"),
+    //@NamedQuery(name = "MuUsuario.findByNombresApellidosFunciona", query = "SELECT m FROM MuUsuario m WHERE LOWER(CONCAT(CONCAT(CONCAT(CONCAT(m.usuNombres,' '),m.usuApellido1),' '),m.usuApellido2)) LIKE :nombresApellidos "),
+    @NamedQuery(name = "MuUsuario.findByNombresApellidos", query = "SELECT m FROM MuUsuario m WHERE LOWER(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(m.usuIdentificacion,' '),m.usuNombres),' '),m.usuApellido1),' '),m.usuApellido2)) LIKE :nombresApellidos "),
+    @NamedQuery(name = "MuUsuario.findByNombresApellidosFuncionarios", query = "SELECT m FROM MuUsuario m WHERE (m.ocuId.ocuDescripcion=:ocupacionD OR m.ocuId.ocuDescripcion=:ocupacionA) AND LOWER(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(m.usuIdentificacion,' '),m.usuNombres),' '),m.usuApellido1),' '),m.usuApellido2)) LIKE :nombresApellidos"),
+    @NamedQuery(name = "MuUsuario.findByNombresApellidosEstudiantes", query = "SELECT m FROM MuUsuario m WHERE LOWER(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(m.usuIdentificacion,' '),m.usuNombres),' '),m.usuApellido1),' '),m.usuApellido2)) LIKE :nombresApellidos AND m.ocuId.ocuDescripcion =:ocupacionE"),
+    @NamedQuery(name = "MuUsuario.findByNombresApellidosFamiliares", query = "SELECT m FROM MuUsuario m WHERE (m.ocuId.ocuDescripcion =:ocupacionHD OR m.ocuId.ocuDescripcion =:ocupacionED OR m.ocuId.ocuDescripcion =:ocupacionEAD OR m.ocuId.ocuDescripcion =:ocupacionAD OR m.ocuId.ocuDescripcion =:ocupacionHA OR m.ocuId.ocuDescripcion =:ocupacionEA OR m.ocuId.ocuDescripcion =:ocupacionEAA OR m.ocuId.ocuDescripcion =:ocupacionAA) AND LOWER(CONCAT(CONCAT(CONCAT(CONCAT(m.usuNombres,' '),m.usuApellido1),' '),m.usuApellido2)) LIKE :nombresApellidos "),
     @NamedQuery(name = "MuUsuario.findByFuncionarios", query = "SELECT m FROM MuUsuario m WHERE m.ocuId.ocuDescripcion =:ocupacionD OR m.ocuId.ocuDescripcion =:ocupacionA"),
     @NamedQuery(name = "MuUsuario.findByEstudiantes", query = "SELECT m FROM MuUsuario m WHERE m.ocuId.ocuDescripcion =:ocupacionE"),
     @NamedQuery(name = "MuUsuario.findByFamiliares", query = "SELECT m FROM MuUsuario m WHERE m.ocuId.ocuDescripcion =:ocupacionHD OR m.ocuId.ocuDescripcion =:ocupacionED OR m.ocuId.ocuDescripcion =:ocupacionEAD OR m.ocuId.ocuDescripcion =:ocupacionAD OR m.ocuId.ocuDescripcion =:ocupacionHA OR m.ocuId.ocuDescripcion =:ocupacionEA OR m.ocuId.ocuDescripcion =:ocupacionEAA OR m.ocuId.ocuDescripcion =:ocupacionAA"),
+    
     @NamedQuery(name = "MuUsuario.findByNameFuncionarios", query = "SELECT m FROM MuUsuario m WHERE LOWER(CONCAT(CONCAT(m.usuNombres,' '),m.usuApellido1)) LIKE :nombre AND m.ocuId IS NOT NULL"),
     @NamedQuery(name = "MuUsuario.findByNameEstudiante", query = "SELECT m FROM MuUsuario m WHERE LOWER(CONCAT(CONCAT(m.usuNombres,' '),m.usuApellido1)) LIKE :nombre AND m.ocuId IS NULL AND m.facDepId IS NOT NULL"),
     @NamedQuery(name = "MuUsuario.findByNameFamiliar", query = "SELECT m FROM MuUsuario m WHERE LOWER(CONCAT(CONCAT(m.usuNombres,' '),m.usuApellido1)) LIKE :nombre"),
-
-    @NamedQuery(name = "MuUsuario.findByContainNombres", query = "SELECT m FROM MuUsuario m WHERE LOWER(m.usuNombres) LIKE :nombres"),
-    @NamedQuery(name = "MuUsuario.findByContainApellidos", query = "SELECT m FROM MuUsuario m WHERE LOWER(m.usuApellido1) LIKE :apellido"),
-    @NamedQuery(name = "MuUsuario.findByIdentiFuncionarios", query = "SELECT m FROM MuUsuario m WHERE TRIM(m.usuIdentificacion) LIKE :usuidentificacion AND m.ocuId IS NOT NULL"),
-    @NamedQuery(name = "MuUsuario.findByIdentiEstudiante", query = "SELECT m FROM MuUsuario m WHERE TRIM(m.usuIdentificacion) LIKE :usuidentificacion AND m.ocuId IS NULL AND m.facDepId IS NOT NULL"),
-    @NamedQuery(name = "MuUsuario.findByIdentiFamiliar", query = "SELECT m FROM MuUsuario m WHERE TRIM(m.usuIdentificacion) LIKE :usuidentificacion ")
 
 })
 public class MuUsuario implements Serializable {

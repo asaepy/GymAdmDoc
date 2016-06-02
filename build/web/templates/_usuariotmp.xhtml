@@ -6,59 +6,62 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-   <h:head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <h:outputStylesheet name="./css/default.css"/>
-      <h:outputStylesheet name="./css/cssLayout.css"/>
-      <h:outputStylesheet name="./css/usuario.css"/>
-      <h:outputStylesheet name="./css/style.css"/>
-      <h:outputScript library="js" name="login.js"/>
-      <title>Facelets Template</title>
-   </h:head>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/usuario.css"/>
+        <h:outputStylesheet name="./css/style.css"/>
+        <title>Facelets Template</title>
+    </h:head>
 
-   <h:body>
+    <h:body>
 
-      <div id="header">
-         <div class="con_escudo_titulo">
-            <div class="bkg">
-               <div class="logo">
-                  <a href="#"></a>
-               </div>
-               <div class="borde-redondo"></div>
+        <div id="header">
+            <div class="con_escudo_titulo">
+                <div class="bkg">
+                    <div class="logo">
+                        <a href="#"></a>
+                    </div>
+                    <div class="borde-redondo"></div>
+                </div>
+                <!--<p:graphicImage library="img/" name="GymAdmDoc.png" height="145" style="margin-top: 25px; margin-left: -30px"/>-->
+                <div class="CuadroDeBotonesSesion">
+                    <ui:insert name="CuadroDeBotonesSesion"> 
+                        <h:form style="width: auto">
+                            <h:link id="opcionesusuario" style="text-decoration: none;color:#FFFFFF; ">
+                                #{usuarioSessionController.nombreUsuario()}
+                                <p:graphicImage value="#{usuarioSessionController.imagenFlujo}" style="border-radius:20px;" width="35"  height="35" >
+                                    <f:param name="id" value="#{usuarioSessionController.identificacion}" />
+                                </p:graphicImage>    
+                            </h:link>
+                            <p:menu  overlay="true"  trigger="opcionesusuario" my="right top" at="right bottom" >
+                                <p:menuitem value="Mi Perfil" action="#{routingController.irPerfil()}"
+                                            ajax="false"
+                              onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"/>
+                                <p:separator/>
+                                <p:menuitem value="Cerrar Sesión" action="#{usuarioSessionController.logout()}"/>
+                            </p:menu>
+
+                        </h:form>
+                    </ui:insert>
+                </div>
+    
+
             </div>
-            <!--<p:graphicImage library="img/" name="GymAdmDoc.png" height="145" style="margin-top: 25px; margin-left: -30px"/>-->
-            <div class="CuadroDeBotonesSesion">
-                <h:form>
-                <h:link id="opcionesusuario" style="text-decoration: none;color:#FFFFFF; ">
-                                    #{usuarioSessionController.nombreUsuario()}
-                                    <p:graphicImage value="#{usuarioSessionController.imagenFlujo}" width="30"  height="30" >
-                                        <f:param name="id" value="#{usuarioSessionController.identificacion}" />
-                        </p:graphicImage>    
-                                </h:link>
-                    
-                    <p:menu overlay="true" trigger="opcionesusuario"  my="left top" at="left bottom" style="width: 100px">     
-                                    
-                                    <p:menuitem value="Mi Perfil" />
-                                    <p:menuitem value="Cerrar Sesión" action="#{usuarioSessionController.logout()}"
-                                                onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"/>
-                                </p:menu>
-                   </h:form>
+            <div class="bottom">
+
             </div>
-            
-         </div>
-         <div class="bottom">
-            
-         </div>
-      </div>
-      <div>
-         <div id="menu">
-            <ui:insert name="left">Left</ui:insert>
-         </div>
-         <div id="content" >
-            <ui:insert name="content">Content</ui:insert>
-         </div>
-      </div>
-<ui:include src="/EfectodeCarga.xhtml"/>
-   </h:body>
+        </div>
+        <div>
+            <div id="menu">
+                <ui:insert name="left">Left</ui:insert>
+            </div>
+            <div id="content" >
+                <ui:insert name="content">Content</ui:insert>
+            </div>
+        </div>
+        <ui:include src="/EfectodeCarga.xhtml"/>
+    </h:body>
 
 </html>

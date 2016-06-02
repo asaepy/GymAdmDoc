@@ -6,22 +6,16 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Facelets Template</title>
-    </h:head>
-    <h:body>
-
-        <p:dialog resizable="false" header="Información" modal="true"  widgetVar="mensajeRegistroExitoso" closable="false">
+        <p:dialog header="Información" modal="true" position="center" widgetVar="mensajeRegistroExitoso" closable="false">
             <p:messages  style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
             <h:form>
-                <p:commandButton  value="Aceptar" style="background:#22419A; 
-                                  color: #FFFFFF;margin-left:70px;font-weight: normal;"
+                <p:commandButton  value="Aceptar" style=" 
+                                  font-weight: normal;"
                                   onclick="PF('mensajeRegistroExitoso').hide()"/>
             </h:form>
         </p:dialog>
 
-        <p:dialog position="top" resizable="false" header="Registro de usuario" showEffect="scale"  modal="true"  widgetVar="RegistrarUsuario">
+        <p:dialog position="center" resizable="false" header="Registro de usuario" showEffect="scale"  modal="true"  widgetVar="RegistrarUsuario">
             <h:form id="form">
                 <p:panelGrid style="text-align:left;" styleClass="panelgrid"  id="panel" >
                     <p:row>
@@ -52,7 +46,7 @@
                         <p:column>
                             <p:message for="ocupacion"/>  
                         </p:column>
-                        
+
                         <p:column style="text-align:right" rendered="#{registrarUsuarioController.ocupacionSeleccionada}">
                             <h:outputLabel class="CampoLabel" for="facultadDependencia" value="Dependencia o Facultad: " />
                         </p:column>
@@ -65,11 +59,8 @@
                                                itemValue="#{facultadDependencia.facDepId}"/>
                             </p:selectOneMenu>                                                                             
                         </p:column>
-                   </p:row>
-
-                    <p:row >
-                        
-                    </p:row>                  
+                    </p:row>
+                    
                     <p:row>
                         <p:column style="text-align:right">
                             <h:outputLabel class="CampoLabel" for="nombres" value="Nombres: " />
@@ -155,7 +146,7 @@
                         </p:column>
 
                         <p:column style="text-align: right; ">                                       
-                            <h:outputLabel class="CampoLabel" for="fechaNacimiento" value="Fecha de Nacimiento: " />
+                            <h:outputLabel class="CampoLabel"  for="fechaNacimiento" value="Fecha de Nacimiento: " />
                             <h:outputLabel style="font-style: italic;font-size: 16px;text-align: left; color:red;" 
                                            value="*"/>
                         </p:column>
@@ -163,6 +154,7 @@
                             <p:calendar value="#{registrarUsuarioController.usuario.usuFechaNacimiento}" size="14" id="fechaNacimiento"  required="true" 
                                         requiredMessage="Seleccione una fecha de nacimiento." 
                                         showOn="button" navigator="true" yearRange="c-100:c" pattern="yyyy-MM-dd" 
+                                        placeholder="aaaa-mm-dd"
                                         >
                                 <f:validator validatorId="ValidarCampoFechaNacimiento"/>
                             </p:calendar>
@@ -199,7 +191,7 @@
                                          >                              
                             </p:inputText>
                         </p:column>
-                       
+
                     </p:row>
 
 
@@ -213,7 +205,8 @@
                                          >                              
                             </p:inputText>
                         </p:column>
-                        
+                        <p:column>                            
+                        </p:column>
                         <p:column colspan="3" rowspan="6">
                             <p:panel header="Foto perfil" toggleable="true">
                                 <div style="float:left">
@@ -245,8 +238,9 @@
                                                 </p:column>
                                                 <p:column rendered="#{!registrarUsuarioController.campoFoto}">
                                                     <p:outputLabel value="#{registrarUsuarioController.uploadedFileFoto.fileName}"/>
-                                                </p:column>
+                                                </p:column> 
                                             </p:row>
+                                            
                                             <!--<p:row> 
                                                 <p:column>
                                                     <p:commandLink rendered="#{!registrarUsuarioController.campoFoto}"
@@ -293,11 +287,13 @@
                             <h:outputLabel style="font-style: italic;font-size: 16px;text-align: left; color:red;" 
                                            value="*"/>
                         </p:column>
-                        <p:column>
+                        <p:column> 
                             <p:password style="width: 170px;font-size:15px" 
                                         id="contrasena" value="#{registrarUsuarioController.contrasena}"
                                         required="true" requiredMessage="Campo obligatorio."
                                         validator="#{registrarUsuarioController.validateContrasena}">
+                                <f:validator validatorId="ValidarCampoMaximo20Caracteres"/>
+                                <f:validator validatorId="ValidarCampoMinimo6Caracteres"/>
 
                             </p:password>                                
                         </p:column>
@@ -311,8 +307,7 @@
                         <p:column>
                             <h:outputLabel class="CampoLabelEspecificacion"  value="Entre 6 y 20 caracteres AlfaNuméricos." />
                         </p:column>
-                        <p:column>                                        
-                        </p:column>                                        
+                                                                
                     </p:row>
                     <p:row>
                         <p:column style="text-align:right">
@@ -367,22 +362,20 @@
                     </p:row>
                     <p:row>
                         <p:column style="text-align: center; " colspan="6">
-                            <p:commandButton   style="background: #22419A;color:#FFFFFF;font-style: italic;font-weight: normal;" 
-                                               action="#{registrarUsuarioController.registrarUsuario()}" value="Registrar" ajax="true" 
-                                               update="panel" id="registrar" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"
-                                               />
-                            <p:commandButton   style="background: #22419A;color:#FFFFFF;font-style: italic;font-weight: normal;" 
-                                               value="Cancelar" onclick="PF('RegistrarUsuario').hide()"
-                                               id="cancelar" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"
-                                               />
+                            <p:commandButton    
+                                action="#{registrarUsuarioController.registrarUsuario()}" value="Registrar" ajax="true" 
+                                update="panel" id="registrar" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"
+                                />
+                            <p:commandButton   
+                                value="Cancelar" onclick="PF('RegistrarUsuario').hide()"
+                                id="cancelar" onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"
+                                />
                         </p:column>
                     </p:row>                               
                 </p:panelGrid>                            
             </h:form>       
         </p:dialog>
 
-
-    </h:body>
 </html>
 
 

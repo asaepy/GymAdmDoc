@@ -102,7 +102,7 @@ public class MuUsuarioFacade extends AbstractFacade<MuUsuario> {
 
     public List<MuUsuario> buscarPorIdentificacionFamiliares(String usuidentificacion) {
         Query query = getEntityManager().createNamedQuery("Usuario.findByIdentiFamiliar");
-        query.setParameter("usuidentificacion", usuidentificacion+"%");
+        query.setParameter("usuIdentificacion", usuidentificacion+"%");
         List<MuUsuario> resultList = query.getResultList();
         return resultList;
 
@@ -110,7 +110,7 @@ public class MuUsuarioFacade extends AbstractFacade<MuUsuario> {
 
     public List<MuUsuario> buscarPorIdentificacionFuncionario(String usuidentificacion) {
         Query query = getEntityManager().createNamedQuery("Usuario.findByIdentiFuncionarios");
-        query.setParameter("usuidentificacion", usuidentificacion+"%");
+        query.setParameter("usuIdentificacion", usuidentificacion+"%");
         List<MuUsuario> resultList = query.getResultList();
         return resultList;
     }
@@ -119,16 +119,11 @@ public class MuUsuarioFacade extends AbstractFacade<MuUsuario> {
     
     public List<MuUsuario> buscarUsuarioPorNombreUsuario(String nombreUsuario) {
         Query query = getEntityManager().createNamedQuery("MuUsuario.findByUsuNombreUsuario");
-        query.setParameter("usunombreusuario", nombreUsuario);
+        query.setParameter("usuNombreUsuario", nombreUsuario);
         return query.getResultList();
     }
 
-    public List<MuUsuario> retornarBuscarPorNombreUsuario(String nombreUsuario) {
-        Query query = getEntityManager().createNamedQuery("MuUsuario.findByUsuNombreUsuario");
-        query.setParameter("usunombreusuario", nombreUsuario);
-        List<MuUsuario> resultList = query.getResultList();
-        return resultList;
-    }  
+    
 
     public List<MuUsuario> buscarPorFamiliares() {
         Query query = getEntityManager().createNamedQuery("MuUsuario.findByFamiliares");
@@ -164,6 +159,44 @@ public class MuUsuarioFacade extends AbstractFacade<MuUsuario> {
     public List<MuUsuario> buscarPorNombresApellidos(String nombresApellidos) {
         Query query = getEntityManager().createNamedQuery("MuUsuario.findByNombresApellidos");
         query.setParameter("nombresApellidos", "%" + nombresApellidos + "%");
+        List<MuUsuario> resultList = query.getResultList();
+        return resultList;
+    }
+    /*public List<MuUsuario> buscarPorNombresApellidos(String nombresApellidos) {
+        Query query = getEntityManager().createNamedQuery("MuUsuario.findByNombresApellidos");
+        query.setParameter("nombresApellidos", "%" + nombresApellidos + "%");
+        query.setParameter("ocupacionD", "Docente");
+        query.setParameter("ocupacionA", "Administrativo");
+        List<MuUsuario> resultList = query.getResultList();
+        return resultList;
+    }*/
+    
+    public List<MuUsuario> buscarPorNombresApellidosFuncionarios(String nombresApellidos) {
+        Query query = getEntityManager().createNamedQuery("MuUsuario.findByNombresApellidosFuncionarios");
+        query.setParameter("nombresApellidos", "%" + nombresApellidos + "%");
+        query.setParameter("ocupacionD", "Docente");
+        query.setParameter("ocupacionA", "Administrativo");
+        List<MuUsuario> resultList = query.getResultList();
+        return resultList;
+    }
+    public List<MuUsuario> buscarPorNombresApellidosEstudiantes(String nombresApellidos) {
+        Query query = getEntityManager().createNamedQuery("MuUsuario.findByNombresApellidosEstudiantes");
+        query.setParameter("nombresApellidos", "%" + nombresApellidos + "%");
+        query.setParameter("ocupacionE", "Estudiante");
+        List<MuUsuario> resultList = query.getResultList();
+        return resultList;
+    }
+    public List<MuUsuario> buscarPorNombresApellidosFamiliares(String nombresApellidos) {
+        Query query = getEntityManager().createNamedQuery("MuUsuario.findByNombresApellidosFamiliares");
+        query.setParameter("nombresApellidos", "%" + nombresApellidos + "%");
+        query.setParameter("ocupacionHD", "Hijo de docente");
+        query.setParameter("ocupacionED", "Esposo de docente");
+        query.setParameter("ocupacionEAD", "Esposa de docente");
+        query.setParameter("ocupacionAD", "Acompañante de docente");
+        query.setParameter("ocupacionHA", "Hijo de administrativo");
+        query.setParameter("ocupacionEA", "Esposo de administrativo");
+        query.setParameter("ocupacionEAA", "Esposa de administrativo");
+        query.setParameter("ocupacionAA", "Acompañante de administrativo");
         List<MuUsuario> resultList = query.getResultList();
         return resultList;
     }

@@ -168,11 +168,11 @@ input:focus {
     padding: 5px;
     color: #FFFFFF;
     text-align: center;
-    border: 1px  solid #ffffff;
-    border-style: dashed;
+    border: 3px  solid #ffffff;
+    border-style: none none solid;
     right: 20px;
     top: 10px;
-    border-radius: 10px;    
+    border-radius: 20px;    
 }
 
 .CuadroDeBotonesSesion .botonSesion
