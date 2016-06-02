@@ -41,7 +41,7 @@
     <security-constraint>
         <display-name>user page</display-name>
         <web-resource-collection>
-            <web-resource-name>paginas de usuario</web-resource-name>
+            <web-resource-name>paginas de usuario estandar</web-resource-name>
             <description/>
             <url-pattern>/faces/usuariosestandar/*</url-pattern>
             <url-pattern>/faces/usuarioestandar/*</url-pattern>
