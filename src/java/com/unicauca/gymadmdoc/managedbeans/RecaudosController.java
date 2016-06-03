@@ -177,10 +177,10 @@ public class RecaudosController implements Serializable {
    
    // <editor-fold defaultstate="collapsed" desc="Atributos para el manejo de las Estadisticas">
    
-   private DonutChartModel donutModel;
+   /*private DonutChartModel donutModel;
    public DonutChartModel getDonutModel() {
       return donutModel;
-   }
+   }*/
    
    private HorizontalBarChartModel barModel;
    public HorizontalBarChartModel getBarModel() {
@@ -249,7 +249,7 @@ public class RecaudosController implements Serializable {
       loadInfoRecibo();
       buildOcupaciones();
       loadGraphicFilters();
-      this.donutModel = new DonutChartModel();
+      //this.donutModel = new DonutChartModel();
       this.barModel = new HorizontalBarChartModel();
    }
    
@@ -281,6 +281,7 @@ public class RecaudosController implements Serializable {
    public void registrarRecaudo(){
       MrecReciboPago rp = buildRecibo();
       service_recaudo.registrarRecaudo(idUsuario, rp);
+      loadTableInfo();
    }
 
    public void registrarPago(){
@@ -345,8 +346,8 @@ public class RecaudosController implements Serializable {
    
    public void generarGraficas(){
       if(comprobateFilters()){
-         this.donutModel = service_recaudo.getDonut(filterFechaInicio, 
-                 filterFechaFin, filterMensualidad, filterSesiones, selectedOcupaciones);
+         //this.donutModel = service_recaudo.getDonut(filterFechaInicio, 
+         //        filterFechaFin, filterMensualidad, filterSesiones, selectedOcupaciones);
          this.barModel = service_recaudo.getBar(filterFechaInicio, 
                  filterFechaFin, filterMensualidad, filterSesiones, selectedOcupaciones);
       }
@@ -354,6 +355,9 @@ public class RecaudosController implements Serializable {
    
    private boolean comprobateFilters(){
       boolean result = true;
+      
+      this.barModel.clear();
+      //this.donutModel.clear();
       
       if(this.filterFechaInicio == null || 
               this.filterFechaFin == null){
