@@ -166,38 +166,43 @@ public class RecaudoService {
       return data;
    }
    
-   public DonutChartModel getDonut(Date ini, Date fin, boolean mensualidad, boolean sesiones,
+   /*public DonutChartModel getDonut(Date ini, Date fin, boolean mensualidad, boolean sesiones,
                                    String[] ocupaciones){
+      
+      String m = " AND rp.rpagMensualidad = 0 ";
+      String s = " AND rp.rpagNumeroSesiones = 0 ";
+      
+      if(mensualidad){
+         m = " AND rp.rpagMensualidad = 1 ";
+      }
+      if(sesiones){
+         s = " AND rp.rpagNumeroSesiones > 0 ";
+      }
+      
       DonutChartModel donut = new DonutChartModel();
       Map<String, Number> hombres = new LinkedHashMap<>();
       Map<String, Number> mujeres = new LinkedHashMap<>();
       
-      String where = "AND ir.irecFechaLimite BETWEEN :fini AND :ffin ";
-      if(mensualidad){
-         where += "AND rp.rpagMensualidad = 1 ";
-      }
-      if(sesiones){
-         where += "AND rp.rpagNumeroSesiones > 0 ";
-      }
-      
       for (String o : ocupaciones) {
          
-         Query queryM = getEm().createQuery("SELECT ir FROM MrecInformacionRecaudo ir, MrecReciboPago rp, MuUsuario u, MuOcupacion o WHERE ir.rpagReferencia = rp.rpagReferencia AND ir.usuIdentificacion = u.usuIdentificacion AND u.ocuId = o.ocuId AND u.usuGenero = 'M' AND o.ocuDescripcion = :ocu "+where);
-            queryM.setParameter("fini", ini);
-            queryM.setParameter("ffin", fin);
-            queryM.setParameter("ocu", o);
-         Query queryF = getEm().createQuery("SELECT ir FROM MrecInformacionRecaudo ir, MrecReciboPago rp, MuUsuario u, MuOcupacion o WHERE ir.rpagReferencia = rp.rpagReferencia AND ir.usuIdentificacion = u.usuIdentificacion AND u.ocuId = o.ocuId AND u.usuGenero = 'F' AND o.ocuDescripcion = :ocu "+where);
-            queryF.setParameter("fini", ini);
-            queryF.setParameter("ffin", fin);
-            queryF.setParameter("ocu", o);
+         Query queryM = getEm().createQuery("SELECT rp FROM MrecInformacionRecaudo ir, MrecReciboPago rp, MuUsuario us, MuOcupacion oc WHERE rp.rpagReferencia = ir.rpagReferencia AND us.usuIdentificacion = ir.usuIdentificacion AND oc.ocuId = us.ocuId.ocuId AND us.usuGenero = :genero AND oc.ocuDescripcion = :ocupacion AND rp.rpagFechaExpedicion BETWEEN :fini AND :ffin"+m+s);
+         queryM.setParameter("genero", "M");
+         queryM.setParameter("ocupacion", o);
+         queryM.setParameter("fini", ini);
+         queryM.setParameter("ffin", fin);
          
-         List<MrecInformacionRecaudo> lstRtaM = queryM.getResultList();
+         Query queryF = getEm().createQuery("SELECT rp FROM MrecInformacionRecaudo ir, MrecReciboPago rp, MuUsuario us, MuOcupacion oc WHERE rp.rpagReferencia = ir.rpagReferencia AND us.usuIdentificacion = ir.usuIdentificacion AND oc.ocuId = us.ocuId.ocuId AND us.usuGenero = :genero AND oc.ocuDescripcion = :ocupacion AND rp.rpagFechaExpedicion BETWEEN :fini AND :ffin"+m+s);
+         queryF.setParameter("genero", "F");
+         queryF.setParameter("ocupacion", o);
+         queryF.setParameter("fini", ini);
+         queryF.setParameter("ffin", fin);
+         
+         List<MrecReciboPago> lstRtaM = queryM.getResultList();
          int rtaM = lstRtaM.size();
          
-         List<MrecInformacionRecaudo> lstRtaF = queryF.getResultList();
+         List<MrecReciboPago> lstRtaF = queryF.getResultList();
          int rtaF = lstRtaF.size();
          
-         System.out.println("-------------------------"+rtaM);
          hombres.put(o, ((Number)rtaM).intValue());
          mujeres.put(o, ((Number)rtaF).intValue());
          
@@ -205,14 +210,14 @@ public class RecaudoService {
       donut.addCircle(mujeres);
       donut.addCircle(hombres);
       
-      donut.setTitle("Donut Chart");
+      donut.setTitle("Circulo interior (Mujeres) - Circulo exterior (Hombres)");
       donut.setLegendPosition("e");
       donut.setSliceMargin(5);
       donut.setShowDataLabels(true);
       donut.setDataFormat("value");
       
       return donut;
-   }
+   }*/
    
    public HorizontalBarChartModel getBar(Date ini, Date fin, boolean mensualidad, boolean sesiones,
                                    String[] ocupaciones){
@@ -222,36 +227,43 @@ public class RecaudoService {
       ChartSeries mujeres = new ChartSeries();
       mujeres.setLabel("Mujeres");
       int maxData = 0;
-      String where = "AND ir.irecFechaLimite BETWEEN :fini AND :ffin ";
-      if(mensualidad){
-         where += "AND rp.rpagMensualidad = 1 ";
-      }
-      if(sesiones){
-         where += "AND rp.rpagNumeroSesiones > 0 ";
+      
+      String conceptos;
+      
+      if(mensualidad && sesiones){
+         conceptos = " AND rp.rpagMensualidad = 1 AND rp.rpagNumeroSesiones > 0";
+      }else if(mensualidad && !sesiones){
+         conceptos = " AND rp.rpagMensualidad = 1";
+      }else if(!mensualidad && sesiones){
+         conceptos = " AND rp.rpagNumeroSesiones > 0 ";
+      }else{
+         conceptos = " AND rp.rpagMensualidad = 0 AND rp.rpagNumeroSesiones = 0 ";
       }
       
       for (String o : ocupaciones) {
          
-         Query queryM = getEm().createQuery("SELECT ir FROM MrecInformacionRecaudo ir, MrecReciboPago rp, MuUsuario u, MuOcupacion o WHERE ir.rpagReferencia = rp.rpagReferencia AND ir.usuIdentificacion = u.usuIdentificacion AND u.ocuId = o.ocuId AND u.usuGenero = 'M' AND o.ocuDescripcion = :ocu "+where);
-            queryM.setParameter("fini", ini);
-            queryM.setParameter("ffin", fin);
-            queryM.setParameter("ocu", o);
-         Query queryF = getEm().createQuery("SELECT ir FROM MrecInformacionRecaudo ir, MrecReciboPago rp, MuUsuario u, MuOcupacion o WHERE ir.rpagReferencia = rp.rpagReferencia AND ir.usuIdentificacion = u.usuIdentificacion AND u.ocuId = o.ocuId AND u.usuGenero = 'F' AND o.ocuDescripcion = :ocu "+where);
-            queryF.setParameter("fini", ini);
-            queryF.setParameter("ffin", fin);
-            queryF.setParameter("ocu", o);
+         Query queryM = getEm().createQuery("SELECT rp FROM MrecInformacionRecaudo ir, MrecReciboPago rp, MuUsuario us, MuOcupacion oc WHERE rp.rpagReferencia = ir.rpagReferencia AND us.usuIdentificacion = ir.usuIdentificacion AND oc.ocuId = us.ocuId.ocuId AND us.usuGenero = :genero AND oc.ocuDescripcion = :ocupacion AND rp.rpagFechaExpedicion BETWEEN :fini AND :ffin"+conceptos);
+         queryM.setParameter("genero", "M");
+         queryM.setParameter("ocupacion", o);
+         queryM.setParameter("fini", ini);
+         queryM.setParameter("ffin", fin);
          
-         List<MrecInformacionRecaudo> lstRtaM = queryM.getResultList();
+         Query queryF = getEm().createQuery("SELECT rp FROM MrecInformacionRecaudo ir, MrecReciboPago rp, MuUsuario us, MuOcupacion oc WHERE rp.rpagReferencia = ir.rpagReferencia AND us.usuIdentificacion = ir.usuIdentificacion AND oc.ocuId = us.ocuId.ocuId AND us.usuGenero = :genero AND oc.ocuDescripcion = :ocupacion AND rp.rpagFechaExpedicion BETWEEN :fini AND :ffin"+conceptos);
+         queryF.setParameter("genero", "F");
+         queryF.setParameter("ocupacion", o);
+         queryF.setParameter("fini", ini);
+         queryF.setParameter("ffin", fin);
+         
+         List<MrecReciboPago> lstRtaM = queryM.getResultList();
          int rtaM = lstRtaM.size();
          if(rtaM>maxData){
             maxData=rtaM+5;
          }
-         List<MrecInformacionRecaudo> lstRtaF = queryF.getResultList();
+         List<MrecReciboPago> lstRtaF = queryF.getResultList();
          int rtaF = lstRtaF.size();
          if(rtaF>maxData){
             maxData=rtaF+5;
          }
-         System.out.println("-------------------------"+rtaM);
          hombres.set(o, ((Number)rtaM).intValue());
          mujeres.set(o, ((Number)rtaF).intValue());
          

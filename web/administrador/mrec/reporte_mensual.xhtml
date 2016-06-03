@@ -20,6 +20,10 @@ and open the template in the editor.
          
          <p:growl id="msgs" showDetail="true"/>
          
+         <h:panelGrid columns="1" style="width: 100%">
+            <h:outputText value="Cupos Diponibles: (0)" style="float: right; margin-right: 10px; font-size: 14px;"/>
+         </h:panelGrid>
+         
          <h:panelGrid columns="2" cellpadding="5">
             <p:selectOneMenu id="year" value="#{recaudosController.year}" style="width: 100px;">
                <p:ajax listener="#{recaudosController.onYearChange}" update="month :form:tblRecaudos"/>
@@ -31,12 +35,16 @@ and open the template in the editor.
             </p:selectOneMenu>
          </h:panelGrid>
          
+         <p:commandButton value="Registrar recaudo" ajax="false"
+                          action="#{routingController.goToNuevoRecaudoMREC()}" style="margin-bottom: 5px; margin-top: 15px;"/>
          
          <p:dataTable id="tblRecaudos" var="recaudo" value="#{recaudosController.recaudos}" widgetVar="recaudosTable"
                       emptyMessage="No se han encontrado registros" rowIndexVar="rowIndex"
                       filteredValue="#{recaudosController.recaudosFiltered}"
                       styleClass="recaudoTable"
-                      rowStyleClass="#{recaudo.fechaLimite.date lt recaudosController.day and (recaudo.estado ne 'Pagado') ? 'fechaRed' : null}">
+                      rowStyleClass="#{recaudo.fechaLimite.date lt recaudosController.day and (recaudo.estado ne 'Pagado') ? 'fechaRed' : null}"
+                      rows="10" paginator="true" rowsPerPageTemplate="5,10,20"
+                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
             
             <f:facet name="header">
                <p:outputPanel>
@@ -84,7 +92,8 @@ and open the template in the editor.
                <p:commandButton update=":form:reciboDetail" oncomplete="PF('generateReciboDialog').show()" 
                                 icon="ui-icon-plus" title="Generar recibo"
                                 onclick="#{recaudosController.loadInfoRecibo()}"
-                                rendered="#{(recaudo.estado eq 'Sin recibo') and (recaudo.fechaLimite.date ge recaudosController.day)}">
+                                rendered="#{(recaudo.estado eq 'Sin recibo') and (recaudo.fechaLimite.date ge recaudosController.day) 
+                                            and (recaudo.fechaLimite.month ge recaudosController)}">
                   <f:setPropertyActionListener value="#{recaudo}" target="#{recaudosController.recaudoSelected}"/>
                </p:commandButton>
                <p:commandButton oncomplete="PF('confirmPagoDialog').show()" 
@@ -109,6 +118,14 @@ and open the template in the editor.
                </p:commandButton>
             </p:column>
          </p:dataTable>
+         
+         <h:panelGrid columns="2" cellpadding="5">
+            <p:commandLink style="margin-left: 10px;">
+               <p:graphicImage name="./img/icon_xls.png" height="40" width="40"/>
+            </p:commandLink>
+            <h:outputText value="Click en el icono para descargar el reporte en formato xls"
+                          style="font-size: 14;"/>
+         </h:panelGrid>
          
          <p:dialog header="Informacion de Recaudo" widgetVar="viewRecaudoDialog"
                    modal="true" showEffect="fade" hideEffect="fade"
