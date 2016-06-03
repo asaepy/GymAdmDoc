@@ -12,5 +12,9 @@
             <base-name>/mvMensajes</base-name>
             <var>mvMensajes</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/mru_Bundle</base-name>
+            <var>mru_Bundle</var>
+        </resource-bundle>
     </application>
 </faces-config>
