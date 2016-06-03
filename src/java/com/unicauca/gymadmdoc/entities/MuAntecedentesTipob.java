@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ROED26
+ * @author Alvaro Lasso
  */
 @Entity
 @Table(name = "mu_antecedentes_tipob")
@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "MuAntecedentesTipob.findAll", query = "SELECT m FROM MuAntecedentesTipob m"),
     @NamedQuery(name = "MuAntecedentesTipob.findByAntbId", query = "SELECT m FROM MuAntecedentesTipob m WHERE m.antbId = :antbId"),
-    @NamedQuery(name = "MuAntecedentesTipob.findByAntbPregunta", query = "SELECT m FROM MuAntecedentesTipob m WHERE m.antbPregunta = :antbPregunta")})
+    @NamedQuery(name = "MuAntecedentesTipob.findByAntbPregunta", query = "SELECT m FROM MuAntecedentesTipob m WHERE m.antbPregunta = :antbPregunta"),
+    @NamedQuery(name = "MuAntecedentesTipob.findByantb_id", query = "SELECT m FROM MuAntecedentesTipob m WHERE m.ansaId = :id") })
 public class MuAntecedentesTipob implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,16 +45,25 @@ public class MuAntecedentesTipob implements Serializable {
     @Basic(optional = false)
     @Column(name = "ANTB_ID")
     private Integer antbId;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "ANTB_PREGUNTA")
     private String antbPregunta;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "Res_tipob")
+    private String resTipob;
+    
     @JoinColumn(name = "ANSA_ID", referencedColumnName = "ANSA_ID")
     @ManyToOne(optional = false)
     private MuAntecedenteSalud ansaId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "antbId")
     private Collection<MuRespuestaTipob> muRespuestaTipobCollection;
+    
 
     public MuAntecedentesTipob() {
     }
@@ -62,11 +72,14 @@ public class MuAntecedentesTipob implements Serializable {
         this.antbId = antbId;
     }
 
-    public MuAntecedentesTipob(Integer antbId, String antbPregunta) {
+    public MuAntecedentesTipob(Integer antbId, String antbPregunta, String resTipob) {
         this.antbId = antbId;
         this.antbPregunta = antbPregunta;
+        this.resTipob = resTipob;
     }
 
+    
+    
     public Integer getAntbId() {
         return antbId;
     }
@@ -90,6 +103,16 @@ public class MuAntecedentesTipob implements Serializable {
     public void setAnsaId(MuAntecedenteSalud ansaId) {
         this.ansaId = ansaId;
     }
+
+    public String getResTipob() {
+        return resTipob;
+    }
+
+    public void setResTipob(String resTipob) {
+        this.resTipob = resTipob;
+    }
+    
+    
 
     @XmlTransient
     public Collection<MuRespuestaTipob> getMuRespuestaTipobCollection() {
@@ -122,7 +145,7 @@ public class MuAntecedentesTipob implements Serializable {
 
     @Override
     public String toString() {
-        return "com.unicauca.gymadmdoc.entities.MuAntecedentesTipob[ antbId=" + antbId + " ]";
+        return "co.unicauca.gymdam.entidades.MuAntecedentesTipob[ antbId=" + antbId + " ]";
     }
     
 }

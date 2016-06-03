@@ -61,7 +61,7 @@
                     Antecedentes de salud previos
                 </p:column>
                 <p:column>
-                    <p:commandButton value="Agregar"/>
+                        <p:commandButton value="Agregar" onclick="PF('NuevoAntecedente').show()" />
                 </p:column>
             </p:row>
             <p:row rendered="#{registrarDatosIngresoController.usuarioSeleccionado}">
@@ -77,6 +77,8 @@
         
         <ui:include src="RegistroExamenFisico.xhtml"/>
         <ui:include src="RegistroMedicamentos.xhtml"/>
+        <ui:include src="NuevoAntecedente.xhtml"/>
+         <ui:include src="Create.xhtml"/>
         <ui:include src="/EfectodeCarga.xhtml"/>
         <p:separator/> 
         

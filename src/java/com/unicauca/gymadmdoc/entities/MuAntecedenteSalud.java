@@ -25,14 +25,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ROED26
+ * @author Alvaro Lasso
  */
 @Entity
 @Table(name = "mu_antecedente_salud")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MuAntecedenteSalud.findAll", query = "SELECT m FROM MuAntecedenteSalud m"),
-    @NamedQuery(name = "MuAntecedenteSalud.findByAnsaId", query = "SELECT m FROM MuAntecedenteSalud m WHERE m.ansaId = :ansaId")})
+    @NamedQuery(name = "MuAntecedenteSalud.findByAnsaId", query = "SELECT m FROM MuAntecedenteSalud m WHERE m.ansaId = :ansaId"),
+    @NamedQuery(name = "MuAntecedenteSalud.findByusuIdentificacion", query = "SELECT m FROM MuAntecedenteSalud m WHERE m.usuIdentificacion = :id")})
 public class MuAntecedenteSalud implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -112,7 +113,7 @@ public class MuAntecedenteSalud implements Serializable {
 
     @Override
     public String toString() {
-        return "com.unicauca.gymadmdoc.entities.MuAntecedenteSalud[ ansaId=" + ansaId + " ]";
+        return "co.unicauca.gymdam.entidades.MuAntecedenteSalud[ ansaId=" + ansaId + " ]";
     }
     
 }

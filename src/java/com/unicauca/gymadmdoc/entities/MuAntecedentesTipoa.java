@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ROED26
+ * @author Alvaro Lasso
  */
 @Entity
 @Table(name = "mu_antecedentes_tipoa")
@@ -60,6 +60,30 @@ public class MuAntecedentesTipoa implements Serializable {
 
     public MuAntecedentesTipoa() {
     }
+    
+    
+  /*  private String antaDescripcion1;
+       
+    private String antaDescripcion2;
+
+    public String getAntaDescripcion1() {
+        return antaDescripcion1;
+    }
+
+    public void setAntaDescripcion1(String antaDescripcion1) {
+        this.antaDescripcion1 = antaDescripcion1;
+    }
+
+    public String getAntaDescripcion2() {
+        return antaDescripcion2;
+    }
+
+    public void setAntaDescripcion2(String antaDescripcion2) {
+        this.antaDescripcion2 = antaDescripcion2;
+    }*/
+    
+    
+    
 
     public MuAntecedentesTipoa(Integer antaId) {
         this.antaId = antaId;
@@ -108,6 +132,8 @@ public class MuAntecedentesTipoa implements Serializable {
     }
 
     public void setAnsaId(MuAntecedenteSalud ansaId) {
+        
+        
         this.ansaId = ansaId;
     }
 
@@ -133,7 +159,7 @@ public class MuAntecedentesTipoa implements Serializable {
 
     @Override
     public String toString() {
-        return "com.unicauca.gymadmdoc.entities.MuAntecedentesTipoa[ antaId=" + antaId + " ]";
+        return "co.unicauca.gymdam.entidades.MuAntecedentesTipoa[ antaId=" + antaId + " ]";
     }
     
 }
