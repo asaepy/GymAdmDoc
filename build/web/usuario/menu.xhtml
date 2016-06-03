@@ -36,16 +36,19 @@
                    <p:menuitem value="Siguientes Valoraciones" action="#{routingController.irSiguientesValoraciones()}" ajax="false"/>
                    <p:menuitem value="Dias Festivos" action="#{routingController.irDiasFestivos()}" ajax="false"/>
                </p:submenu>
+			   <!--.................................RUTINAS..................................................................-->
                <p:submenu label="Rutinas">
-                  <p:menuitem value="Ir" ajax="false"
+                        <p:menuitem value="Ver rutinas" ajax="false"
                                     action="#{routingController.goToUsuarios_Rutinas}"/>
-                        <p:menuitem value="Nueva Rutina" ajax="false"
+                        <p:menuitem value="Nueva rutina" ajax="false"
                                     action="#{routingController.goToNuevaRutina}"/>
                         <p:menuitem value="Agregar nuevo día a rutina" ajax="false"
                                     action="#{routingController.goToNuevoDia()}"/>
                         <p:menuitem value="Gestionar ejercicios" ajax="false"
                                     action="#{routingController.goToEjercicios}"/>
-               </p:submenu>
+				</p:submenu>
+				<!--.................................FIN_RUTINAS..................................................................-->
+				
                <p:separator/>
                <p:menuitem value="Configuracion"/>
             </p:tieredMenu>

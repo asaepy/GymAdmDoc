@@ -42,6 +42,7 @@ public class MruRutinaController implements Serializable {
         this.prepareCreate();
         selectedUsuario=new MuUsuario();
         rutinas= null;
+        //consultarRutinaPorUsuario();
     }
 
     public List<MruRutina> getRutinas() {
@@ -96,13 +97,14 @@ public class MruRutinaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        clearFields();
         
     }
     
     public void clearFields(){
         selected = new MruRutina();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Successful",  "Los campos han sido limpiados") );
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        context.addMessage(null, new FacesMessage("Campos limpiados",  "Los campos han sido limpiados") );
     }
 
     public void update() {

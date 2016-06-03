@@ -21,12 +21,12 @@ and open the template in the editor.
          
          <h:panelGrid columns="1" style="width: 100%;">
             
-            <p:panel id="filtros" header="Filtros para las graficas" toggleable="true"
+            <p:panel id="filtros" header="Filtros para las gráficas" toggleable="true"
                      toggleSpeed="500" widgetVar="panel" style="margin-bottom: 20px;" >
                
-               <h5>Elige un rango de fechas para visualizar tus estadisticas</h5>
+               <h5>Elige un rango de fechas para visualizar tus estadísticas</h5>
                <h:panelGrid columns="4">
-                  <h:outputText value="Fecha Incial" style="margin-left: 30px;"/>
+                  <h:outputText value="Fecha Inicial" style="margin-left: 30px;"/>
                   <p:calendar showOn="button" pattern="dd-MM-yyyy" style="margin-right: 40px;"
                               value="#{recaudosController.filterFechaInicio}"/>
                   <h:outputText value="Fecha Final"/>
@@ -34,7 +34,7 @@ and open the template in the editor.
                               value="#{recaudosController.filterFechaFin}"/>
                </h:panelGrid>
                
-               <h5>Elige que tipo de pago se debe ver en las graficas</h5>
+               <h5>Elige que tipo de pago se debe ver en las gráficas</h5>
                <h:panelGrid columns="4">
                   
                   <h:outputText value="Mensualidad" style="margin-left: 30px;"/>
@@ -50,7 +50,7 @@ and open the template in the editor.
                   
                </h:panelGrid>
                
-               <h5>Elige las ocupaciones que deseas que se filtren en las graficas</h5>
+               <h5>Elige las ocupaciones que deseas que se filtren en las gráficas</h5>
                <h:panelGrid columns="2">
                   <p:selectCheckboxMenu id="ocupaciones" value="#{recaudosController.selectedOcupaciones}"
                                         label="Ocupación" filter="true" filterMatchMode="startsWith"
@@ -71,15 +71,14 @@ and open the template in the editor.
                   </p:outputPanel>
                </h:panelGrid>
                
-               <p:commandButton value="Generar grafica" style="font-size: 14px !important; margin-top: 20px;"
+               <p:commandButton value="Generar gráfica" style="font-size: 14px !important; margin-top: 20px;"
                                 action="#{recaudosController.generarGraficas()}" update="msgs" ajax="false"/>
             </p:panel>
             
          </h:panelGrid>
          
          <h:panelGrid id="graphics" columns="1" style="width: 100%">
-            <p:chart type="donut" model="#{recaudosController.donutModel}"
-                     style="width: 400px; height: 300px;"/>
+            
             
             <p:chart type="bar" model="#{recaudosController.barModel}"
                      style="height: 300px; width: 100%"/>
