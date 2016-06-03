@@ -39,6 +39,7 @@ public class UsuarioSessionController implements Serializable {
     String contrasena;
 
     private Boolean haySesion;
+    private boolean errorSesion;
     private Long identificacion;
     private MuUsuario usuario;
 
@@ -52,6 +53,14 @@ public class UsuarioSessionController implements Serializable {
 
     public void setHaySesion(Boolean haySesion) {
         this.haySesion = haySesion;
+    }
+
+    public boolean isErrorSesion() {
+        return errorSesion;
+    }
+
+    public void setErrorSesion(boolean errorSesion) {
+        this.errorSesion = errorSesion;
     }
 
     public String getNombreDeUsuario() {
@@ -95,6 +104,7 @@ public class UsuarioSessionController implements Serializable {
                 req.login(this.nombreDeUsuario, this.contrasena);
                 req.getServletContext().log("Autenticacion exitosa");
                 haySesion = true;
+                this.errorSesion=false;
                 if (this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuariogrupoPK().getGruId().equals("user")) {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/GymAdmDoc/faces/usuarioestandar/estandarMain.xhtml");
                     identificacion = this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuario().getUsuIdentificacion();
@@ -104,14 +114,7 @@ public class UsuarioSessionController implements Serializable {
                 }
             } catch (ServletException e) {
 
-                requestContext = RequestContext.getCurrentInstance();
-                FacesContext context = FacesContext.getCurrentInstance();
-                Application application = context.getApplication();
-                ViewHandler viewHandler = application.getViewHandler();
-                UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
-                context.setViewRoot(viewRoot);
-                context.renderResponse();
-                requestContext.execute("PF('errorIniciarSesion').show()");
+                this.errorSesion=true;
 
             }
         } else if (this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuariogrupoPK().getGruId().equals("user")) {

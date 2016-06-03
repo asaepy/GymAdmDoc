@@ -379,6 +379,7 @@ public class RegistrarDatosIngresoController implements Serializable {
         } else {
             consumeMedicanmentos = false;
         }
+        
 
     }
 

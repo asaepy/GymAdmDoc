@@ -16,11 +16,9 @@
         <h:outputStylesheet name="./css/ses.css"/>
         <h:outputScript library="js" name="login.js"/>
 
-        <title>Facelets Template</title>
+        <title>Gimnasio</title>
     </h:head>
-
     <h:body>
-
         <div id="header" >
             <div class="con_escudo_titulo">
                 <div class="bkg" >
@@ -40,7 +38,7 @@
                                         <p:outputLabel  value="Nombre de Usuario:" />
                                         <p:outputLabel style="color:red; text-align: left"  value=" * " />
                                     </p:column>
-                                    
+
                                     <p:column>
                                         <p:inputText id="firstname" value="#{usuarioSessionController.nombreDeUsuario}" 
                                                      required="true" label="Firstname" requiredMessage="Ingrese nombre de usuario"/>
@@ -56,7 +54,7 @@
                                         <p:outputLabel  value="Contraseña:" />
                                         <p:outputLabel style="color:red; text-align: left"  value=" * " />
                                     </p:column>
-                                    
+
                                     <p:column>
                                         <p:password id="contrasena" value="#{usuarioSessionController.contrasena}" 
                                                     label="Lastname" required="true" requiredMessage="Ingrese una contraseña">
@@ -78,34 +76,37 @@
                                     <p:column colspan="3" style="text-align: right; ">
                                         <p:commandButton style="background: gainsboro; width: 150px; color:#000000;font-style: normal;font-weight: bold; "
                                                          value="Iniciar sesión"  action="#{usuarioSessionController.login()}"
-                                                         
                                                          ajax="false"/>
-                                        
                                     </p:column>
-                                    
                                 </p:row>
-                            </p:panelGrid>           
+                            </p:panelGrid>   
                         </h:form>
-                        
                     </div>
                     <h:form id="mensajeerror">
-    
                     </h:form>
                 </div>
                 <p:graphicImage library="img/" name="GymAdmDoc.png" height="145" style="margin-top: 25px; margin-left: -30px"/>
-
             </div>
-
         </div>
         <div id="content" class="center_content">
             <ui:insert name="content">Content</ui:insert>
-            
         </div>
-
         <div id="bottom">
             <ui:insert name="bottom">Bottom</ui:insert>
         </div>
-        
+
+        <p:confirmDialog style="text-align: center; font-size: 15px; "  width="300px" rendered="#{usuarioSessionController.haySesion}" closable="flase" visible="true" message="Existe una sesión con el usuario: #{usuarioSessionController.nombreDeUsuario}   ¿Desea continuar con esta sesión?" showEffect="fade" hideEffect="fade">
+            <h:form style="text-align: center">
+                <p:commandButton value="Si" action="#{usuarioSessionController.login()}" ajax="false"/>
+                <p:commandButton value="No" action="#{usuarioSessionController.logout()}" ajax="false"/>
+            </h:form>  
+        </p:confirmDialog>
+        <p:confirmDialog style="text-align: center; font-size: 15px;"  width="300px" rendered="#{usuarioSessionController.errorSesion}" closable="flase" visible="true" message="Usuario o contraseña incorrecto" showEffect="fade" hideEffect="fade">
+            <h:form style="text-align: center">
+                <p:commandButton value="Aceptar" action="#{usuarioSessionController.setErrorSesion(false)}" ajax="false"/>
+            </h:form>  
+        </p:confirmDialog>
+
     </h:body>
 
 </html>
