@@ -57,9 +57,11 @@
                                 <br/>
                                 <h:panelGrid columns="4">
                                     <p:outputLabel value="#{mru_Bundle.CreateMruRutinaLabel_ruPeso}" for="ruPeso" />
-                                    <p:inputText id="ruPeso" value="#{mruRutinaController.selected.ruPeso}" title="#{mru_Bundle.CreateMruRutinaTitle_ruPeso}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruPeso}"/>
+                                    <p:inputMask id="ruPeso" value="#{mruRutinaController.selected.ruPeso}" mask="99.99" title="#{mru_Bundle.CreateMruRutinaTitle_ruPeso}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruPeso}"/>
+<!--<p:inputText id="ruPeso" value="#{mruRutinaController.selected.ruPeso}" title="#{mru_Bundle.CreateMruRutinaTitle_ruPeso}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruPeso}"/>-->
                                     <p:outputLabel value="#{mru_Bundle.CreateMruRutinaLabel_ruTalla}" for="ruTalla" />
-                                    <p:inputText id="ruTalla" value="#{mruRutinaController.selected.ruTalla}" title="#{mru_Bundle.CreateMruRutinaTitle_ruTalla}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruTalla}"/>
+                                    <p:inputMask id="ruTalla" value="#{mruRutinaController.selected.ruTalla}" mask="9.99" title="#{mru_Bundle.CreateMruRutinaTitle_ruTalla}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruTalla}"/>
+<!--<p:inputText id="ruTalla" value="#{mruRutinaController.selected.ruTalla}" title="#{mru_Bundle.CreateMruRutinaTitle_ruTalla}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruTalla}"/>-->
                                 </h:panelGrid>
                                 <br/>
 

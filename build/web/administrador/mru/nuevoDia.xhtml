@@ -38,8 +38,8 @@
                 </h:panelGrid>
             </p:panel>
             <p:growl id="growl2" life="2000" />
-            <p:commandButton actionListener="#{mruDiaController.create}" value="#{mru_Bundle.Save}" update="growl2"/>
-            <p:commandButton ajax="false" actionListener="#{mruDiaController.clearFields}" value="#{mru_Bundle.clearFields}" update="growl2" />
+            <p:commandButton style="margin-top: 10px" actionListener="#{mruDiaController.create}" value="#{mru_Bundle.Save}" update="growl2"/>
+            <!--<p:commandButton ajax="false" actionListener="#{mruDiaController.clearFields}" value="#{mru_Bundle.clearFields}" update="growl2" />-->
         </h:form>
     </h:body>
 </html>
