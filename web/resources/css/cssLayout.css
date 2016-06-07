@@ -33,6 +33,7 @@
     position: relative;
     background-color: #dddddd;
     padding: 5px;
+    margin-top: 5px;
 }
 
 .left_content {
@@ -59,4 +60,10 @@
   text-decoration : underline;
 }
 
-
+.button_main_menu{
+   background: linear-gradient(to bottom,rgb(9,33,103)0%,rgb(23,52,134)51%,rgb(9,33,103)100%);
+   color: #ffffff;
+   font-size: 20px;
+   position: relative;
+   z-index: 3;
+}

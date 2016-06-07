@@ -58,3 +58,9 @@ body {
     display: block;
     background: url(../img/logo-unicauca.png) no-repeat;
 }
+
+#header .con_botones{
+   text-align: center;
+   margin-top: 40px;
+   width: 100%;
+}
