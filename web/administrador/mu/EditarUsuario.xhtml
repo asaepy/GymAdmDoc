@@ -10,72 +10,39 @@
         <h:form id="editarFoto">
             <p:panelGrid styleClass="panelgrid" id="panel">
                 <p:row>
-                    <p:column>
-                        
-                    </p:column>
                     <p:column >
-                        
+                        <p:outputLabel value="Foto de perfil" style="font-weight: bold; font-size: 15px; color: black; "/>
                     </p:column>
-                    <p:column >
-                        
+                </p:row>                                   
+                <p:row>
+                    
+                    <p:column  rendered="#{editarUsuarioController.campoFoto}">                                
+                        <p:graphicImage value="#{editarUsuarioController.imagenFlujo}" >
+                            <f:param name="idUsu" value="#{editarUsuarioController.usuario.usuIdentificacion}" />
+                        </p:graphicImage>
+
                     </p:column>
-                    <p:column rowspan="7">
-                        <p:panel header="Foto de Perfil" toggleable="true">
-                            <div style="float:left">
-                                <h:form id="formularioFoto">
-                                    <p:messages closable="true"/>
-                                    <p:panelGrid styleClass="panelgrid" id="panelgridusuario">                            
-                                        <p:row>
-                                            <p:column>                                
-                                            </p:column>
-
-                                            <p:column  rendered="#{editarUsuarioController.campoFoto}">                                
-                                                <p:graphicImage value="#{editarUsuarioController.imagenFlujo}" >
-                                                    <f:param name="idUsu" value="#{editarUsuarioController.usuario.usuIdentificacion}" />
-                                                </p:graphicImage>
-
-                                            </p:column>
-                                            <p:column rendered="#{editarUsuarioController.campoFoto}">
-                                                <p:commandLink style="color: blue;" action="#{editarUsuarioController.mostraSubirFoto()}" value="Cambiar"/>                                                                 
-                                            </p:column>
-
-                                            <p:column  rendered="#{!editarUsuarioController.campoFoto}">
-                                                    <p:fileUpload  fileUploadListener="#{editarUsuarioController.cargarFoto}" mode="advanced" dragDropSupport="false"
-                                                                   style="width:250px;"
-                                                                   label="Seleccionar" auto="false"  
-                                                                   invalidFileMessage="Tipo de archivo no válido" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                                                   onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"/>
-
-                                                </p:column>
-                                                <p:column rendered="#{!editarUsuarioController.campoFoto}">
-                                                    <p:outputLabel value="#{editarUsuarioController.uploadedFileFoto.fileName}"/>
-                                                </p:column>
-                                        </p:row>                                   
-
-                                    </p:panelGrid>            
-                                </h:form> 
-                            </div>
-                            <div style="float:left;margin-top: 50px;">
-                                <h:form id="formularioEditarFoto">
-                                    <p:commandLink rendered="#{!editarUsuarioController.campoFoto}"
-                                                   action="#{editarUsuarioController.actualizarFoto()}"
-                                                   style="color:blue;"  value="Aceptar"
-                                                   onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"  />
-                                    <p:commandLink rendered="#{!editarUsuarioController.campoFoto}" 
-                                                   style="margin-left:10px; color:blue;"  value="Cancelar" action="#{editarUsuarioController.cancelarSubirFoto()}"
-                                                   onstart="PF('cargando').show()"  oncomplete="PF('cargando').hide()"/>
-                                </h:form>
-                            </div>            
-                            <div style="clear: both"></div>
-                        </p:panel>
+                    <p:column rendered="#{editarUsuarioController.campoFoto}">
+                        <p:commandLink style="color: blue;" action="#{editarUsuarioController.mostraSubirFoto()}" value="Cambiar"/>                                                                 
                     </p:column>
-                </p:row>
-            </p:panelGrid>
-        </h:form>
-        
+
+                    <p:column  rendered="#{!editarUsuarioController.campoFoto}">
+                        <p:fileUpload fileUploadListener="#{editarUsuarioController.actualizarFoto}" mode="advanced"
+                                      label="Seleccionar"
+                                      auto="true" allowTypes="/(\.|\/)(jpe?g)$/"
+                                      />
+
+                    </p:column>
+                    <p:column rendered="#{!editarUsuarioController.campoFoto}">
+                        <p:outputLabel value="#{editarUsuarioController.uploadedFileFoto.fileName}"/>
+                    </p:column>
+                </p:row>                                   
+
+            </p:panelGrid>            
+        </h:form> 
         <h:form id="editarInformacionUsuario">
             <p:panelGrid styleClass="panelgrid" id="panel">
-                
+
                 <p:row rendered="#{editarUsuarioController.campoIdentificacion}">
                     <p:column>
                         <p:outputLabel style="font-size: 15px;" value="Número de cédula: "/>
@@ -371,7 +338,7 @@
                         <p:outputLabel value=" años"/>
                     </p:column>
                 </p:row>
-                
+
                 <p:row rendered="#{editarUsuarioController.campoOcupacion}">
                     <p:column>
                         <p:outputLabel style="font-size: 15px;" value="Ocupacion: "/>
@@ -501,6 +468,13 @@
                         <p:commandLink style="margin-left: 10px;color: blue;" value="Cancelar" 
                                        action="#{editarUsuarioController.cancelarActualizarContrasena()}"
                                        onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="6" style="text-align: center;">
+                        <p:commandButton  value="Cerrar" style=" 
+                                          font-weight: normal;"
+                                          onclick="PF('editarUsuario').hide()" />
                     </p:column>
                 </p:row>
             </p:panelGrid>    

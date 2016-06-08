@@ -6,9 +6,14 @@
 package com.unicauca.gymadmdoc.sessionbeans;
 
 import com.unicauca.gymadmdoc.entities.MuAntecedenteSalud;
+import com.unicauca.gymadmdoc.entities.MuUsuario;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,5 +33,16 @@ public class MuAntecedenteSaludFacade extends AbstractFacade<MuAntecedenteSalud>
     public MuAntecedenteSaludFacade() {
         super(MuAntecedenteSalud.class);
     }
+
+    public List<MuAntecedenteSalud> buscarAntecedentesSalud(MuUsuario usuIdentificacion) {
+        Query query = getEntityManager().createNamedQuery("MuAntecedenteSalud.findByusuIdentificacion");
+        query.setParameter("id", usuIdentificacion);
+        List<MuAntecedenteSalud> resultList = query.getResultList();
+        return resultList;
+        
+    
+        
+    }
+    
     
 }

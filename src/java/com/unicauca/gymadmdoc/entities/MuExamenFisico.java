@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MuExamenFisico.findByEfisTa", query = "SELECT m FROM MuExamenFisico m WHERE m.efisTa = :efisTa"),
     @NamedQuery(name = "MuExamenFisico.findByEfisFr", query = "SELECT m FROM MuExamenFisico m WHERE m.efisFr = :efisFr"),
     @NamedQuery(name = "MuExamenFisico.findByEfisImc", query = "SELECT m FROM MuExamenFisico m WHERE m.efisImc = :efisImc"),
-    @NamedQuery(name = "MuExamenFisico.findByEfisIcc", query = "SELECT m FROM MuExamenFisico m WHERE m.efisIcc = :efisIcc")})
+    @NamedQuery(name = "MuExamenFisico.findByEfisIcc", query = "SELECT m FROM MuExamenFisico m WHERE m.efisIcc = :efisIcc"),
+    @NamedQuery(name = "MuExamenFisico.findByusuIdentificacion", query = "SELECT m FROM MuExamenFisico m WHERE m.usuIdentificacion = :id")
+})
 public class MuExamenFisico implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -88,23 +90,15 @@ public class MuExamenFisico implements Serializable {
     @NotNull
     @Column(name = "EFIS_ICC")
     private float efisIcc;
-    @Basic(optional = false)
-    @NotNull
     @Lob
     @Column(name = "EFIS_FOTO_CUERPO_COMPLETO_FRENTE")
     private byte[] efisFotoCuerpoCompletoFrente;
-    @Basic(optional = false)
-    @NotNull
     @Lob
     @Column(name = "EFIS_FOTO_CUERPO_COMPLETO_ESPALDA")
     private byte[] efisFotoCuerpoCompletoEspalda;
-    @Basic(optional = false)
-    @NotNull
     @Lob
     @Column(name = "EFIS_FOTO_CUERPO_COMPLETO_PERFIL_DER")
     private byte[] efisFotoCuerpoCompletoPerfilDer;
-    @Basic(optional = false)
-    @NotNull
     @Lob
     @Column(name = "EFIS_FOTO_CUERPO_COMPLETO_PERFIL_IZQ")
     private byte[] efisFotoCuerpoCompletoPerfilIzq;

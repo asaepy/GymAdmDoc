@@ -128,11 +128,6 @@ public class MuUsuario implements Serializable {
     @Size(min = 1, max = 15)
     @Column(name = "USU_ESTADO")
     private String usuEstado;
-    @JoinTable(name = "usuario_medicamento", joinColumns = {
-        @JoinColumn(name = "USU_IDENTIFICACION", referencedColumnName = "USU_IDENTIFICACION")}, inverseJoinColumns = {
-        @JoinColumn(name = "MED_ID", referencedColumnName = "MED_ID")})
-    @ManyToMany
-    private Collection<MuMedicamento> muMedicamentoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "muUsuario")
     private Collection<MuUsuariogrupo> muUsuariogrupoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuIdentificacion")
@@ -283,15 +278,6 @@ public class MuUsuario implements Serializable {
 
     public void setUsuEstado(String usuEstado) {
         this.usuEstado = usuEstado;
-    }
-
-    @XmlTransient
-    public Collection<MuMedicamento> getMuMedicamentoCollection() {
-        return muMedicamentoCollection;
-    }
-
-    public void setMuMedicamentoCollection(Collection<MuMedicamento> muMedicamentoCollection) {
-        this.muMedicamentoCollection = muMedicamentoCollection;
     }
 
     @XmlTransient

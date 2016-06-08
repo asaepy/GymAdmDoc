@@ -9,12 +9,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.servlet.ServletException;
@@ -113,8 +110,9 @@ public class UsuarioSessionController implements Serializable {
                     identificacion = this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuario().getUsuIdentificacion();
                 }
             } catch (ServletException e) {
-
+                
                 this.errorSesion=true;
+                
 
             }
         } else if (this.usuarioGrupoEJB.buscarPorNombreUsuario(req.getUserPrincipal().getName()).get(0).getMuUsuariogrupoPK().getGruId().equals("user")) {
@@ -155,20 +153,6 @@ public class UsuarioSessionController implements Serializable {
             fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "FAILED", "Logout failed on backend"));
         }
 
-    }
-
-    public void ventanaInicioSession() {
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        FacesContext context = FacesContext.getCurrentInstance();
-        Application application = context.getApplication();
-        ViewHandler viewHandler = application.getViewHandler();
-        UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
-        context.setViewRoot(viewRoot);
-        context.renderResponse();
-        this.contrasena = null;
-        this.nombreDeUsuario = null;
-        requestContext.update("formularioInicioSession");
-        requestContext.execute("PF('IniciarSesion').show()");
     }
 
     public boolean esusuarioSinSession() {

@@ -6,9 +6,12 @@
 package com.unicauca.gymadmdoc.sessionbeans;
 
 import com.unicauca.gymadmdoc.entities.MuEvaluacion;
+import com.unicauca.gymadmdoc.entities.MuUsuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,13 @@ public class MuEvaluacionFacade extends AbstractFacade<MuEvaluacion> {
 
     public MuEvaluacionFacade() {
         super(MuEvaluacion.class);
+    }
+
+    public List<MuEvaluacion> buscarEvaluacion(MuUsuario usuario) {
+        Query query = getEntityManager().createNamedQuery("MuEvaluacion.findByusuIdentificacion");
+        query.setParameter("id", usuario);
+        List<MuEvaluacion> resultList = query.getResultList();
+        return resultList;
     }
     
 }

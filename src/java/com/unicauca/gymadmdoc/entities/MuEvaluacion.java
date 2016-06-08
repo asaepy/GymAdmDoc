@@ -35,7 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "MuEvaluacion.findAll", query = "SELECT m FROM MuEvaluacion m"),
     @NamedQuery(name = "MuEvaluacion.findByEvalId", query = "SELECT m FROM MuEvaluacion m WHERE m.evalId = :evalId"),
-    @NamedQuery(name = "MuEvaluacion.findByEvalObservacion", query = "SELECT m FROM MuEvaluacion m WHERE m.evalObservacion = :evalObservacion")})
+    @NamedQuery(name = "MuEvaluacion.findByEvalObservacion", query = "SELECT m FROM MuEvaluacion m WHERE m.evalObservacion = :evalObservacion"),
+    @NamedQuery(name = "MuEvaluacion.findByusuIdentificacion", query = "SELECT m FROM MuEvaluacion m WHERE m.usuIdentificacion = :id")
+})
+
 public class MuEvaluacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
