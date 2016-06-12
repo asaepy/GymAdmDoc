@@ -5,20 +5,25 @@
  */
 package com.unicauca.gymadmdoc.managedbeans;
 
-import com.unicauca.gymadmdoc.entities.MuAntecedenteSalud;
-import com.unicauca.gymadmdoc.entities.MuDiagnosticoMedico;
+import static com.sun.faces.facelets.util.Path.context;
+import com.unicauca.gymadmdoc.cifrado.Cifrar;
 import com.unicauca.gymadmdoc.entities.MuExamenFisico;
+import com.unicauca.gymadmdoc.entities.MuFacultadDependencia;
+import com.unicauca.gymadmdoc.entities.MuMedicamento;
+
+import com.unicauca.gymadmdoc.entities.MuOcupacion;
 import com.unicauca.gymadmdoc.entities.MuUsuario;
+import com.unicauca.gymadmdoc.entities.MuUsuariogrupo;
+import com.unicauca.gymadmdoc.entities.MuUsuariogrupoPK;
 import com.unicauca.gymadmdoc.sessionbeans.MuExamenFisicoFacade;
+import com.unicauca.gymadmdoc.sessionbeans.MuFacultadDependenciaFacade;
+import com.unicauca.gymadmdoc.sessionbeans.MuMedicamentoFacade;
+import com.unicauca.gymadmdoc.sessionbeans.MuOcupacionFacade;
 import com.unicauca.gymadmdoc.sessionbeans.MuUsuarioFacade;
-import com.unicauca.gymadmdoc.sessionbeans.MuAntecedenteSaludFacade;
-import com.unicauca.gymadmdoc.sessionbeans.MuDiagnosticoMedicoFacade;
-import com.unicauca.gymadmdoc.sessionbeans.MuEvaluacionFacade;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import com.unicauca.gymadmdoc.sessionbeans.MuUsuariogrupoFacade;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,29 +32,37 @@ import javax.faces.application.FacesMessage;
 import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.validator.ValidatorException;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 
 @ManagedBean
 @ViewScoped
 public class RegistrarDatosIngresoController implements Serializable {
 
     @EJB
+    private MuFacultadDependenciaFacade facultadDependenciaEJB;
+    @EJB
     private MuUsuarioFacade usuarioEJB;
     @EJB
-    private MuDiagnosticoMedicoFacade diagnosticoMedicoEJB;
+    private MuOcupacionFacade ocupacionEJB;
+    @EJB
+    private MuUsuariogrupoFacade usuarioGrupoEJB;
+    @EJB
+    private MuMedicamentoFacade medicamentoEJB;
     @EJB
     private MuExamenFisicoFacade examenFisicoEJB;
-    @EJB
-    private MuAntecedenteSaludFacade antecedentesSaludEJB;
-    @EJB
-    private MuEvaluacionFacade evaluacionEJB;
 
-    private boolean consumeMedicamentos;
+    private List<String> listaTipo;
+    private boolean camposRegistroEstudiante;
+    private boolean camposRegistroFuncionario;
+    private boolean camposRegistroFamiliar;
+    private boolean camposRegistroFuncionarioDocente;
+    private boolean camposRegistroFuncionarioAdministrativo;
+    private boolean consumeMedicanmentos;
     private float peso;
     private float talla;
     private float fc;
@@ -59,32 +72,35 @@ public class RegistrarDatosIngresoController implements Serializable {
     private float imc;
     private float icc;
     private Date fecha;
-    private String medicamentos;
+    private String consume;
+    private List<MuFacultadDependencia> listaFacultadesYDependencias;
+    private List<MuOcupacion> listaOcupaciones;
     private MuUsuario usuario;
+    private MuFacultadDependencia facultadDependencia;
+    private MuOcupacion ocupacion;
+    private MuMedicamento medicamento;
     private MuExamenFisico examenFisico;
-    private MuDiagnosticoMedico diagnosticoMedico;
+    private String contrasena;
+    private String repetircontrasena;
     private String numeroIdentificacion;
+    private String codigo;
     private List<MuUsuario> listaFuncionarios;
+    private MuUsuario funcionario;
     private String nombreOApellidos;
     private boolean usuarioSeleccionado;
-    private boolean tieneAntecedentesDeSalud;
-    private boolean tieneExamenFisico;
-    private boolean tieneDiagnosticoMedico;
-    private boolean tieneEvaluacion;
-    private String descripcionDiagnostico;
 
     public RegistrarDatosIngresoController() {
+        this.cargarListaTipo();
         this.inicializarCamposUsuarioEspecificos();
         this.usuario = new MuUsuario();
-        this.diagnosticoMedico = new MuDiagnosticoMedico();
-        this.examenFisico= new MuExamenFisico();
+        this.usuario.setUsuGenero("M");
 
     }
 
     @PostConstruct
     private void init() {
-        asignarFecha();
-
+        this.facultadDependencia = new MuFacultadDependencia();
+        this.cargarListaFacultades();
     }
 
     public String getNombreOApellidos() {
@@ -95,6 +111,10 @@ public class RegistrarDatosIngresoController implements Serializable {
         this.nombreOApellidos = nombreOApellidos;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
     public boolean isUsuarioSeleccionado() {
         return usuarioSeleccionado;
     }
@@ -103,52 +123,24 @@ public class RegistrarDatosIngresoController implements Serializable {
         this.usuarioSeleccionado = usuarioSeleccionado;
     }
 
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public MuUsuario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(MuUsuario funcionario) {
+        this.funcionario = funcionario;
+    }
+
     public float getPeso() {
         return peso;
     }
 
     public void setPeso(float peso) {
         this.peso = peso;
-    }
-
-    public boolean isTieneExamenFisico() {
-        return tieneExamenFisico;
-    }
-
-    public void setTieneExamenFisico(boolean tieneExamenFisico) {
-        this.tieneExamenFisico = tieneExamenFisico;
-    }
-
-    public boolean isTieneDiagnosticoMedico() {
-        return tieneDiagnosticoMedico;
-    }
-
-    public void setTieneDiagnosticoMedico(boolean tieneDiagnosticoMedico) {
-        this.tieneDiagnosticoMedico = tieneDiagnosticoMedico;
-    }
-
-    public boolean isTieneEvaluacion() {
-        return tieneEvaluacion;
-    }
-
-    public void setTieneEvaluacion(boolean tieneEvaluacion) {
-        this.tieneEvaluacion = tieneEvaluacion;
-    }
-
-    public boolean isTieneAntecedentesDeSalud() {
-        return tieneAntecedentesDeSalud;
-    }
-
-    public void setTieneAntecedentesDeSalud(boolean tieneAntecedentesDeSalud) {
-        this.tieneAntecedentesDeSalud = tieneAntecedentesDeSalud;
-    }
-
-    public String getDescripcionDiagnostico() {
-        return descripcionDiagnostico;
-    }
-
-    public void setDescripcionDiagnostico(String descripcionDiagnostico) {
-        this.descripcionDiagnostico = descripcionDiagnostico;
     }
 
     public float getTalla() {
@@ -215,20 +207,20 @@ public class RegistrarDatosIngresoController implements Serializable {
         this.fecha = fecha;
     }
 
-    public boolean isConsumeMedicamentos() {
-        return consumeMedicamentos;
+    public boolean isConsumeMedicanmentos() {
+        return consumeMedicanmentos;
     }
 
-    public void setConsumeMedicamentos(boolean consumeMedicamentos) {
-        this.consumeMedicamentos = consumeMedicamentos;
+    public void setConsumeMedicanmentos(boolean consumeMedicanmentos) {
+        this.consumeMedicanmentos = consumeMedicanmentos;
     }
 
-    public String getMedicamentos() {
-        return medicamentos;
+    public String getConsume() {
+        return consume;
     }
 
-    public void setMedicamentos(String medicamentos) {
-        this.medicamentos = medicamentos;
+    public void setConsume(String consume) {
+        this.consume = consume;
     }
 
     public List<MuUsuario> getListaFuncionarios() {
@@ -247,6 +239,62 @@ public class RegistrarDatosIngresoController implements Serializable {
         this.numeroIdentificacion = numeroIdentificacion;
     }
 
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getRepetircontrasena() {
+        return repetircontrasena;
+    }
+
+    public void setRepetircontrasena(String repetircontrasena) {
+        this.repetircontrasena = repetircontrasena;
+    }
+
+    public MuOcupacion getOcupacion() {
+        return ocupacion;
+    }
+
+    public void setOcupacion(MuOcupacion ocupacion) {
+        this.ocupacion = ocupacion;
+    }
+
+    public boolean isCamposRegistroFuncionarioDocente() {
+        return camposRegistroFuncionarioDocente;
+    }
+
+    public void setCamposRegistroFuncionarioDocente(boolean camposRegistroFuncionarioDocente) {
+        this.camposRegistroFuncionarioDocente = camposRegistroFuncionarioDocente;
+    }
+
+    public boolean isCamposRegistroFuncionarioAdministrativo() {
+        return camposRegistroFuncionarioAdministrativo;
+    }
+
+    public void setCamposRegistroFuncionarioAdministrativo(boolean camposRegistroFuncionarioAdministrativo) {
+        this.camposRegistroFuncionarioAdministrativo = camposRegistroFuncionarioAdministrativo;
+    }
+
+    public List<MuOcupacion> getListaOcupaciones() {
+        return listaOcupaciones;
+    }
+
+    public void setListaCargos(List<MuOcupacion> listaOcupaciones) {
+        this.listaOcupaciones = listaOcupaciones;
+    }
+
+    public MuFacultadDependencia getFacultadDependencia() {
+        return facultadDependencia;
+    }
+
+    public void setFacultad(MuFacultadDependencia facultadDependencia) {
+        this.facultadDependencia = facultadDependencia;
+    }
+
     public MuUsuario getUsuario() {
         return usuario;
     }
@@ -255,17 +303,83 @@ public class RegistrarDatosIngresoController implements Serializable {
         this.usuario = usuario;
     }
 
+    public List<MuFacultadDependencia> getListaFacultadesYDependencias() {
+        return listaFacultadesYDependencias;
+    }
+
+    public void setListaFacultades(List<MuFacultadDependencia> listaFacultadesYDependencias) {
+        this.listaFacultadesYDependencias = listaFacultadesYDependencias;
+    }
+
+    public boolean isCamposRegistroFuncionario() {
+        return camposRegistroFuncionario;
+    }
+
+    public void setCamposRegistroFuncionario(boolean camposRegistroFuncionario) {
+        this.camposRegistroFuncionario = camposRegistroFuncionario;
+    }
+
+    public boolean isCamposRegistroFamiliar() {
+        return camposRegistroFamiliar;
+    }
+
+    public void setCamposRegistroFamiliar(boolean camposRegistroFamiliar) {
+        this.camposRegistroFamiliar = camposRegistroFamiliar;
+    }
+
+    public boolean isCamposRegistroEstudiante() {
+        return camposRegistroEstudiante;
+    }
+
+    public void setCamposRegistroEstudiante(boolean camposRegistroEstudiante) {
+        this.camposRegistroEstudiante = camposRegistroEstudiante;
+    }
+
+    public List<String> getListaTipo() {
+        return listaTipo;
+    }
+
+    public void setListaTipo(List<String> listaTipo) {
+        this.listaTipo = listaTipo;
+    }
+
+    private void cargarListaFacultades() {
+        this.listaFacultadesYDependencias = facultadDependenciaEJB.findAll();
+    }
+
+    private void cargarListaOcupaciones() {
+        this.listaOcupaciones = ocupacionEJB.findAll();
+    }
+
     private void inicializarCamposUsuarioEspecificos() {
+        this.camposRegistroEstudiante = true;
+        this.camposRegistroFamiliar = false;
+        this.camposRegistroFuncionario = false;
+        this.camposRegistroFuncionarioDocente = false;
+        this.camposRegistroFuncionarioAdministrativo = false;
         this.usuarioSeleccionado = false;
-        this.consumeMedicamentos = false;
+        this.consumeMedicanmentos = false;
+    }
+
+    private void cargarListaTipo() {
+        listaTipo = new ArrayList();
+        listaTipo.add("Estudiante");
+        listaTipo.add("Familiar");
+        listaTipo.add("Funcionario");
+    }
+
+    private void cargarListaFuncionarios() {
+        this.listaFuncionarios = usuarioEJB.buscarPorFuncionario();
     }
 
     public void respuesta(ValueChangeEvent e) {
-        if (e.getNewValue().equals("Si")) {
-            consumeMedicamentos = true;
+        System.out.println("dato consume: " + e.getNewValue());
+        if (this.consume.equalsIgnoreCase("Si")) {
+            consumeMedicanmentos = true;
         } else {
-            consumeMedicamentos = false;
+            consumeMedicanmentos = false;
         }
+        
 
     }
 
@@ -282,7 +396,7 @@ public class RegistrarDatosIngresoController implements Serializable {
         requestContext.execute("PF('RegistrarExamenFisico').show()");
     }
 
-    public void abrirVentanaDiagnosticoMedico() {
+    public void abrirVentanaMedicamentos() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         FacesContext context = FacesContext.getCurrentInstance();
         Application application = context.getApplication();
@@ -292,7 +406,7 @@ public class RegistrarDatosIngresoController implements Serializable {
         context.renderResponse();
         requestContext.update("form:panel");
         requestContext.update("form");
-        requestContext.execute("PF('RegistrarDiagnosticoMedico').show()");
+        requestContext.execute("PF('RegistrarMedicamento').show()");
     }
 
     public void abrirVentanaEvaluacion() {
@@ -308,9 +422,78 @@ public class RegistrarDatosIngresoController implements Serializable {
         requestContext.execute("PF('RegistrarEvaluacion').show()");
     }
 
+    public void cambiarTipoUsuario(ValueChangeEvent e) {
+        String tipo = e.getNewValue().toString();
+        this.camposRegistroEstudiante = false;
+        this.camposRegistroFamiliar = false;
+        this.camposRegistroFuncionario = false;
+        this.camposRegistroFuncionarioDocente = false;
+        this.camposRegistroFuncionarioAdministrativo = false;
+        this.listaFacultadesYDependencias = null;
+        this.facultadDependencia = null;
+        this.ocupacion = null;
+        this.listaFuncionarios = null;
+        this.funcionario = null;
+        if (tipo.equals("Estudiante")) {
+            this.facultadDependencia = new MuFacultadDependencia();
+            this.camposRegistroEstudiante = true;
+            this.cargarListaFacultades();
+        }
+        if (tipo.equals("Funcionario")) {
+            this.ocupacion = new MuOcupacion();
+            this.facultadDependencia = new MuFacultadDependencia();
+            this.cargarListaFacultades();
+            this.camposRegistroFuncionarioDocente = true;
+            this.camposRegistroFuncionario = true;
+            this.cargarListaOcupaciones();
+        }
+        if (tipo.equals("Familiar")) {
+            this.funcionario = new MuUsuario();
+            this.funcionario.setFacDepId(new MuFacultadDependencia());
+            this.cargarListaFuncionarios();
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            requestContext.update("funcionarios");
+            this.camposRegistroFamiliar = true;
+        }
+    }
+
+    public void cambiarOcupacionFuncionario(ValueChangeEvent e) {
+        String tipo = e.getNewValue().toString();
+        this.camposRegistroFuncionarioDocente = false;
+        this.camposRegistroFuncionarioAdministrativo = false;
+        this.listaFacultadesYDependencias = null;
+
+        this.facultadDependencia = null;
+
+        if (tipo.equals("1")) {
+            this.facultadDependencia = new MuFacultadDependencia();
+            this.cargarListaFacultades();
+            this.camposRegistroFuncionarioDocente = true;
+        }
+
+    }
+
+    public List<MuFacultadDependencia> listarFacultades() {
+        return facultadDependenciaEJB.findAll();
+    }
+
     public void buscarPorNombreFuncionario() {
 
         this.listaFuncionarios = usuarioEJB.busacarPorNombreFuncionario(this.nombreOApellidos.toLowerCase());
+
+    }
+
+    public void validateContrasena(FacesContext arg0, UIComponent arg1, Object arg2) throws ValidatorException {
+
+        this.contrasena = String.valueOf(arg2);
+    }
+
+    public void validateRepitaContrasena(FacesContext arg0, UIComponent arg1, Object arg2) throws ValidatorException {
+        String texto = String.valueOf(arg2);
+        if (!(texto.equals(this.contrasena))) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Las contraseñas no coinciden."));
+
+        }
 
     }
 
@@ -319,15 +502,83 @@ public class RegistrarDatosIngresoController implements Serializable {
         requestContext.execute("PF('seleccionarUsuario').hide()");
         this.usuario = usuario;
         this.usuarioSeleccionado = true;
-        cambiarEstadoAntecedentes(usuario);
+        System.out.println("Nombre: " + usuario.getUsuNombres());
         requestContext.update("usuarioSeleccionado");
         requestContext.update("datosIngreso");
         requestContext.update("registroDatosIngreso");
+    }
 
+    public void registrarUsuario() {
+
+        if (this.funcionario != null) {
+            if (this.funcionario.getUsuNombres() == null) {
+                this.usuarioSeleccionado = true;
+            } else {
+                this.usuario.setUsuIdentificacion(Long.parseLong(this.numeroIdentificacion));
+                this.usuario.setUsuContrasena(Cifrar.sha256(this.contrasena));
+                //this.usuario.setConyugeid(this.funcionario);
+                this.usuarioEJB.create(this.usuario);
+                MuUsuariogrupo usuarioGrupo = new MuUsuariogrupo();
+                MuUsuariogrupoPK usuarioGrupoPK = new MuUsuariogrupoPK();
+                usuarioGrupoPK.setGruId("user");
+                usuarioGrupoPK.setUsuIdentificacion(this.usuario.getUsuIdentificacion());
+                usuarioGrupo.setMuUsuariogrupoPK(usuarioGrupoPK);
+                usuarioGrupo.setUsuNombreUsuario(this.usuario.getUsuNombreUsuario());
+                this.usuarioGrupoEJB.create(usuarioGrupo);
+
+                RequestContext requestContext = RequestContext.getCurrentInstance();
+                FacesContext context = FacesContext.getCurrentInstance();
+                Application application = context.getApplication();
+                ViewHandler viewHandler = application.getViewHandler();
+                UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
+                context.setViewRoot(viewRoot);
+                context.renderResponse();
+                this.usuario = new MuUsuario();
+                this.cargarListaTipo();
+                this.inicializarCamposUsuarioEspecificos();
+                this.facultadDependencia = new MuFacultadDependencia();
+                this.cargarListaFacultades();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro Exitoso."));
+                requestContext.execute("PF('mensajeRegistroExitoso').show()");
+            }
+        } else {
+            if (this.ocupacion != null) {
+                this.usuario.setOcuId(this.ocupacion);
+            }
+            if (this.facultadDependencia != null) {
+                this.usuario.setFacDepId(this.facultadDependencia);
+            }
+
+            this.usuario.setUsuIdentificacion(Long.parseLong(this.numeroIdentificacion));
+            this.usuario.setUsuContrasena(Cifrar.sha256(this.contrasena));
+            this.usuarioEJB.create(this.usuario);
+            MuUsuariogrupo usuarioGrupo = new MuUsuariogrupo();
+            MuUsuariogrupoPK usuarioGrupoPK = new MuUsuariogrupoPK();
+            usuarioGrupoPK.setGruId("user");
+            usuarioGrupoPK.setUsuIdentificacion(this.usuario.getUsuIdentificacion());
+            usuarioGrupo.setMuUsuariogrupoPK(usuarioGrupoPK);
+            usuarioGrupo.setUsuNombreUsuario(this.usuario.getUsuNombreUsuario());
+            this.usuarioGrupoEJB.create(usuarioGrupo);
+
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            FacesContext context = FacesContext.getCurrentInstance();
+            Application application = context.getApplication();
+            ViewHandler viewHandler = application.getViewHandler();
+            UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
+            context.setViewRoot(viewRoot);
+            context.renderResponse();
+            this.usuario = new MuUsuario();
+            this.cargarListaTipo();
+            this.inicializarCamposUsuarioEspecificos();
+            this.facultadDependencia = new MuFacultadDependencia();
+            this.cargarListaFacultades();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro Exitoso."));
+            requestContext.execute("PF('mensajeRegistroExitoso').show()");
+        }
     }
 
     public void registrarExamenFisico() {
-               
+
         this.examenFisico.setEfisFecha(fecha);
         this.examenFisico.setEfisPeso(peso);
         this.examenFisico.setEfisTalla(talla);
@@ -338,134 +589,18 @@ public class RegistrarDatosIngresoController implements Serializable {
         this.examenFisico.setEfisIcc(icc);
         this.examenFisico.setEfisImc(imc);
         this.examenFisico.setUsuIdentificacion(usuario);
-        this.examenFisicoEJB.create(examenFisico);       
+        this.examenFisicoEJB.create(examenFisico);
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
+        FacesContext context = FacesContext.getCurrentInstance();
+        Application application = context.getApplication();
+        ViewHandler viewHandler = application.getViewHandler();
+        UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
+        context.setViewRoot(viewRoot);
+        context.renderResponse();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Registro Exitoso."));
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
-        cambiarEstadoAntecedentes(usuario);
-        reinicarDatos();
-        requestContext.update("usuarioSeleccionado");
-        requestContext.update("datosIngreso");
-        requestContext.update("registroDatosIngreso");
-        
-    }
-    
-    public void registrarDiagnosticoMedico() {
 
-        if (medicamentos != null) {
-            this.diagnosticoMedico.setDimedMedicamentos(medicamentos);
-        }
-        this.diagnosticoMedico.setDimedDescripcion(descripcionDiagnostico);
-        this.diagnosticoMedico.setUsuIdentificacion(usuario);
-        this.diagnosticoMedicoEJB.create(diagnosticoMedico);
-
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('RegistrarDiagnosticoMedico').hide()");
-        cambiarEstadoAntecedentes(usuario);
-        requestContext.update("usuarioSeleccionado");
-        requestContext.update("datosIngreso");
-        requestContext.update("registroDatosIngreso");
-
-    }
-
-    private void cambiarEstadoAntecedentes(MuUsuario usuario) {
-
-        if (this.antecedentesSaludEJB.buscarAntecedentesSalud(usuario).size() > 0) {
-            tieneAntecedentesDeSalud = true;
-        } else {
-            tieneAntecedentesDeSalud = false;
-        }
-
-        if (this.diagnosticoMedicoEJB.buscarDiagnosticoMedico(usuario).size() > 0) {
-            tieneDiagnosticoMedico = true;
-        } else {
-            tieneDiagnosticoMedico = false;
-        }
-
-        if (this.examenFisicoEJB.buscarExamenFisico(usuario).size() > 0) {
-            tieneExamenFisico = true;
-        } else {
-            tieneExamenFisico = false;
-        }
-
-        if (this.evaluacionEJB.buscarEvaluacion(usuario).size() > 0) {
-            tieneEvaluacion = true;
-        } else {
-            tieneEvaluacion = false;
-        }
-
-    }
-
-    
-    public void eliminarDiagnosticoMedico() {
-        diagnosticoMedicoEJB.remove(diagnosticoMedicoEJB.buscarDiagnosticoMedico(usuario).get(0));
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('eliminarDiagnostico').hide()");
-        cambiarEstadoAntecedentes(usuario);        
-        requestContext.update("usuarioSeleccionado");
-        requestContext.update("datosIngreso");
-        requestContext.update("registroDatosIngreso");
-        
-        
-    }
-    public void eliminarExamenFisico() {
-        examenFisicoEJB.remove(examenFisicoEJB.buscarExamenFisico(usuario).get(0));
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('eliminarExamenFisico').hide()");
-        cambiarEstadoAntecedentes(usuario);        
-        requestContext.update("usuarioSeleccionado");
-        requestContext.update("datosIngreso");
-        requestContext.update("registroDatosIngreso");   
-        
-    }
-    public void subirImagenFrente(FileUploadEvent event) {
-        UploadedFile file  = event.getFile();
-        examenFisico.setEfisFotoCuerpoCompletoFrente(inputStreamToByteArray(file));
-    }
-    public void subirImagenEspalda(FileUploadEvent event) {
-        UploadedFile file  = event.getFile();
-        examenFisico.setEfisFotoCuerpoCompletoEspalda(inputStreamToByteArray(file));
-    }
-    public void subirImagenPerfilIzq(FileUploadEvent event) {
-        UploadedFile file  = event.getFile();
-        examenFisico.setEfisFotoCuerpoCompletoPerfilIzq(inputStreamToByteArray(file));
-    }
-    public void subirImagenPerfilDer(FileUploadEvent event) {
-        UploadedFile file  = event.getFile();
-        examenFisico.setEfisFotoCuerpoCompletoPerfilDer(inputStreamToByteArray(file));
-    }
-    private byte[] inputStreamToByteArray(UploadedFile file) {
-        byte[] imagen = null;
-        if(file != null) {
-            try {
-                ByteArrayOutputStream output;
-                try (InputStream input = file.getInputstream()) {
-                    byte[] buffer = new byte[1024];
-                    int length;
-                    output = new ByteArrayOutputStream();
-                    while ((length = input.read(buffer)) != -1) output.write(buffer, 0, length);
-                }
-                imagen = output.toByteArray();
-            } catch (Exception ex) {}
-        }
-        return imagen;
-    }
-    private void asignarFecha() {
-        GregorianCalendar c = new GregorianCalendar();
-        fecha = c.getTime();
-    }
-
-    private void reinicarDatos() {
-        this.examenFisico= new MuExamenFisico();
-        this.peso=0;
-        this.talla=0;
-        this.fc=0;
-        this.fcm=0;
-        this.ta=0;
-        this.fr=0;
-        this.icc=0;
-        this.imc=0;
     }
 
 }

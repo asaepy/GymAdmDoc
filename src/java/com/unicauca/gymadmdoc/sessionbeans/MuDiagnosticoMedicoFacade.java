@@ -5,14 +5,10 @@
  */
 package com.unicauca.gymadmdoc.sessionbeans;
 
-import com.unicauca.gymadmdoc.entities.MuAntecedenteSalud;
 import com.unicauca.gymadmdoc.entities.MuDiagnosticoMedico;
-import com.unicauca.gymadmdoc.entities.MuUsuario;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -31,13 +27,6 @@ public class MuDiagnosticoMedicoFacade extends AbstractFacade<MuDiagnosticoMedic
 
     public MuDiagnosticoMedicoFacade() {
         super(MuDiagnosticoMedico.class);
-    }
-
-    public List<MuDiagnosticoMedico> buscarDiagnosticoMedico(MuUsuario usuario) {
-        Query query = getEntityManager().createNamedQuery("MuDiagnosticoMedico.findByusuIdentificacion");
-        query.setParameter("id", usuario);
-        List<MuDiagnosticoMedico> resultList = query.getResultList();
-        return resultList;
     }
     
 }

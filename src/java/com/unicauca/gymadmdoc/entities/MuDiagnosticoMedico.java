@@ -9,14 +9,13 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,25 +29,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "MuDiagnosticoMedico.findAll", query = "SELECT m FROM MuDiagnosticoMedico m"),
     @NamedQuery(name = "MuDiagnosticoMedico.findByDimedId", query = "SELECT m FROM MuDiagnosticoMedico m WHERE m.dimedId = :dimedId"),
-    @NamedQuery(name = "MuDiagnosticoMedico.findByusuIdentificacion", query = "SELECT m FROM MuDiagnosticoMedico m WHERE m.usuIdentificacion = :id"),
     @NamedQuery(name = "MuDiagnosticoMedico.findByDimedDescripcion", query = "SELECT m FROM MuDiagnosticoMedico m WHERE m.dimedDescripcion = :dimedDescripcion")})
 public class MuDiagnosticoMedico implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "DIMED_ID")
     private Long dimedId;
-    @Size(max = 350)
+    @Size(max = 250)
     @Column(name = "DIMED_DESCRIPCION")
     private String dimedDescripcion;
     @JoinColumn(name = "USU_IDENTIFICACION", referencedColumnName = "USU_IDENTIFICACION")
     @ManyToOne(optional = false)
     private MuUsuario usuIdentificacion;
-    @Size(max = 250)
-    @Column(name = "DIMED_MEDICAMENTOS")
-    private String dimedMedicamentos;
+
     public MuDiagnosticoMedico() {
     }
 
@@ -80,15 +76,6 @@ public class MuDiagnosticoMedico implements Serializable {
         this.usuIdentificacion = usuIdentificacion;
     }
 
-    public String getDimedMedicamentos() {
-        return dimedMedicamentos;
-    }
-
-    public void setDimedMedicamentos(String dimedMedicamentos) {
-        this.dimedMedicamentos = dimedMedicamentos;
-    }
-
-    
     @Override
     public int hashCode() {
         int hash = 0;

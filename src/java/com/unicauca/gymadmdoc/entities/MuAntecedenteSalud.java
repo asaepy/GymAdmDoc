@@ -115,5 +115,5 @@ public class MuAntecedenteSalud implements Serializable {
     public String toString() {
         return "co.unicauca.gymdam.entidades.MuAntecedenteSalud[ ansaId=" + ansaId + " ]";
     }
-
+    
 }

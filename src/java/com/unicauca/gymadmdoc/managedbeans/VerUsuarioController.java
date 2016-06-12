@@ -31,6 +31,10 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 
+/**
+ *
+ * @author geovanny
+ */
 @ManagedBean
 @SessionScoped
 public class VerUsuarioController implements Serializable {
@@ -68,8 +72,6 @@ public class VerUsuarioController implements Serializable {
         } else {
 
             String id = context.getExternalContext().getRequestParameterMap().get("idUsu");
-            if (id==null || id.isEmpty())
-                return Utilidades.getImagenPorDefecto("foto");
             MuUsuario usu = usuarioEJB.buscarPorIdUsuario(Long.valueOf(id)).get(0);
             if (usuario.getUsuFoto()==null)
                 return Utilidades.getImagenPorDefecto("foto");

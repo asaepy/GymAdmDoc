@@ -18,11 +18,10 @@
                 <h3>Seleccione Aquí la rutina a la cual pertenece este día</h3>
                 <h:panelGrid columns="4">
                     <p:outputLabel value="#{mru_Bundle.CreateMruDiaLabel_ruId}" for="ruId" />
-                    <p:selectOneMenu id="ruId" value="#{mruDiaController.selected.ruId}" required="true" requiredMessage="#{mru_Bundle.EditMruDiaRequiredMessage_ruId}">
-                        <f:selectItems value="#{mruRutinaController.itemsAvailableSelectOne}"
-                                       var="ruIdItem"
-                                       itemValue="#{ruIdItem}"/>
-                    </p:selectOneMenu>
+                    <p:inputText id="ruId" value="#{mruDiaController.selected.ruId}" required="true" requiredMessage="#{mru_Bundle.EditMruDiaRequiredMessage_ruId}"/>
+                    <script>
+                        document.getElementById("MruDiaCreateForm:ruId").value = "#{mruDiaController.selectedRutina.ruId}";
+                    </script>
                     <p:outputLabel/>
                     <p:outputLabel/>
                 </h:panelGrid>

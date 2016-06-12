@@ -18,7 +18,6 @@ import com.unicauca.gymadmdoc.sessionbeans.MuUsuariogrupoFacade;
 import com.unicauca.gymadmdoc.utilidades.RedimensionadorImagenes;
 import com.unicauca.gymadmdoc.utilidades.Utilidades;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -329,26 +328,38 @@ public class RegistrarUsuarioController implements Serializable {
 
     public void cargarFoto(FileUploadEvent event) {
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        UploadedFile file = event.getFile();
-        usuario.setUsuFoto(inputStreamToByteArray(file));
-        requestContext.update("tablasUsuarios");
-        requestContext.update("tablaGestionUsuario");
+        this.uploadedFileFoto = event.getFile();
+        requestContext.update("formularioFoto");
+
     }
 
-    private byte[] inputStreamToByteArray(UploadedFile file) {
-        byte[] imagen = null;
-        if (file != null) {
-            try {
-                ByteArrayOutputStream output;
-                try (InputStream input = file.getInputstream()) {
-               imagen=RedimensionadorImagenes.redimensionar(input, 150);     
-                }
-               
-            } catch (Exception ex) {
+    public void cancelarSubirFoto() {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        this.campoFoto = false;
+        this.uploadedFileFoto = null;
+        requestContext.update("formularioFoto");
+    }
+
+    public StreamedContent getImagenFlujo() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = context.getExternalContext().getRequestParameterMap().get("idUsu");
+            MuUsuario usu = usuarioEJB.buscarPorIdUsuario(Long.valueOf(id)).get(0);
+            if (usuario.getUsuFoto() == null) {
+                return Utilidades.getImagenPorDefecto("foto");
+            } else {
+                return new DefaultStreamedContent(new ByteArrayInputStream(usu.getUsuFoto()));
             }
         }
-        
-        return imagen;
+    }
+
+    public void mostraSubirFoto() {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        this.campoFoto = false;
+        requestContext.update("formularioFoto");
     }
 
     public void registrarUsuario() {
@@ -375,7 +386,11 @@ public class RegistrarUsuarioController implements Serializable {
         }
         this.usuario.setUsuContrasena(Cifrar.sha256(this.contrasena));
         this.usuarioEJB.create(this.usuario);
-
+        try {
+            agregarFoto();
+        } catch (InterruptedException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al cargar la foto", "Error foto."));
+        }
         MuUsuariogrupo usuarioGrupo = new MuUsuariogrupo();
         MuUsuariogrupoPK usuarioGrupoPK = new MuUsuariogrupoPK();
         usuarioGrupoPK.setGruId("user");
@@ -400,13 +415,35 @@ public class RegistrarUsuarioController implements Serializable {
         requestContext.execute("PF('mensajeRegistroExitoso').show()");
     }
 
+    public void actualizarFoto() throws InterruptedException {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        if (this.uploadedFileFoto != null) {
+            this.campoFoto = true;
+            try {
+                InputStream fi = uploadedFileFoto.getInputstream();
+                byte[] buffer = RedimensionadorImagenes.redimensionar(fi, 200);
+                usuario.setUsuFoto(buffer);
+                this.usuarioEJB.edit(usuario);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Foto Actualizada exitosamente. Fresione F5 para refrescarla", "Foto Actualizada."));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Thread.sleep(2000);
+            this.uploadedFileFoto = null;
+
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se ha cargado una foto.", "No se ha cargado una foto"));
+        }
+        requestContext.update("formularioFoto");
+    }
+
     public void agregarFoto() throws InterruptedException {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         if (this.uploadedFileFoto != null) {
             this.campoFoto = true;
             try {
                 InputStream fi = uploadedFileFoto.getInputstream();
-                byte[] buffer = RedimensionadorImagenes.redimensionar(fi, 150);
+                byte[] buffer = RedimensionadorImagenes.redimensionar(fi, 200);
                 usuario.setUsuFoto(buffer);
                 this.usuarioEJB.edit(usuario);
             } catch (IOException e) {
@@ -416,7 +453,7 @@ public class RegistrarUsuarioController implements Serializable {
             this.uploadedFileFoto = null;
 
         }
-        requestContext.update("formfoto");
+        requestContext.update("formularioFoto");
     }
 
     public void cambiarCargoFuncionario(ValueChangeEvent e) {

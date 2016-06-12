@@ -5,31 +5,26 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <title>Nueva Rutina</title>
-        <script>
-            function showElement(id) {
-                var element = document.getElementById(id);
-                element.style.visibility = 'visible';
-            }
-        </script>
+
     </h:head>
     <h:body>
 
-        <!--<h:panelGroup id="display">-->
-
 
         <br/>
-        <!--<h:panelGrid columns="1">-->
         <h2>Agregar una nueva Rutina</h2>
 
         <br/>
         <br/>
+        <h3>Datos Preliminares</h3>
         <h:panelGrid columns="1">
-            <p:tabView>
-                <p:tab title="Datos preliminares" >
+            <!--<p:tabView>-->
+                <!--<p:tab title="Datos preliminares" >-->
+                
                     <h:form id="MruRutinaCreateForm">
                         <p:outputLabel value="#{mru_Bundle.requiredFieldsMessage}"/>
                         <br/>
@@ -41,8 +36,16 @@
                                 <p:inputText id="ruId" value="#{mruRutinaController.selected.ruId}" title="#{mru_Bundle.CreateMruRutinaTitle_ruId}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruId}"/>
                                 <h:panelGroup/>
                                 <h:panelGroup/>-->
-                                <p:outputLabel value="#{mru_Bundle.CreateMruRutinaLabel_ruUsuario}" for="ruUsuario" />
-                                <p:inputText id="ruUsuario" value="#{mruRutinaController.selected.usuIdentificacion}" title="#{mru_Bundle.CreateMruRutinaTitle_ruUsuario}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruUsuario}"/>
+                                <div id="unkown">
+                                    <p:outputLabel value="#{mru_Bundle.CreateMruRutinaLabel_ruUsuario}" for="ruUsuario" />
+                                    <p:inputText id="ruUsuario" value="#{mruRutinaController.selected.usuIdentificacion}" title="#{mru_Bundle.CreateMruRutinaTitle_ruUsuario}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruUsuario}"/>
+                                </div>
+                                <!-- LAS LINEAS DE ABAJO PERMITEN SETEAR EL ID DEL USUARIO -->
+                                <script>
+                                    document.getElementById("MruRutinaCreateForm:ruUsuario").value = "#{mruRutinaController.selectedUsuario.usuIdentificacion}";
+                                </script>
+                                <!-- LAS LINEAS DE ARRIBA PERMITEN SETEAR EL ID DEL USUARIO -->
+
                             </h:panelGrid>
                             <h3>Periodo de vigencia de la rutina</h3>
                             <h:panelGrid columns="4">
@@ -55,13 +58,15 @@
                             <h3>Datos personales</h3>
                             <p:panel>
                                 <br/>
-                                <h:panelGrid columns="4">
+                                <h:panelGrid columns="6">
                                     <p:outputLabel value="#{mru_Bundle.CreateMruRutinaLabel_ruPeso}" for="ruPeso" />
                                     <p:inputMask id="ruPeso" value="#{mruRutinaController.selected.ruPeso}" mask="99.99" title="#{mru_Bundle.CreateMruRutinaTitle_ruPeso}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruPeso}"/>
 <!--<p:inputText id="ruPeso" value="#{mruRutinaController.selected.ruPeso}" title="#{mru_Bundle.CreateMruRutinaTitle_ruPeso}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruPeso}"/>-->
                                     <p:outputLabel value="#{mru_Bundle.CreateMruRutinaLabel_ruTalla}" for="ruTalla" />
                                     <p:inputMask id="ruTalla" value="#{mruRutinaController.selected.ruTalla}" mask="9.99" title="#{mru_Bundle.CreateMruRutinaTitle_ruTalla}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruTalla}"/>
 <!--<p:inputText id="ruTalla" value="#{mruRutinaController.selected.ruTalla}" title="#{mru_Bundle.CreateMruRutinaTitle_ruTalla}" required="true" requiredMessage="#{mru_Bundle.CreateMruRutinaRequiredMessage_ruTalla}"/>-->
+                                    <p:outputLabel value="IMC: " for="ruIMC" />
+                                    <p:inputText disabled="true" id="ruIMC" value="" title="" required="false"/>
                                 </h:panelGrid>
                                 <br/>
 
@@ -81,8 +86,8 @@
                         <p:commandButton ajax="false" actionListener="#{mruRutinaController.create}" value="#{mru_Bundle.Save}" update="growl1" />
                         <!--<p:commandButton ajax="false" actionListener="#{mruRutinaController.clearFields}" value="#{mru_Bundle.clearFields}" update="growl1" />-->
                     </h:form>
-                </p:tab>
-            </p:tabView>
+                <!--</p:tab>-->
+            <!--</p:tabView>-->
         </h:panelGrid>
         <!--</h:panelGrid>-->
         <!--</h:panelGroup>--> 

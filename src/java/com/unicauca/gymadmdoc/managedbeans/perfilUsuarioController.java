@@ -28,7 +28,11 @@ import org.primefaces.model.UploadedFile;
 import com.unicauca.gymadmdoc.utilidades.RedimensionadorImagenes;
 import com.unicauca.gymadmdoc.utilidades.Utilidades;
 
-
+/**
+ *
+ * @author Geovanny
+ * Maneja los eventos de la vista de administrador/usuarios/perfilAdministrador.xhtml y de /usuario/usuarios/perfilUsuario.xhtml
+ */
 @ManagedBean
 @SessionScoped
 public class perfilUsuarioController implements Serializable {
@@ -113,6 +117,7 @@ public class perfilUsuarioController implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) fc.getExternalContext().getRequest();
         if (req.getUserPrincipal() != null) {
+            System.out.println("Usuario: "+req.getUserPrincipal().getName());
             this.usuario = this.usuarioEJB.buscarUsuarioPorNombreUsuario(req.getUserPrincipal().getName()).get(0);
         }
     }
