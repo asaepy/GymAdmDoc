@@ -9,18 +9,28 @@ import com.unicauca.gymadmdoc.entities.MrecRecaudo;
 import com.unicauca.gymadmdoc.entities.MrecReciboPago;
 import com.unicauca.gymadmdoc.entities.MuUsuario;
 import com.unicauca.gymadmdoc.services.DateService;
+import com.unicauca.gymadmdoc.services.ExportService;
 import com.unicauca.gymadmdoc.services.RecaudoService;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.chart.DonutChartModel;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 
@@ -34,6 +44,8 @@ public class RecaudosController implements Serializable {
 
    // <editor-fold defaultstate="collapsed" desc="Atributos para el manejo de la fecha">
 
+   List<String> monthsES;
+   
    private int year;
    public int getYear() {
       return year;
@@ -47,6 +59,14 @@ public class RecaudosController implements Serializable {
    }
    public void setMonth(String month) {
       this.month = month;
+   }
+   private int monthInt;
+
+   public int getMonthInt() {
+      return monthInt;
+   }
+   public void setMonthInt(int monthInt) {
+      this.monthInt = monthInt;
    }
    private int day;
    public int getDay() {
@@ -63,7 +83,11 @@ public class RecaudosController implements Serializable {
    public List<String> getMonths() {
       return months;
    }
-
+   private List<Integer> monthsInt;
+   public List<Integer> getMonthsInt() {
+      return monthsInt;
+   }
+   
    @Inject
    private DateService service_date;
    public void setService_date(DateService service_date) {
@@ -116,6 +140,13 @@ public class RecaudosController implements Serializable {
    public void setService_recaudo(RecaudoService service_recaudo) {
       this.service_recaudo = service_recaudo;
    }
+   
+   @Inject
+   private ExportService service_export;
+   public void setService_export(ExportService service_export) {
+      this.service_export = service_export;
+   }
+   
    
    
    // </editor-fold>
@@ -234,16 +265,43 @@ public class RecaudosController implements Serializable {
       
    // </editor-fold>
    
+   // <editor-fold defaultstate="collapsed" desc="Atributos para el manejo de la exportación">
+   
+   /*private DonutChartModel donutModel;
+   public DonutChartModel getDonutModel() {
+      return donutModel;
+   }*/
+   private StreamedContent file;
+   String nombreTemp;
+   
+   
+   public StreamedContent getFile() {
+      nombreTemp = service_export.exportReporteRecaudo(monthInt, year);  
+      if(!nombreTemp.isEmpty()){
+         File fil = new File("C:/Temp/"+nombreTemp);
+         try {
+            this.file = new DefaultStreamedContent(new FileInputStream(fil), new MimetypesFileTypeMap().getContentType(fil), nombreTemp);
+         } catch (FileNotFoundException ex) {
+            Logger.getLogger(RecaudosController.class.getName()).log(Level.SEVERE, null, ex);
+         }
+      }
+      return file;
+   }
+   
+   // </editor-fold>
+   
    public RecaudosController(){}
    
    @PostConstruct
    public void init(){
       //updateDatePicker();
+      llenarMeses();
       Calendar c = Calendar.getInstance();
       this.year = c.get(Calendar.YEAR);
       this.years = service_date.getYears();
       this.months = service_date.getMonths(year);
       this.month = months.get(0);
+      this.monthInt = monthsES.indexOf(month)+1;
       this.day = c.get(Calendar.DATE);
       loadTableInfo();
       loadInfoRecibo();
@@ -260,11 +318,14 @@ public class RecaudosController implements Serializable {
    
    public void onYearChange(){
       this.months = service_date.getMonths(year);
+      this.monthsInt = service_date.getMonthsInt(year);
       this.month = months.get(0);
+      this.monthInt = monthsES.indexOf(month)+1;
       loadTableInfo();
    }
    
    public void onMonthChange(){
+      this.monthInt = monthsES.indexOf(month)+1;
       loadTableInfo();
    }
    
@@ -376,5 +437,28 @@ public class RecaudosController implements Serializable {
       return result;
    }
    
+   public void exportReporte(){
+      
+   }
+   
+   public void downloadReporte(){
+      
+   }
+   
+   private void llenarMeses(){
+      monthsES = new ArrayList<>();
+      monthsES.add("Enero");
+      monthsES.add("Febrero");
+      monthsES.add("Marzo");
+      monthsES.add("Abril");
+      monthsES.add("Mayo");
+      monthsES.add("Junio");
+      monthsES.add("Julio");
+      monthsES.add("Agosto");
+      monthsES.add("Septiembre");
+      monthsES.add("Octubre");
+      monthsES.add("Noviembre");
+      monthsES.add("Diciembre");
+   }
 }
 

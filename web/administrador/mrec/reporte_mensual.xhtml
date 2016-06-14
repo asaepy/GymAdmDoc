@@ -93,12 +93,15 @@ and open the template in the editor.
                                 icon="ui-icon-plus" title="Generar recibo"
                                 onclick="#{recaudosController.loadInfoRecibo()}"
                                 rendered="#{(recaudo.estado eq 'Sin recibo') and (recaudo.fechaLimite.date ge recaudosController.day) 
-                                            and (recaudo.fechaLimite.month ge recaudosController)}">
+                                            and (recaudo.fechaLimite.month ge recaudosController.monthInt) 
+                                            and (recaudo.fechaLimite.year ge recaudosController.year)}">
                   <f:setPropertyActionListener value="#{recaudo}" target="#{recaudosController.recaudoSelected}"/>
                </p:commandButton>
                <p:commandButton oncomplete="PF('confirmPagoDialog').show()" 
                                 icon="ui-icon-check" title="Confirmar Pago"
-                                rendered="#{(recaudo.estado eq 'Por pagar') and (recaudo.fechaLimite.date ge recaudosController.day)}">
+                                rendered="#{(recaudo.estado eq 'Por pagar') and (recaudo.fechaLimite.date ge recaudosController.day)
+                                            and (recaudo.fechaLimite.month ge recaudosController.monthInt) 
+                                            and (recaudo.fechaLimite.year ge recaudosController.year)}">
                   <f:setPropertyActionListener value="#{recaudo}" target="#{recaudosController.recaudoSelected}"/>
                </p:commandButton>
             </p:column>
@@ -120,11 +123,13 @@ and open the template in the editor.
          </p:dataTable>
          
          <h:panelGrid columns="2" cellpadding="5">
-            <p:commandLink style="margin-left: 10px;">
+            <p:commandLink style="margin-left: 10px;" ajax="false"
+                           action="#{recaudosController.exportReporte()}">
                <p:graphicImage name="./img/icon_xls.png" height="40" width="40"/>
+               <p:fileDownload value="#{recaudosController.file}"/>
             </p:commandLink>
             <h:outputText value="Click en el icono para descargar el reporte en formato xls"
-                          style="font-size: 14;"/>
+                          style="font-size: 14px;"/>
          </h:panelGrid>
          
          <p:dialog header="Informacion de Recaudo" widgetVar="viewRecaudoDialog"
@@ -262,7 +267,11 @@ and open the template in the editor.
                </h:panelGrid>
             </p:outputPanel>
          </p:dialog>
-                          
+         
+         
       </h:form>
+      
+    
+      
    </h:body>
 </html>

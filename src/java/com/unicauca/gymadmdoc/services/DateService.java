@@ -47,6 +47,22 @@ public class DateService {
       return meses;
    }
    
+   public List<Integer> getMonthsInt(int year){
+      List<Integer> meses = new ArrayList<>();
+      Calendar c = Calendar.getInstance();
+      int anio =c.get(Calendar.YEAR);
+      int maxMonth = 11;
+      
+      if(anio == year){
+         maxMonth = c.get(Calendar.MONTH);
+      }
+     
+      for(int i=maxMonth; i>=0; i--){
+         meses.add(i+1);
+      }
+      return meses;
+   }
+   
    public List<Integer> getYears(){
       List<Integer> anios = new ArrayList<>();
       
