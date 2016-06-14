@@ -104,7 +104,7 @@ public class MruVariaciondepeso implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.unicauca.gymadmdoc.entities.MruVariaciondepeso[ vpId=" + vpId + " ]";
+        return vpId + " - "+ vpNombre;
     }
     
 }

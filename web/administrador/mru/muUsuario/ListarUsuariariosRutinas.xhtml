@@ -74,7 +74,9 @@
                         <p:ajax id="ajaxAUX" listener="#{mruRutinaController.consultarRutinaPorUsuario()}"/>
 
                     </p:commandButton>
-                    <p:commandButton ajax="false" id="nuevaRutina" value="#{mru_Bundle.btnNuevaRutinaLabel}" title="#{mru_Bundle.btnNuevaRutinaTitle}" actionListener="#{routingController.goToNuevaRutina()}"/>
+                    <p:commandButton ajax="false" id="nuevaRutina" value="#{mru_Bundle.btnNuevaRutinaLabel}" title="#{mru_Bundle.btnNuevaRutinaTitle}" actionListener="#{routingController.goToNuevaRutina()}">
+                        <f:setPropertyActionListener value="#{usuario}" target="#{mruRutinaController.selectedUsuario}" />
+                    </p:commandButton>
 
                 </p:column>
                 <f:facet name="footer">
@@ -146,7 +148,9 @@
                             <f:setPropertyActionListener value="#{rutina}" target="#{mruDiaController.selectedRutina}" />
                         </p:commandButton>
                         <!--<p:commandButton id="editButton" icon="ui-icon-pencil" update=":MruRutinaEditForm" oncomplete="PF('MruRutinaEditDialog').show()"/>-->
-                        <p:commandButton ajax="false" id="nuevoDia" value="#{mru_Bundle.btnNuevoDiaLabel}" title="#{mru_Bundle.btnNuevoDiaTitle}" actionListener="#{routingController.goToNuevoDia()}"/>
+                        <p:commandButton ajax="false" id="nuevoDia" value="#{mru_Bundle.btnNuevoDiaLabel}" title="#{mru_Bundle.btnNuevoDiaTitle}" actionListener="#{routingController.goToNuevoDia()}">
+                            <f:setPropertyActionListener value="#{rutina}" target="#{mruDiaController.selectedRutina}" />
+                        </p:commandButton>
 
                     </p:column>
                 </p:dataTable>
@@ -159,35 +163,45 @@
         <br/>
         <br/>
         <br/>
-        <h3>Dias registrados: <p:outputLabel value="#{mruDiaController.selectedRutina.toString()}" /> </h3>
-        <h:panelGroup>      
-            <p:dataTable id="tblDias" value="#{mruDiaController.dias}" var="dia"
-                         paginator="true"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         emptyMessage="#{mru_Bundle.NoRecords}">
-                <!--                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{mru_Bundle.ListMruDiaTitle_diaId}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{dia.diaId}"/>
-                                </p:column>-->
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{mru_Bundle.ListMruDiaTitle_diaNumero}"/>
-                    </f:facet>
-                    <h:outputText value="#{dia.diaNumero}"/>
-                </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{mru_Bundle.ListMruDiaTitle_diaTiempomin}"/>
-                    </f:facet>
-                    <h:outputText value="#{dia.diaTiempomin}">
-                        <f:convertDateTime pattern="HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
-            </p:dataTable>
-        </h:panelGroup>
+        <h:form id="MruGPForm">
+            <h3>Dias registrados: <p:outputLabel value="#{mruDiaController.selectedRutina.toString()}" /> </h3>
+            <h:panelGroup>      
+                <p:dataTable id="tblDias" value="#{mruDiaController.dias}" var="dia"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             emptyMessage="#{mru_Bundle.NoRecords}">
+                    <!--                <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mru_Bundle.ListMruDiaTitle_diaId}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{dia.diaId}"/>
+                                    </p:column>-->
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{mru_Bundle.ListMruDiaTitle_diaNumero}"/>
+                        </f:facet>
+                        <h:outputText value="#{dia.diaNumero}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{mru_Bundle.ListMruDiaTitle_diaTiempomin}"/>
+                        </f:facet>
+                        <h:outputText value="#{dia.diaTiempomin}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column width="35%">
+                        <f:facet name="header">
+                            <h:outputText value="Acciones"/>
+                        </f:facet>
+                        <p:commandButton ajax="false" id="nuevoGP" value="#{mru_Bundle.btnNuevoGPLabel}" title="#{mru_Bundle.btnNuevoGPTitle}" actionListener="#{routingController.goToGP()}"/>
+                        <p:commandButton style="margin-left: 5px" ajax="false" id="nuevoEjercicioGP" value="#{mru_Bundle.btnRelacionarEjercicioLabel}" title="#{mru_Bundle.btnRelacionarEjercicioTitle}" actionListener="#{routingController.goToRelacionarEjercicios()}"/>
+
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        </h:form>
 
 
 

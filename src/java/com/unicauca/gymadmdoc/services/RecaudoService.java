@@ -8,9 +8,11 @@ package com.unicauca.gymadmdoc.services;
 import com.unicauca.gymadmdoc.entities.MrecInformacionRecaudo;
 import com.unicauca.gymadmdoc.entities.MrecRecaudo;
 import com.unicauca.gymadmdoc.entities.MrecReciboPago;
+import com.unicauca.gymadmdoc.entities.MruRutina;
 import com.unicauca.gymadmdoc.entities.MuOcupacion;
 import com.unicauca.gymadmdoc.entities.MuUsuario;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,9 +25,13 @@ import com.unicauca.gymadmdoc.sessionbeans.MuOcupacionFacade;
 import com.unicauca.gymadmdoc.sessionbeans.MuUsuarioFacade;
 import java.math.BigInteger;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import javax.ejb.EJBException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.ChartSeries;
@@ -39,9 +45,6 @@ import org.primefaces.model.chart.HorizontalBarChartModel;
 @Named(value = "recaudoService")
 @ApplicationScoped
 public class RecaudoService {
-   
-   public static final int VALOR_MENSUALIDAD = 28000;
-   public static final int VALOR_SESION = 2000;
    
    @PersistenceContext(unitName = "Gym_Adm_DocPU")
    private EntityManager em;
@@ -237,9 +240,6 @@ public class RecaudoService {
          conceptos = " AND rp.rpagMensualidad = 0 AND rp.rpagNumeroSesiones = 0 ";
       }
       
-      long totalMensualidades = 0;
-      long totalSesiones = 0;
-      
       for (String o : ocupaciones) {
          
          Query queryM = getEm().createQuery("SELECT rp FROM MrecInformacionRecaudo ir, MrecReciboPago rp, MuUsuario us, MuOcupacion oc WHERE rp.rpagReferencia = ir.rpagReferencia AND us.usuIdentificacion = ir.usuIdentificacion AND oc.ocuId = us.ocuId.ocuId AND us.usuGenero = :genero AND oc.ocuDescripcion = :ocupacion AND rp.rpagFechaExpedicion BETWEEN :fini AND :ffin"+conceptos);
@@ -259,26 +259,22 @@ public class RecaudoService {
          if(rtaM>maxData){
             maxData=rtaM+5;
          }
-         
          List<MrecReciboPago> lstRtaF = queryF.getResultList();
          int rtaF = lstRtaF.size();
          if(rtaF>maxData){
             maxData=rtaF+5;
          }
-         
          hombres.set(o, ((Number)rtaM).intValue());
          mujeres.set(o, ((Number)rtaF).intValue());
-         
          
       }
       
       bar.addSeries(hombres);
       bar.addSeries(mujeres);
       
-      bar.setTitle("HorizontalBar");
+      bar.setTitle("Horizontal Bar");
       bar.setLegendPosition("e");
       bar.setStacked(true);
-      
       
       Axis xAxis = bar.getAxis(AxisType.X);
       xAxis.setLabel("Cantidad de Personas por ocupacion");
@@ -287,7 +283,7 @@ public class RecaudoService {
       xAxis.setTickFormat("%d");
       
       Axis yAxis = bar.getAxis(AxisType.Y);
-      yAxis.setLabel("Ocupaciones");
+      yAxis.setLabel("Ocupacion");
       return bar;
    }
    
